@@ -24,11 +24,27 @@ export type BusViolation = {
 
 const API_URL = "https://data.ny.gov/resource/kh8p-hcbm.json";
 
-export const getData = async ({ offset = 0 }: { offset?: number }) => {
+export const getData = async ({
+  offset = 0,
+  query = "",
+}: {
+  offset?: number;
+  query?: string;
+}) => {
   try {
-    const offsetAddon = `?$offset=${offset}`;
+    let finalQuery = query;
 
-    const response = await fetch(`${API_URL}${offsetAddon}`);
+    if (query && query.length > 0) {
+      finalQuery = `${query} OFFSET ${offset}`;
+    }
+
+    const url = `${API_URL}${
+      query && query.length > 0
+        ? `?$query=${encodeURIComponent(finalQuery)}`
+        : `?$offset=${offset}`
+    }`;
+
+    const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch ACE data");
 
     const data: BusViolation[] = await response.json();

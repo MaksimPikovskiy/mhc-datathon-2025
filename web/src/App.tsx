@@ -4,16 +4,25 @@ import { getData, type BusViolation } from './api/getData';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
 import { CSV_COLUMNS, JSON_COLUMNS } from './util/constants';
 import Navbar from './components/navbar';
+import { Label } from './components/ui/label';
+import { Textarea } from './components/ui/textarea';
 
 function App() {
   const [offset, setOffset] = useState(0);
   const [data, setData] = useState<BusViolation[] | undefined>([]);
+  const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
-    getData({ offset }).then((data) => {
+    getData({ offset, query }).then((data) => {
       setData(data);
     });
-  }, [offset]);
+  }, [offset, query]);
+
+  const handleQueryChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setQuery(e.target.value);
+  };
 
   const handlePrev = () => {
     setOffset((prev) => Math.max(prev - 1000, 0));
@@ -32,30 +41,35 @@ function App() {
     return value as string;
   };
 
-
   return (
     <>
       <Navbar handlePrev={handlePrev} handleNext={handleNext} />
-      <main className="mt-12">
-        <Table>
-          <TableCaption>ACE Data</TableCaption>
-          <TableHeader>
-            <TableRow>
-              {CSV_COLUMNS.map((col) => (
-                <TableHead key={col}>{col}</TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data && data.map((row: BusViolation) => (
-              <TableRow key={row.violation_id}>
-                {JSON_COLUMNS.map((col) => (
-                  <TableCell key={col}>{renderCell(col, row[col])}</TableCell>)
-                )}
+      <main className="mt-12 space-y-6">
+        <div>
+          <Label htmlFor="query">SoQL Query:</Label>
+          <Textarea placeholder="Query" value={query} onChange={handleQueryChange} />
+        </div>
+        <div className="max-h-[500px] overflow-auto">
+          <Table>
+            <TableCaption>ACE Data</TableCaption>
+            <TableHeader>
+              <TableRow>
+                {CSV_COLUMNS.map((col) => (
+                  <TableHead key={col}>{col}</TableHead>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data && data.map((row: BusViolation) => (
+                <TableRow key={row.violation_id}>
+                  {JSON_COLUMNS.map((col) => (
+                    <TableCell key={col}>{renderCell(col, row[col])}</TableCell>)
+                  )}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </main>
     </>
   )
