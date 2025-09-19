@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Button } from './ui/button';
 
-export default function Navbar({ handlePrev, handleNext }: { handlePrev: () => void, handleNext: () => void }) {
+export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const toggleMobileMenu = () => {
@@ -22,15 +21,9 @@ export default function Navbar({ handlePrev, handleNext }: { handlePrev: () => v
                     <a href="#" className="text-gray-600 hover:text-gray-800 transition duration-300">Report</a>
                     <a href="#" className="text-gray-600 hover:text-gray-800 transition duration-300">Extra</a>
                     <a href="#" className="text-gray-600 hover:text-gray-800 transition duration-300">Credits</a>
-                    <div className="flex gap-2">
-                        <Button size="sm" onClick={handlePrev} className="cursor-pointer">Previous</Button>
-                        <Button size="sm" onClick={handleNext} className="cursor-pointer">Next</Button>
-                    </div>
                 </div>
 
                 <div className="md:hidden flex gap-2">
-                    <Button size="sm" onClick={handlePrev} className="cursor-pointer">←</Button>
-                    <Button size="sm" onClick={handleNext} className="cursor-pointer">→</Button>
                     <button
                         id="mobile-menu-button"
                         className="text-gray-600 hover:text-gray-800 focus:outline-none"

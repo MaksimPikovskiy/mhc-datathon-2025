@@ -22,9 +22,17 @@ export type BusViolation = {
   };
 };
 
-const API_URL = "https://data.ny.gov/resource/kh8p-hcbm.json";
+export type BusRoute = {
+  route: string;
+  program: string;
+  implementation_date: string;
+};
 
-export const getData = async ({
+const VIOLATION_API_URL = "https://data.ny.gov/resource/kh8p-hcbm.json";
+
+const ROUTE_API_URL = "https://data.ny.gov/resource/ki2b-sg5y.json";
+
+export const getViolationData = async ({
   offset = 0,
   query = "",
 }: {
@@ -38,7 +46,7 @@ export const getData = async ({
       finalQuery = `${query} OFFSET ${offset}`;
     }
 
-    const url = `${API_URL}${
+    const url = `${VIOLATION_API_URL}${
       query && query.length > 0
         ? `?$query=${encodeURIComponent(finalQuery)}`
         : `?$offset=${offset}`
@@ -51,5 +59,39 @@ export const getData = async ({
     return data;
   } catch (error) {
     console.error("Error fetching ACE data:", error);
+    return [];
+  }
+};
+
+export const getRouteData = async ({
+  offset = 0,
+  query = "",
+}: {
+  offset?: number;
+  query?: string;
+}) => {
+  try {
+    let finalQuery = query;
+
+    if (query && query.length > 0) {
+      finalQuery = `${query} OFFSET ${offset}`;
+    }
+
+    const url = `${ROUTE_API_URL}${
+      query && query.length > 0
+        ? `?$query=${encodeURIComponent(finalQuery)}`
+        : `?$offset=${offset}`
+    }`;
+
+        console.log(url)
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch ACE data");
+
+    const data: BusRoute[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching ACE data:", error);
+    return [];
   }
 };
