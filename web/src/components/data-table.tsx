@@ -4,6 +4,7 @@ import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
 import { fixTitle } from '../util/utils'
 import { Button } from './ui/button'
+import { ScrollArea } from './ui/scroll-area'
 
 interface DataTableProps<T> {
     /** called whenever offset or query changes */
@@ -54,14 +55,14 @@ export function DataTable<T extends Record<string, any>>({ // eslint-disable-lin
             </div>
 
             <h2>{title}</h2>
-            <div className="max-h-[500px] overflow-auto">
+            <ScrollArea className="relative h-[450px] max-h-[450px] overflow-auto border rounded">
                 {data.length > 0 ? (
                     <Table>
                         <TableCaption>{title} Data</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 {cols.map(col => (
-                                    <TableHead key={col}>
+                                    <TableHead key={col} className='border-0 bg-white shadow-border shadow-[inset_0_-1px_0]'>
                                         <div className="flex flex-col">
                                             <span className="select-none">{fixTitle(col)}</span>
                                             <div>
@@ -89,7 +90,7 @@ export function DataTable<T extends Record<string, any>>({ // eslint-disable-lin
                 ) : (
                     <div className="flex items-center justify-center">NO DATA</div>
                 )}
-            </div>
+            </ScrollArea>
 
             <div className="flex gap-2">
                 <Button onClick={handlePrev} className="cursor-pointer">Prev</Button>
