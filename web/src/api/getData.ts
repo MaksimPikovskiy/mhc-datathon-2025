@@ -83,8 +83,6 @@ export const getRouteData = async ({
         : `?$offset=${offset}`
     }`;
 
-        console.log(url)
-
     const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch ACE data");
 
