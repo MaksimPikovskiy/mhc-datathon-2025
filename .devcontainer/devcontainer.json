@@ -8,7 +8,8 @@
 		"ghcr.io/devcontainers/features/node:1": {},
 		"ghcr.io/devcontainers/features/git-lfs:1": {}
 	},
-	"postCreateCommand": "git lfs install"
+	"postCreateCommand": "git lfs install",
+	"forwardPorts": [3000, 5173]
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
