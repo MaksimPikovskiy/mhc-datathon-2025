@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { getData, type BusViolation } from './api/getData';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table';
-import { CSV_COLUMNS, JSON_COLUMNS } from './util/constants';
+import { JSON_COLUMNS } from './util/constants';
 import Navbar from './components/navbar';
 import { Label } from './components/ui/label';
 import { Textarea } from './components/ui/textarea';
+import { fixTitle } from './util/utils';
 
 function App() {
   const [offset, setOffset] = useState(0);
@@ -47,28 +48,39 @@ function App() {
       <main className="mt-12 space-y-6">
         <div>
           <Label htmlFor="query">SoQL Query:</Label>
-          <Textarea placeholder="Query" value={query} onChange={handleQueryChange} />
+          <Textarea placeholder='e.g. SELECT * WHERE stop_name="EAST TREMONT AV/VYSE AV"' value={query} onChange={handleQueryChange} />
         </div>
         <div className="max-h-[500px] overflow-auto">
-          <Table>
-            <TableCaption>ACE Data</TableCaption>
-            <TableHeader>
-              <TableRow>
-                {CSV_COLUMNS.map((col) => (
-                  <TableHead key={col}>{col}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data && data.map((row: BusViolation) => (
-                <TableRow key={row.violation_id}>
-                  {JSON_COLUMNS.map((col) => (
-                    <TableCell key={col}>{renderCell(col, row[col])}</TableCell>)
-                  )}
+          {data && data.length > 0 ?
+            <Table>
+              <TableCaption>ACE Data</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  {data && Object.keys(data[0]).map((col) => (
+                    <TableHead key={col}>
+                      <div className="flex flex-col">
+                        <span className="select-none">{fixTitle(col)}</span>
+                        <div>
+                          <span className="text-gray-400 text-xs select-none">(</span>
+                          <span className="text-gray-400 text-xs select-all">{col}</span>
+                          <span className="text-gray-400 text-xs select-none">)</span>
+                        </div>
+                      </div>
+                    </TableHead>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {data && data.map((row: BusViolation) => (
+                  <TableRow key={JSON.stringify(row.violation_id)}>
+                    {JSON_COLUMNS.map((col) => (
+                      <TableCell key={col}>{renderCell(col, row[col])}</TableCell>)
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            : <div className="flex items-center justify-center">NO DATA</div>}
         </div>
       </main>
     </>
