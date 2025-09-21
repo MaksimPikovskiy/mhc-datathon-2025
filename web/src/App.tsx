@@ -32,6 +32,15 @@ type BusRouteMarker = {
 
 const purpleOptions = { color: 'purple' }
 
+const greenOptions = { color: 'green' }
+
+const simpleCongestionZone = [
+  [40.699793, -74.019806],  // bottom-left
+  [40.774653, -74.019806],  // top-left
+  [40.774653, -73.9586025], // top-right
+  [40.699793, -73.9586025], // bottom-right
+]
+
 function App() {
   const [data, setData] = useState<BusViolation[]>([]);
   const [routes, setRoutes] = useState<BusRouteMarker[]>([]);
@@ -64,11 +73,17 @@ function App() {
     const allViolationData = [];
     const limit = 1000;
     const totalRecordsToFetch = 5000;
+    const query = `SELECT *
+                    WHERE
+                      \`violation_longitude\` BETWEEN -74.019806 AND -73.9586025
+                      AND \`violation_latitude\` BETWEEN 40.699793 AND 40.774653
+                      AND caseless_contains(\`bus_route_id\`, "M")
+                    ORDER BY \`violation_id\` DESC NULL FIRST`;
 
     for (let i = 0; i < totalRecordsToFetch / limit; i++) {
       const offset = i * limit;
       try {
-        const newData = await getViolationData({ offset });
+        const newData = await getViolationData({ offset, query });
         allViolationData.push(...newData);
       } catch (error) {
         console.error('Failed to fetch violation data:', error);
@@ -124,7 +139,7 @@ function App() {
             {data.map(vio => (
               <Marker
                 key={vio.violation_id}
-                position={[+vio.bus_stop_latitude, +vio.bus_stop_longitude]}
+                position={[parseFloat(vio.violation_latitude), parseFloat(vio.violation_longitude)]}
                 icon={getExtraMarker(getColorByRouteId(vio.bus_route_id))}
               >
                 <Popup className="flex flex-row">
@@ -135,10 +150,15 @@ function App() {
                   <span>{vio.violation_type}</span>
                   <br />
                   <span>{vio.violation_status}</span>
+                  <br />
+                  <span>Longitude: {vio.violation_longitude}</span>
+                  <br />
+                  <span>Latitude: {vio.violation_latitude}</span>
                 </Popup>
               </Marker>
             ))}
             <Polygon pathOptions={purpleOptions} positions={congestionZone as LatLngExpression[][]} />
+            <Polygon pathOptions={greenOptions} positions={simpleCongestionZone as LatLngExpression[]} />
           </MapContainer>
         </div>
       </main>
