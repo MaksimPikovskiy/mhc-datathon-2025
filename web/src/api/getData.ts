@@ -28,9 +28,21 @@ export type BusRoute = {
   implementation_date: string;
 };
 
+type GeoJSONPolygon = {
+  type: "Polygon";
+  coordinates: number[][][];
+}
+
+type PolygonFeature = {
+  polygon: GeoJSONPolygon;
+}
+
+
 const VIOLATION_API_URL = "https://data.ny.gov/resource/kh8p-hcbm.json";
 
 const ROUTE_API_URL = "https://data.ny.gov/resource/ki2b-sg5y.json";
+
+const CBD_API_URL = "https://data.ny.gov/resource/srxy-5nxn.json"
 
 export const getViolationData = async ({
   offset = 0,
@@ -84,12 +96,28 @@ export const getRouteData = async ({
     }`;
 
     const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch ACE data");
+    if (!response.ok) throw new Error("Failed to fetch Bus Route data");
 
     const data: BusRoute[] = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching ACE data:", error);
+    console.error("Error fetching Bus Route data:", error);
     return [];
   }
 };
+
+
+export const getCBDData = async () => {
+  try {
+    const response = await fetch(CBD_API_URL);
+    if (!response.ok) throw new Error("Failed to fetch CBD data");
+
+    const data: PolygonFeature[] = await response.json();
+    return data.map((f) =>
+    f.polygon.coordinates[0].map(([lng, lat]) => [lat, lng])
+  );;
+  } catch (error) {
+    console.error("Error fetching CBD data:", error);
+    return [];
+  }
+}

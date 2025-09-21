@@ -1,10 +1,10 @@
 import './App.css'
-import { type BusRoute, getRouteData, getViolationData, type BusViolation } from './api/getData';
+import { type BusRoute, getRouteData, getViolationData, type BusViolation, getCBDData } from './api/getData';
 import { JSON_COLUMNS } from './util/constants';
 import Navbar from './components/navbar';
 import { DataTable } from './components/data-table';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
-import L from 'leaflet';
+import { MapContainer, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
+import L, { type LatLngExpression } from 'leaflet';
 import "leaflet/dist/leaflet.css";
 import 'leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css';
 import 'leaflet-extra-markers';
@@ -30,9 +30,12 @@ type BusRouteMarker = {
   color: string,
 }
 
+const purpleOptions = { color: 'purple' }
+
 function App() {
   const [data, setData] = useState<BusViolation[]>([]);
   const [routes, setRoutes] = useState<BusRouteMarker[]>([]);
+  const [congestionZone, setCongestionZone] = useState<number[][][]>([]);
 
   const getDistinctRoutesWithColors = (data: BusViolation[]) => {
     const uniqueRouteIds = new Set<string>(data.map((item: BusViolation) => item.bus_route_id));
@@ -80,6 +83,7 @@ function App() {
 
   useEffect(() => {
     fetchAndSetViolationData();
+    getCBDData().then(setCongestionZone);
   }, [fetchAndSetViolationData]);
 
   const getColorByRouteId = (id: string) => {
@@ -119,6 +123,7 @@ function App() {
             />
             {data.map(vio => (
               <Marker
+                key={vio.violation_id}
                 position={[+vio.bus_stop_latitude, +vio.bus_stop_longitude]}
                 icon={getExtraMarker(getColorByRouteId(vio.bus_route_id))}
               >
@@ -133,6 +138,7 @@ function App() {
                 </Popup>
               </Marker>
             ))}
+            <Polygon pathOptions={purpleOptions} positions={congestionZone as LatLngExpression[][]} />
           </MapContainer>
         </div>
       </main>
