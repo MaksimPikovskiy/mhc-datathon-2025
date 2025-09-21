@@ -68,15 +68,15 @@ function App() {
   const chartConfig2 = {
     bus_stop_violations: {
       label: "Bus Stop",
-      color: "#2563eb",
+      color: "#E53A70",
     },
     double_parked_violations: {
       label: "Double Parked",
-      color: "#60a5fa",
+      color: "#32CD32",
     },
     bus_lane_violations: {
       label: "Bus Lane",
-      color: "#3b82f6",
+      color: "#FF8C00",
     },
   } satisfies ChartConfig
 
