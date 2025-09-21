@@ -12,7 +12,7 @@ export default function Navbar() {
             <div className="container mx-auto flex items-center justify-between">
 
                 <div className="flex items-center">
-                    <a href="#" className="text-xl font-bold text-gray-800">Mechanicus (MHC++)</a>
+                    <a href="#" className="text-xl font-bold text-gray-800"><span className='bg-[#F1421C] text-white p-2 rounded'>MHC++</span> Mechanicus </a>
                 </div>
 
                 <div className="hidden md:flex items-center space-x-6">

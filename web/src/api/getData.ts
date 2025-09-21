@@ -22,6 +22,14 @@ export type BusViolation = {
   };
 };
 
+export type BusViolationCount = {
+  bus_route_id: string;
+  total_violations: number;
+  bus_stop_violations: number;
+  double_parked_violations: number;
+  bus_lane_violations: number;
+};
+
 export type BusRoute = {
   route: string;
   program: string;
@@ -31,18 +39,17 @@ export type BusRoute = {
 type GeoJSONPolygon = {
   type: "Polygon";
   coordinates: number[][][];
-}
+};
 
 type PolygonFeature = {
   polygon: GeoJSONPolygon;
-}
-
+};
 
 const VIOLATION_API_URL = "https://data.ny.gov/resource/kh8p-hcbm.json";
 
 const ROUTE_API_URL = "https://data.ny.gov/resource/ki2b-sg5y.json";
 
-const CBD_API_URL = "https://data.ny.gov/resource/srxy-5nxn.json"
+const CBD_API_URL = "https://data.ny.gov/resource/srxy-5nxn.json";
 
 export const getViolationData = async ({
   offset = 0,
@@ -106,7 +113,6 @@ export const getRouteData = async ({
   }
 };
 
-
 export const getCBDData = async () => {
   try {
     const response = await fetch(CBD_API_URL);
@@ -114,10 +120,47 @@ export const getCBDData = async () => {
 
     const data: PolygonFeature[] = await response.json();
     return data.map((f) =>
-    f.polygon.coordinates[0].map(([lng, lat]) => [lat, lng])
-  );;
+      f.polygon.coordinates[0].map(([lng, lat]) => [lat, lng])
+    );
   } catch (error) {
     console.error("Error fetching CBD data:", error);
     return [];
   }
-}
+};
+
+export const getViolationCountData = async ({
+  offset = 0,
+  query = "",
+}: {
+  offset?: number;
+  query?: string;
+}) => {
+  try {
+    let finalQuery = query;
+
+    if (query && query.length > 0) {
+      finalQuery = `${query} OFFSET ${offset}`;
+    }
+
+    const url = `${VIOLATION_API_URL}${
+      query && query.length > 0
+        ? `?$query=${encodeURIComponent(finalQuery)}`
+        : `?$offset=${offset}`
+    }`;
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch ACE data");
+
+    const data: BusViolationCount[] = await response.json();
+
+    const normalized = data.map((row) => ({
+      ...row,
+      bus_route_id: row.bus_route_id ?? "ABLE",
+    }));
+
+    return normalized;
+  } catch (error) {
+    console.error("Error fetching ACE data:", error);
+    return [];
+  }
+};
