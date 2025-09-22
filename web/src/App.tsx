@@ -229,8 +229,8 @@ function App() {
 
         <span>{getTotal()}</span>
         <h2 className='font-bold text-xl'>Total Violations Per Bus Route</h2>
-        <ChartContainer config={chartConfig} className="min-h-[200px] max-h-[500px] w-full">
-          <BarChart accessibilityLayer data={getChartData()}>
+        <ChartContainer config={chartConfig} className="min-h-[200px] max-h-[550px] w-full">
+          <BarChart accessibilityLayer data={getChartData()} margin={{ bottom: 30 }}>
             <CartesianGrid vertical={false} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <XAxis
@@ -249,8 +249,8 @@ function App() {
           </BarChart>
         </ChartContainer>
         <h2 className='font-bold text-xl'>Violations of Each Type Per Bus Route</h2>
-        <ChartContainer config={chartConfig2} className="min-h-[200px] max-h-[500px] w-full">
-          <BarChart accessibilityLayer data={counts}>
+        <ChartContainer config={chartConfig2} className="min-h-[200px] max-h-[550px] w-full">
+          <BarChart accessibilityLayer data={counts} margin={{ bottom: 30 }}>
             <CartesianGrid vertical={false} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
