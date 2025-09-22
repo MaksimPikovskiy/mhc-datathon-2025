@@ -1,5 +1,5 @@
 import './App.css'
-import { type BusRoute, getRouteData, getViolationData, type BusViolation, getCBDData, getViolationCountData, type BusViolationCount } from './api/getData';
+import { type BusRoute, getRouteData, getViolationData, type BusViolation, getCBDData, getViolationCountData, type BusViolationCount, type BusSpeed, getSpeedData, type BusRidership, getRidershipData } from './api/getData';
 import { JSON_COLUMNS } from './util/constants';
 import Navbar from './components/navbar';
 import { DataTable } from './components/data-table';
@@ -49,14 +49,26 @@ function App() {
   const [congestionZone, setCongestionZone] = useState<number[][][]>([]);
 
   const [counts, setCounts] = useState<BusViolationCount[]>([]);
-  const countQuery = `SELECT 
-                          bus_route_id,
-                          COUNT(*) AS total_violations,
-                          SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
-                          SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
-                          SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
-                      GROUP BY bus_route_id
-                      `
+  const violationQuery = `SELECT 
+                            bus_route_id,
+                            COUNT(*) AS total_violations,
+                            SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
+                            SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
+                            SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
+                          GROUP BY bus_route_id`
+  const speedQuery = `SELECT
+                        route_id,
+                        SUM(total_mileage) AS total_mileage,
+                        SUM(total_operating_time) AS total_operating_time,
+                        AVG(average_speed) AS average_speed
+                      GROUP BY route_id`
+
+  const ridershipQuery = `SELECT
+                            bus_route,
+                            SUM(ridership) AS total_ridership,
+                            SUM(transfers) AS total_transfers
+                          WHERE ridership != 0 OR transfers != 0
+                          GROUP BY bus_route`
 
   const chartConfig = {
     value: {
@@ -145,9 +157,9 @@ function App() {
     fetchAndSetViolationData();
     getCBDData().then(setCongestionZone);
 
-    getViolationCountData({ offset: 0, query: countQuery }).then(setCounts);
+    getViolationCountData({ offset: 0, query: violationQuery }).then(setCounts);
 
-  }, [fetchAndSetViolationData, countQuery]);
+  }, [fetchAndSetViolationData, violationQuery]);
 
   const getColorByRouteId = (id: string) => {
     return routes.find(r => r.bus_route_id === id)?.color ?? 'gray';
@@ -212,7 +224,7 @@ function App() {
 
         <DataTable<BusViolationCount>
           title="Violation Count"
-          fetchData={() => getViolationCountData({ offset: 0, query: countQuery })}
+          fetchData={() => getViolationCountData({ offset: 0, query: violationQuery })}
         />
 
         <span>{getTotal()}</span>
@@ -226,7 +238,11 @@ function App() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              angle={-45}
+              textAnchor='end'
+              interval={0}
+              dy={-10}
+              dx={-4}
             />
             <YAxis />
             <Bar dataKey="value" fill="var(--color-value)" radius={4} />
@@ -243,7 +259,11 @@ function App() {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              angle={-45}
+              textAnchor='end'
+              interval={0}
+              dy={-10}
+              dx={-5}
             />
             <YAxis />
             <Bar dataKey="bus_stop_violations" fill="var(--color-bus_stop_violations)" radius={4} />
@@ -251,6 +271,16 @@ function App() {
             <Bar dataKey="double_parked_violations" fill="var(--color-double_parked_violations)" radius={4} />
           </BarChart>
         </ChartContainer>
+
+        <DataTable<BusSpeed>
+          title="Bus Speed"
+          fetchData={() => getSpeedData({ offset: 0, query: speedQuery })}
+        />
+
+        <DataTable<BusRidership>
+          title="Bus Ridership"
+          fetchData={() => getRidershipData({ offset: 0, query: ridershipQuery })}
+        />
       </main>
     </>
   )
