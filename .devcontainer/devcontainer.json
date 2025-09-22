@@ -11,7 +11,7 @@
       "version": "3.13"
     }
   },
-  "postCreateCommand": "git lfs install",
+  "postCreateCommand": "git lfs install && pip install -r scripts/requirements.txt",
   "forwardPorts": [3000, 5173]
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
