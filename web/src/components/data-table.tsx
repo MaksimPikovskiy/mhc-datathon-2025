@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import { Label } from './ui/label'
 import { Textarea } from './ui/textarea'
-import { fixTitle } from '../util/utils'
 import { Button } from './ui/button'
 import { ScrollArea, ScrollBar } from './ui/scroll-area'
+import { fixTitle } from '@/lib/utils'
 
 interface DataTableProps<T> {
     /** called whenever offset or query changes */
