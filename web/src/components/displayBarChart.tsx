@@ -20,8 +20,6 @@ export type BarDefinition = {
 };
 
 type BarChartOptions = {
-  /** name shown above the chart */
-  title: string;
   /** data to display in the chart */
   data: any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
   /** recharts config for colors and labels */
@@ -35,7 +33,6 @@ type BarChartOptions = {
 };
 
 export function DisplayBarChart({
-  title,
   data,
   config,
   bars,
@@ -44,7 +41,6 @@ export function DisplayBarChart({
 }: BarChartOptions) {
   return (
     <div className="w-full">
-      <h2 className="font-bold text-xl mb-2">{title}</h2>
       <ChartContainer
         config={config}
         className="min-h-[200px] max-h-[550px] w-full"

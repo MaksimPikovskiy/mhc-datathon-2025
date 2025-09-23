@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type BusRidership from "@/models/BusRidership";
 import type BusSpeed from "@/models/BusSpeed";
+import { riskColors } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -88,4 +89,21 @@ export const normalizeArray = (values: number[]) => {
   const max = Math.max(...values);
 
   return values.map((v) => (max === min ? 0 : (v - min) / (max - min)));
+};
+
+// score expected 0–1
+export const getColorForScore = (score: number): string => {
+  // clamp score to [0,1]
+  const clamped = Math.max(0, Math.min(1, score));
+  // convert to index 0..(riskColors.length-1)
+  const idx = Math.floor(clamped * (riskColors.length - 1));
+  return riskColors[idx];
+};
+
+export const normalizeName = (name: string): string => {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s]/g, "") // remove punctuation like () , . etc.
+    .replace(/\s+/g, "_"); // collapse multiple spaces and convert to underscore
 };

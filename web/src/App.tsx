@@ -4,12 +4,10 @@ import Navbar from "./components/navbar";
 import { useCallback, useEffect, useState } from "react";
 import { DisplayTable } from "./components/displayTable";
 import { DisplayBarChart } from "./components/displayBarChart";
-import type { ChartConfig } from "./components/ui/chart";
 import type BusRoute from "./models/BusRoute";
 import type BusViolationCount from "./models/BusViolationCount";
 import type BusSpeed from "./models/BusSpeed";
 import type BusRidership from "./models/BusRidership";
-// import type Neighborhood from "./models/Neighborhood";
 import { getRouteData } from "./api/getBusRoutes";
 import { getSpeedData } from "./api/getBusSpeeds";
 import { getRidershipData } from "./api/getBusRiderships";
@@ -23,60 +21,22 @@ import { getRouteDataLocal } from "./local-api/getBusRoutesLocal";
 import { getSpeedDataLocal } from "./local-api/getBusSpeedsLocal";
 import { getRidershipDataLocal } from "./local-api/getBusRidershipsLocal";
 import { getViolationCountDataLocal } from "./local-api/getBusViolationCountLocal";
-import neighborhoods from "./data/neighborhoods.json";
-import MapWithPolygons from "./components/mapWithPolygons";
+import neighborhoodPolygons from "./data/neighborhoods.json";
 import type { FeatureCollection } from "geojson";
-
-const violationCountQuery = `SELECT 
-    bus_route_id,
-    COUNT(*) AS total_violations,
-    SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
-    SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
-    SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
-  GROUP BY bus_route_id`;
-
-const chartConfigTotalViolations = {
-  total_violations: {
-    label: "Total Violations",
-    color: "#2563eb",
-  },
-} satisfies ChartConfig;
-
-const chartConfigViolationsPerType = {
-  bus_stop_violations: {
-    label: "Bus Stop",
-    color: "#E53A70",
-  },
-  double_parked_violations: {
-    label: "Double Parked",
-    color: "#32CD32",
-  },
-  bus_lane_violations: {
-    label: "Bus Lane",
-    color: "#FF8C00",
-  },
-} satisfies ChartConfig;
-
-const chartConfigSpeeds = {
-  average_speed: {
-    label: "Average Speed",
-    color: "#2563eb",
-  },
-};
-
-const chartConfigRiderships = {
-  total_riders: {
-    label: "Ridership",
-    color: "#2563eb",
-  },
-};
-
-const chartConfigRiskScores = {
-  riskScore: {
-    label: "Risk Score",
-    color: "#2563eb",
-  },
-};
+import type Neighborhood from "./models/Neighborhood";
+import { getNeighborhoodsLocal } from "./local-api/getNeighborhoodsLocal";
+import type NeighborhoodRisk from "./models/NeighborhoodRisk";
+import NeighborhoodSection from "./components/neighboorhoodSection";
+import {
+  chartConfigRiderships,
+  chartConfigRiskScores,
+  chartConfigSpeeds,
+  chartConfigTotalViolations,
+  chartConfigViolationsPerType,
+  defaultFactorsEnabled,
+  defaultWeights,
+  violationCountQuery,
+} from "./lib/constants";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
@@ -87,7 +47,7 @@ function App() {
   >([]);
   const [busSpeeds, setBusSpeeds] = useState<BusSpeed[]>([]);
   const [busRiderships, setBusRiderships] = useState<BusRidership[]>([]);
-  // const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]); //TODO: Add Type
+  const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]);
 
   const [normalizedViolations, setNormalizedViolations] = useState<
     (BusViolationCount & {
@@ -104,23 +64,25 @@ function App() {
     (BusRidership & { normalized: number })[]
   >([]);
 
+  const [normalizedNeighborhoods, setNormalizedNeighborhoods] = useState<
+    (Neighborhood & {
+      normalized_total_violations: number;
+      normalized_bus_stop_violations: number;
+      normalized_double_parked_violations: number;
+      normalized_bus_lane_violations: number;
+      normalized_avg_speed: number;
+      normalized_avg_total_ridership: number;
+    })[]
+  >([]);
+
   const [busRouteRisks, setBusRouteRisks] = useState<BusRouteRisk[]>([]);
+  const [neighborhoodRisks, setNeighborhoodRisks] = useState<
+    NeighborhoodRisk[]
+  >([]);
 
-  const [weights, setWeights] = useState({
-    doubleParkedViolation: 0,
-    busStopViolation: 0,
-    busLaneViolation: 0,
-    speed: 0,
-    ridership: 0,
-  });
+  const [weights, setWeights] = useState(defaultWeights);
 
-  const [factorsEnabled, setFactorsEnabled] = useState({
-    doubleParkedViolation: true,
-    busStopViolation: true,
-    busLaneViolation: true,
-    speed: true,
-    ridership: true,
-  });
+  const [factorsEnabled, setFactorsEnabled] = useState(defaultFactorsEnabled);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -181,6 +143,47 @@ function App() {
               query: violationCountQuery,
             });
         setBusViolationCounts(violations);
+
+        getNeighborhoodsLocal().then((data) => {
+          setNeighborhoods(data);
+
+          if (data.length) {
+            const totalViolations = data.map((v) => v.total_violations);
+            const doubleParkedViolations = data.map(
+              (v) => v.double_parked_violations
+            );
+            const busLaneViolations = data.map((v) => v.bus_lane_violations);
+            const busStopViolations = data.map((v) => v.bus_stop_violations);
+            const busAvgSpeeds = data.map((v) => v.avg_speed);
+            const busAvgRiderships = data.map((v) => v.avg_total_ridership);
+
+            const normalizedTotalViolations = normalizeArray(totalViolations);
+            const normalizedDoubleParkedViolations = normalizeArray(
+              doubleParkedViolations
+            );
+            const normalizedBusLaneViolations =
+              normalizeArray(busLaneViolations);
+            const normalizedBusStopViolations =
+              normalizeArray(busStopViolations);
+            const normalizedBusAvgSpeeds = normalizeArray(busAvgSpeeds);
+            const normalizedBusAvgRiderships = normalizeArray(busAvgRiderships);
+
+            setNormalizedNeighborhoods(
+              data.map((v, idx) => ({
+                ...v,
+                normalized_total_violations: normalizedTotalViolations[idx],
+                normalized_double_parked_violations:
+                  normalizedDoubleParkedViolations[idx],
+                normalized_bus_lane_violations:
+                  normalizedBusLaneViolations[idx],
+                normalized_bus_stop_violations:
+                  normalizedBusStopViolations[idx],
+                normalized_avg_speed: normalizedBusAvgSpeeds[idx],
+                normalized_avg_total_ridership: normalizedBusAvgRiderships[idx],
+              }))
+            );
+          }
+        });
       } catch (error) {
         console.error("Error fetching bus data:", error);
       }
@@ -237,6 +240,63 @@ function App() {
       );
     }
   }, [busViolationCounts, busSpeeds, busRiderships]);
+
+  useEffect(() => {
+    const calculateRiskByNeighborhood = (name: string) => {
+      const entry = normalizedNeighborhoods.find(
+        (n) => n.neighborhood_name === name
+      );
+
+      if (!entry) return 0;
+
+      const vDouble = entry.normalized_double_parked_violations;
+      const vStop = entry.bus_stop_violations;
+      const vLane = entry.bus_lane_violations;
+      const vSpeed = entry.avg_speed;
+      const vRidership = entry.avg_total_ridership;
+
+      if (!vDouble || !vStop || !vLane || !vSpeed || !vRidership) return 0;
+
+      let score = 0;
+      if (factorsEnabled.doubleParkedViolation)
+        score += weights.doubleParkedViolation * vDouble;
+      if (factorsEnabled.busStopViolation)
+        score += weights.busStopViolation * vStop;
+      if (factorsEnabled.busLaneViolation)
+        score += weights.busLaneViolation * vLane;
+      if (factorsEnabled.speed) score += weights.speed * vSpeed;
+      if (factorsEnabled.ridership) score += weights.ridership * vRidership;
+
+      return score;
+    };
+    if (normalizedNeighborhoods.length) {
+      const allNeighborhoods: NeighborhoodRisk[] = [];
+
+      normalizedNeighborhoods.forEach((neighborhood) => {
+        const newNeighborhoodRisk: NeighborhoodRisk = {
+          neighborhoodName: "",
+          riskScore: 0,
+        };
+
+        newNeighborhoodRisk.neighborhoodName = neighborhood.neighborhood_name;
+        newNeighborhoodRisk.riskScore = calculateRiskByNeighborhood(
+          neighborhood.neighborhood_name
+        );
+
+        allNeighborhoods.push(newNeighborhoodRisk);
+      });
+
+      const allRiskScores = allNeighborhoods.map((s) => s.riskScore);
+      const normalizedRiskScores = normalizeArray(allRiskScores);
+
+      const normalizedAllNeighborhoods = allNeighborhoods.map((s, idx) => ({
+        ...s,
+        riskScore: normalizedRiskScores[idx],
+      }));
+
+      setNeighborhoodRisks(normalizedAllNeighborhoods);
+    }
+  }, [normalizedNeighborhoods, factorsEnabled, weights]);
 
   const calculateRiskByRoute = useCallback(
     (routeId: string) => {
@@ -347,24 +407,24 @@ function App() {
           </div>
         </div>
         <DisplayTable<BusRoute>
-          title="Bus Route with ACE or ABLE"
+          // title="Bus Route with ACE or ABLE"
           data={busAceRoutes}
         />
         <DisplayTable<BusViolationCount>
-          title="Bus Violations"
+          // title="Bus Violations"
           data={busViolationCounts}
         />
         <DisplayTable<BusSpeed>
-          title="Bus Speeds for ACE/ABLE Routes"
+          // title="Bus Speeds for ACE/ABLE Routes"
           data={busSpeeds}
         />
         <DisplayTable<BusRidership>
-          title="Bus Riderships for ACE/ABLE Routes"
+          // title="Bus Riderships for ACE/ABLE Routes"
           data={busRiderships}
         />
 
         <DisplayBarChart
-          title="Total Violations Per Bus Route"
+          // title="Total Violations Per Bus Route"
           data={busViolationCounts}
           config={chartConfigTotalViolations}
           bars={[
@@ -376,7 +436,7 @@ function App() {
           showLegend={true}
         />
         <DisplayBarChart
-          title="Violations of Each Type Per Bus Route"
+          // title="Violations of Each Type Per Bus Route"
           data={busViolationCounts}
           config={chartConfigViolationsPerType}
           bars={[
@@ -396,7 +456,7 @@ function App() {
           showLegend={true}
         />
         <DisplayBarChart
-          title="Average Speed Per Bus Route"
+          // title="Average Speed Per Bus Route"
           data={busSpeeds}
           config={chartConfigSpeeds}
           xKey="route_id"
@@ -409,7 +469,7 @@ function App() {
           showLegend={true}
         />
         <DisplayBarChart
-          title="Ridership Per Bus Route"
+          // title="Ridership Per Bus Route"
           data={busRiderships}
           config={chartConfigRiderships}
           xKey="bus_route"
@@ -436,26 +496,26 @@ function App() {
             normalized_bus_stop_violations: number;
           }
         >
-          title="Normalized Bus Violations"
+          // title="Normalized Bus Violations"
           data={normalizedViolations}
         />
 
         <DisplayTable<BusSpeed & { normalized: number }>
-          title="Normalized Bus Speeds"
+          // title="Normalized Bus Speeds"
           data={normalizedSpeeds}
         />
 
         <DisplayTable<BusRidership & { normalized: number }>
-          title="Normalized Bus Ridership"
+          // title="Normalized Bus Ridership"
           data={normalizedRidership}
         />
 
         <DisplayTable<BusRouteRisk>
-          title="Risk Score for Bus Routes"
+          // title="Risk Score for Bus Routes"
           data={busRouteRisks}
         />
         <DisplayBarChart
-          title="Risk Score for Bus Routes"
+          // title="Risk Score for Bus Routes"
           data={busRouteRisks}
           config={chartConfigRiskScores}
           xKey="busRouteId"
@@ -470,7 +530,24 @@ function App() {
         <h2 className="font-bold  text-xl mb-2">
           Mapping Risk by Neighborhoods
         </h2>
-        <MapWithPolygons data={neighborhoods as FeatureCollection} />
+        <DisplayTable<
+          Neighborhood & {
+            normalized_total_violations: number;
+            normalized_bus_stop_violations: number;
+            normalized_double_parked_violations: number;
+            normalized_bus_lane_violations: number;
+            normalized_avg_speed: number;
+            normalized_avg_total_ridership: number;
+          }
+        >
+          // title="Normalized Statistics for Neighborhoods"
+          data={normalizedNeighborhoods}
+        />
+        <NeighborhoodSection
+          neighborhoodPolygons={neighborhoodPolygons as FeatureCollection}
+          neighborhoods={neighborhoods}
+          neighborhoodRisks={neighborhoodRisks}
+        />
       </main>
     </>
   );

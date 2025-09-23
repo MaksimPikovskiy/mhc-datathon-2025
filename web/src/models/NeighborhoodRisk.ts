@@ -1,4 +1,4 @@
 export default interface NeighborhoodRisk {
-  busRouteId: string;
+  neighborhoodName: string;
   riskScore: number;
 }

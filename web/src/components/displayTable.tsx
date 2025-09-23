@@ -3,7 +3,6 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -11,25 +10,20 @@ import {
 } from "./ui/table";
 
 interface DisplayTableProps<T> {
-  /** name shown above the table */
-  title: string;
   /** data to display in the table */
   data: T[];
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DisplayTable<T extends Record<string, any>>({
-  title,
   data,
 }: DisplayTableProps<T>) {
   const cols = data.length > 0 ? Object.keys(data[0]) : [];
 
   return (
     <div>
-      <h2>{title}</h2>
-      <ScrollArea className="relative h-[450px] max-h-[450px] overflow-auto border rounded">
+      <ScrollArea className="relative h-[575px] max-h-[575px] overflow-auto border rounded">
         {data.length > 0 ? (
           <Table>
-            <TableCaption>{title} Data</TableCaption>
             <TableHeader>
               <TableRow>
                 {cols.map((col) => (
