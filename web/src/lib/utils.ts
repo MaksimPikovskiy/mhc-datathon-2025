@@ -83,7 +83,7 @@ export const mergeBusRiderships = (
   return Array.from(map.values());
 };
 
-export const normalize = (values: number[]) => {
+export const normalizeArray = (values: number[]) => {
   const min = Math.min(...values);
   const max = Math.max(...values);
 

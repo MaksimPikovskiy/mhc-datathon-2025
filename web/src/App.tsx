@@ -1,7 +1,7 @@
 import "./App.css";
 
 import Navbar from "./components/navbar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DisplayTable } from "./components/displayTable";
 import { DisplayBarChart } from "./components/displayBarChart";
 import type { ChartConfig } from "./components/ui/chart";
@@ -15,6 +15,8 @@ import { getSpeedData } from "./api/getBusSpeeds";
 import { getRidershipData } from "./api/getBusRiderships";
 import { getViolationCountData } from "./api/getBusViolationCount";
 import { FactorsDisplay } from "./components/displayFactors";
+import type BusRouteRisk from "./models/busRouteRisk";
+import { normalizeArray } from "./lib/utils";
 
 const violationCountQuery = `SELECT 
     bus_route_id,
@@ -69,13 +71,29 @@ function App() {
   const [busRiderships, setBusRiderships] = useState<BusRidership[]>([]);
   // const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]); //TODO: Add Type
 
+  const [normalizedViolations, setNormalizedViolations] = useState<
+    (BusViolationCount & {
+      normalized_total_violations: number;
+      normalized_double_parked_violations: number;
+      normalized_bus_lane_violations: number;
+      normalized_bus_stop_violations: number;
+    })[]
+  >([]);
+  const [normalizedSpeeds, setNormalizedSpeeds] = useState<
+    (BusSpeed & { normalized: number })[]
+  >([]);
+  const [normalizedRidership, setNormalizedRidership] = useState<
+    (BusRidership & { normalized: number })[]
+  >([]);
+
+  const [busRouteRisks, setBusRouteRisks] = useState<BusRouteRisk[]>([]);
+
   const [weights, setWeights] = useState({
     doubleParkedViolation: 0,
     busStopViolation: 0,
     busLaneViolation: 0,
     speed: 0,
     ridership: 0,
-    neighborhood: 0,
   });
 
   const [factorsEnabled, setFactorsEnabled] = useState({
@@ -84,41 +102,7 @@ function App() {
     busLaneViolation: true,
     speed: true,
     ridership: true,
-    neighborhood: true,
   });
-
-  // const calculateRisk = (routeId: string) => {
-  //   const violation = busViolationCounts.find(
-  //     (b) => b.bus_route_id === routeId
-  //   );
-  //   const speed = busSpeeds.find((b) => b.route_id === routeId);
-  //   const ridership = busRiderships.find((b) => b.bus_route === routeId);
-  //   // const neighborhood = 0; //TODO: get neighboorhood based on id? idk
-
-  //   // TODO: Get normalized values
-  //   const vDouble = 0;
-  //   const vStop = 0;
-  //   const vLane = 0;
-  //   const vSpeed = 0;
-  //   const vRidership = 0;
-  //   const vNeighborhood = 0;
-
-  //   if (!violation || !speed || !ridership) return 0;
-
-  //   let score = 0;
-  //   if (factorsEnabled.doubleParkedViolation)
-  //     score += weights.doubleParkedViolation * vDouble;
-  //   if (factorsEnabled.busStopViolation)
-  //     score += weights.busStopViolation * vStop;
-  //   if (factorsEnabled.busLaneViolation)
-  //     score += weights.busLaneViolation * vLane;
-  //   if (factorsEnabled.speed) score += weights.speed * vSpeed;
-  //   if (factorsEnabled.ridership) score += weights.ridership * vRidership;
-  //   if (factorsEnabled.neighborhood)
-  //     score += weights.neighborhood * vNeighborhood;
-
-  //   return score;
-  // };
 
   useEffect(() => {
     getRouteData({}).then((data) => {
@@ -138,14 +122,17 @@ function App() {
           bus_route,
           SUM(ridership) AS total_ridership,
           SUM(transfers) AS total_transfers
-        WHERE (ridership != 0 OR transfers != 0)
-          AND bus_route IN (${inRouteList})
+        WHERE ridership != 0 OR transfers != 0
         GROUP BY bus_route`;
 
       getSpeedData({ offset: 0, query: speedQuery }).then(setBusSpeeds);
-      getRidershipData({ offset: 0, query: ridershipQuery }).then(
-        setBusRiderships
-      );
+      getRidershipData({ offset: 0, query: ridershipQuery }).then((data) => {
+        // Filter the routes locally for Database Servers times us out
+        const filtered = data.filter((row) =>
+          busAceRoutes.some((r) => r.route === row.bus_route)
+        );
+        setBusRiderships(filtered);
+      });
     });
 
     getViolationCountData({ offset: 0, query: violationCountQuery }).then(
@@ -153,7 +140,130 @@ function App() {
     );
   }, []);
 
-  useEffect(() => {}, [busViolationCounts, busSpeeds, busRiderships]);
+  useEffect(() => {
+    if (busViolationCounts.length) {
+      const totalViolations = busViolationCounts.map((v) => v.total_violations);
+      const doubleParkedViolations = busViolationCounts.map(
+        (v) => v.double_parked_violations
+      );
+      const busLaneViolations = busViolationCounts.map(
+        (v) => v.bus_lane_violations
+      );
+      const busStopViolations = busViolationCounts.map(
+        (v) => v.bus_stop_violations
+      );
+
+      const normalizedTotalViolations = normalizeArray(totalViolations);
+      const normalizedDoubleParkedViolations = normalizeArray(
+        doubleParkedViolations
+      );
+      const normalizedBusLaneViolations = normalizeArray(busLaneViolations);
+      const normalizedBusStopViolations = normalizeArray(busStopViolations);
+
+      setNormalizedViolations(
+        busViolationCounts.map((v, idx) => ({
+          ...v,
+          normalized_total_violations: normalizedTotalViolations[idx],
+          normalized_double_parked_violations:
+            normalizedDoubleParkedViolations[idx],
+          normalized_bus_lane_violations: normalizedBusLaneViolations[idx],
+          normalized_bus_stop_violations: normalizedBusStopViolations[idx],
+        }))
+      );
+    }
+
+    if (busSpeeds.length) {
+      const avgSpeeds = busSpeeds.map((s) => s.average_speed);
+      const normalized = normalizeArray(avgSpeeds);
+      setNormalizedSpeeds(
+        busSpeeds.map((s, idx) => ({ ...s, normalized: normalized[idx] }))
+      );
+    }
+
+    if (busRiderships.length) {
+      const ridershipValues = busRiderships.map((r) => r.total_ridership);
+      const normalized = normalizeArray(ridershipValues);
+      setNormalizedRidership(
+        busRiderships.map((r, idx) => ({ ...r, normalized: normalized[idx] }))
+      );
+    }
+  }, [busViolationCounts, busSpeeds, busRiderships]);
+
+  const calculateRiskByRoute = useCallback(
+    (routeId: string) => {
+      const violation = busViolationCounts.find(
+        (b) => b.bus_route_id === routeId
+      );
+      const speed = busSpeeds.find((b) => b.route_id === routeId);
+      const ridership = busRiderships.find((b) => b.bus_route === routeId);
+
+      const vDouble = normalizedViolations.find(
+        (v) => v.bus_route_id === routeId
+      )?.normalized_double_parked_violations;
+      const vStop = normalizedViolations.find(
+        (v) => v.bus_route_id === routeId
+      )?.normalized_bus_stop_violations;
+      const vLane = normalizedViolations.find(
+        (v) => v.bus_route_id === routeId
+      )?.normalized_bus_lane_violations;
+      const vSpeed = normalizedSpeeds.find(
+        (v) => v.route_id === routeId
+      )?.normalized;
+      const vRidership = normalizedRidership.find(
+        (v) => v.bus_route === routeId
+      )?.normalized;
+
+      if (!violation || !speed || !ridership) return 0;
+      if (!vDouble || !vStop || !vLane || !vSpeed || !vRidership) return 0;
+
+      let score = 0;
+      if (factorsEnabled.doubleParkedViolation)
+        score += weights.doubleParkedViolation * vDouble;
+      if (factorsEnabled.busStopViolation)
+        score += weights.busStopViolation * vStop;
+      if (factorsEnabled.busLaneViolation)
+        score += weights.busLaneViolation * vLane;
+      if (factorsEnabled.speed) score += weights.speed * vSpeed;
+      if (factorsEnabled.ridership) score += weights.ridership * vRidership;
+
+      return score;
+    },
+    [
+      busRiderships,
+      busSpeeds,
+      busViolationCounts,
+      normalizedRidership,
+      normalizedSpeeds,
+      normalizedViolations,
+      factorsEnabled,
+      weights,
+    ]
+  );
+
+  useEffect(() => {
+    if (
+      normalizedViolations.length &&
+      normalizedSpeeds.length &&
+      normalizedRidership.length
+    ) {
+      const allRoutes: BusRouteRisk[] = busAceRoutes.map((route) => ({
+        busRouteId: route.route,
+        riskScore: 0,
+      }));
+
+      allRoutes.forEach((route) => {
+        route.riskScore = calculateRiskByRoute(route.busRouteId);
+      });
+
+      setBusRouteRisks(allRoutes);
+    }
+  }, [
+    busAceRoutes,
+    normalizedViolations,
+    normalizedSpeeds,
+    normalizedRidership,
+    calculateRiskByRoute,
+  ]);
 
   return (
     <>
@@ -239,6 +349,33 @@ function App() {
           setWeights={setWeights}
           factorsEnabled={factorsEnabled}
           setFactorsEnabled={setFactorsEnabled}
+        />
+
+        <DisplayTable<
+          BusViolationCount & {
+            normalized_total_violations: number;
+            normalized_double_parked_violations: number;
+            normalized_bus_lane_violations: number;
+            normalized_bus_stop_violations: number;
+          }
+        >
+          title="Normalized Bus Violations"
+          data={normalizedViolations}
+        />
+
+        <DisplayTable<BusSpeed & { normalized: number }>
+          title="Normalized Bus Speeds"
+          data={normalizedSpeeds}
+        />
+
+        <DisplayTable<BusRidership & { normalized: number }>
+          title="Normalized Bus Ridership"
+          data={normalizedRidership}
+        />
+
+        <DisplayTable<BusRouteRisk>
+          title="Risk for Bus Route"
+          data={busRouteRisks}
         />
       </main>
     </>

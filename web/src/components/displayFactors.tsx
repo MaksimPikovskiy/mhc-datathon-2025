@@ -1,4 +1,3 @@
-
 import { fixCamelCaseTitle } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Label } from "./ui/label";
@@ -12,7 +11,6 @@ interface FactorsDisplayProps {
     busLaneViolation: number;
     speed: number;
     ridership: number;
-    neighborhood: number;
   };
   setWeights: React.Dispatch<
     React.SetStateAction<{
@@ -21,7 +19,6 @@ interface FactorsDisplayProps {
       busLaneViolation: number;
       speed: number;
       ridership: number;
-      neighborhood: number;
     }>
   >;
   factorsEnabled: {
@@ -30,7 +27,6 @@ interface FactorsDisplayProps {
     busLaneViolation: boolean;
     speed: boolean;
     ridership: boolean;
-    neighborhood: boolean;
   };
   setFactorsEnabled: React.Dispatch<
     React.SetStateAction<{
@@ -39,7 +35,6 @@ interface FactorsDisplayProps {
       busLaneViolation: boolean;
       speed: boolean;
       ridership: boolean;
-      neighborhood: boolean;
     }>
   >;
 }
@@ -57,7 +52,10 @@ export function FactorsDisplay({
       <h2 className="font-bold text-xl mb-2">Risk Factors</h2>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {factors.map((factor) => (
-          <Card key={factor} className={`p-4 ${!factorsEnabled[factor] ? "bg-gray-50" : ""}`}>
+          <Card
+            key={factor}
+            className={`p-4 ${!factorsEnabled[factor] ? "bg-gray-50" : ""}`}
+          >
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
                 {fixCamelCaseTitle(factor)}
