@@ -1,17 +1,11 @@
-import fs from "fs";
-import path from "path";
+import routesCsv from "../data/bus-routes.csv?raw";
 import Papa from "papaparse";
 import type BusRoute from "@/models/BusRoute";
 
-const ROUTE_CSV = path.resolve(process.cwd(), "data/routes.csv");
-
-export const getRouteData = async (): Promise<BusRoute[]> => {
+export const getRouteDataLocal = async (): Promise<BusRoute[]> => {
   try {
-    // Read the CSV file
-    const csv = fs.readFileSync(ROUTE_CSV, "utf-8");
-
     // Parse CSV into JSON
-    const data: BusRoute[] = Papa.parse(csv, {
+    const data: BusRoute[] = Papa.parse(routesCsv, {
       header: true,
       skipEmptyLines: true,
     }).data as BusRoute[];

@@ -1,4 +1,4 @@
-bus_route,ridership,transfers
+bus_route,total_ridership,total_transfers
 B1,2974806,714678
 B100,853581,328329
 B103,1727739,429352

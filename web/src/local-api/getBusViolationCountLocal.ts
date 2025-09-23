@@ -1,17 +1,13 @@
-import fs from "fs";
-import path from "path";
+import violationCsv from "../data/ace-violations.csv?raw";
 import Papa from "papaparse";
 import type BusViolationCount from "@/models/BusViolationCount";
 
-const VIOLATION_CSV = path.resolve(process.cwd(), "data/violations.csv");
-
-export const getViolationCountData = async (): Promise<BusViolationCount[]> => {
+export const getViolationCountDataLocal = async (): Promise<
+  BusViolationCount[]
+> => {
   try {
-    // Read the CSV file
-    const csv = fs.readFileSync(VIOLATION_CSV, "utf-8");
-
     // Parse CSV into JSON
-    const data: BusViolationCount[] = Papa.parse(csv, {
+    const data: BusViolationCount[] = Papa.parse(violationCsv, {
       header: true,
       skipEmptyLines: true,
     }).data as BusViolationCount[];

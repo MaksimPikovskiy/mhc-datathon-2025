@@ -1,25 +1,18 @@
-import fs from "fs";
-import path from "path";
+import speedsCsv24 from "../data/speeds-24.csv?raw";
+import speedsCsv25 from "../data/speeds-25.csv?raw";
 import Papa from "papaparse";
 import { mergeBusSpeeds } from "@/lib/utils";
 import type BusSpeed from "@/models/BusSpeed";
 
-const SPEED_24_CSV = path.resolve(process.cwd(), "data/speed_24.csv");
-const SPEED_25_CSV = path.resolve(process.cwd(), "data/speed_25.csv");
-
-export const getSpeedData = async (): Promise<BusSpeed[]> => {
+export const getSpeedDataLocal = async (): Promise<BusSpeed[]> => {
   try {
-    // Read the CSV files
-    const csv24 = fs.readFileSync(SPEED_24_CSV, "utf-8");
-    const csv25 = fs.readFileSync(SPEED_25_CSV, "utf-8");
-
     // Parse CSV into JSON
-    const data_24: BusSpeed[] = Papa.parse(csv24, {
+    const data_24: BusSpeed[] = Papa.parse(speedsCsv24, {
       header: true,
       skipEmptyLines: true,
     }).data as BusSpeed[];
 
-    const data_25: BusSpeed[] = Papa.parse(csv25, {
+    const data_25: BusSpeed[] = Papa.parse(speedsCsv25, {
       header: true,
       skipEmptyLines: true,
     }).data as BusSpeed[];

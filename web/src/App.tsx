@@ -19,6 +19,10 @@ import type BusRouteRisk from "./models/busRouteRisk";
 import { normalizeArray } from "./lib/utils";
 import { Switch } from "./components/ui/switch";
 import { Label } from "./components/ui/label";
+import { getRouteDataLocal } from "./local-api/getBusRoutesLocal";
+import { getSpeedDataLocal } from "./local-api/getBusSpeedsLocal";
+import { getRidershipDataLocal } from "./local-api/getBusRidershipsLocal";
+import { getViolationCountDataLocal } from "./local-api/getBusViolationCountLocal";
 
 const violationCountQuery = `SELECT 
     bus_route_id,
@@ -116,12 +120,19 @@ function App() {
   });
 
   useEffect(() => {
-    getRouteData({}).then((data) => {
-      setBusAceRoutes(data);
+    const fetchData = async () => {
+      try {
+        const routes = useLocal
+          ? await getRouteDataLocal()
+          : await getRouteData({});
 
-      const inRouteList = data.map((route) => `'${route.route}'`).join(", ");
+        setBusAceRoutes(routes);
 
-      const speedQuery = `SELECT
+        const inRouteList = routes
+          .map((route) => `'${route.route}'`)
+          .join(", ");
+
+        const speedQuery = `SELECT
           route_id,
           SUM(total_mileage) AS total_mileage,
           SUM(total_operating_time) AS total_operating_time,
@@ -129,29 +140,51 @@ function App() {
         WHERE route_id IN (${inRouteList})
         GROUP BY route_id`;
 
-      const ridershipQuery = `SELECT
+        const ridershipQuery = `SELECT
           bus_route,
           SUM(ridership) AS total_ridership,
           SUM(transfers) AS total_transfers
         WHERE ridership != 0 OR transfers != 0
         GROUP BY bus_route`;
 
-      getSpeedData({ offset: 0, query: speedQuery }).then(setBusSpeeds);
-      getRidershipData({ offset: 0, query: ridershipQuery }).then(
-        (ridership_data) => {
-          // Filter the routes locally for Database Servers times us out
-          const filtered = ridership_data.filter((row) =>
-            data.some((r) => r.route === row.bus_route)
-          );
-          setBusRiderships(filtered);
-        }
-      );
-    });
+        const speeds = useLocal
+          ? await getSpeedDataLocal()
+          : await getSpeedData({ offset: 0, query: speedQuery });
 
-    getViolationCountData({ offset: 0, query: violationCountQuery }).then(
-      setBusViolationCounts
-    );
-  }, []);
+        if (useLocal) {
+          // Filter locally to match ACE/ABLE routes
+          const filteredSpeeds = speeds.filter((row) =>
+            routes.some((r) => r.route === row.route_id)
+          );
+          setBusSpeeds(filteredSpeeds);
+        } else {
+          setBusSpeeds(speeds);
+        }
+
+        const ridershipData = useLocal
+          ? await getRidershipDataLocal()
+          : await getRidershipData({ offset: 0, query: ridershipQuery });
+
+        // Filter locally to match ACE/ABLE routes
+        const filteredRidership = ridershipData.filter((row) =>
+          routes.some((r) => r.route === row.bus_route)
+        );
+        setBusRiderships(filteredRidership);
+
+        const violations = useLocal
+          ? await getViolationCountDataLocal()
+          : await getViolationCountData({
+              offset: 0,
+              query: violationCountQuery,
+            });
+        setBusViolationCounts(violations);
+      } catch (error) {
+        console.error("Error fetching bus data:", error);
+      }
+    };
+
+    fetchData();
+  }, [useLocal]);
 
   useEffect(() => {
     if (busViolationCounts.length) {

@@ -1,4 +1,4 @@
 export default interface BusRouteRisk {
-    busRouteId: string;
-    riskScore: number;
+  busRouteId: string;
+  riskScore: number;
 }
