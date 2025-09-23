@@ -17,6 +17,19 @@ function FitBounds({ data }: { data: FeatureCollection }) {
   return null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onEachFeature = (feature: any, layer: any) => {
+  // Popup (click)
+  layer.bindPopup(`
+      <strong>${feature.properties.NTAName}</strong><br/>
+      Borough: ${feature.properties.BoroName}<br/>
+      Area: ${feature.properties.Shape__Area.toFixed(2)}
+    `);
+
+  // Tooltip (hover)
+  layer.bindTooltip(feature.properties.NTAName, { sticky: true });
+};
+
 export default function MapWithPolygons({ data }: Props) {
   return (
     <MapContainer
@@ -38,6 +51,7 @@ export default function MapWithPolygons({ data }: Props) {
           fillColor: "#3388ff",
           fillOpacity: 0.3,
         }}
+        onEachFeature={onEachFeature}
       />
       <FitBounds data={data} />
     </MapContainer>
