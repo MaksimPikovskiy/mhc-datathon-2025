@@ -1,289 +1,248 @@
-import './App.css'
-import { type BusRoute, getRouteData, getViolationData, type BusViolation, getCBDData, getViolationCountData, type BusViolationCount, type BusSpeed, getSpeedData, type BusRidership, getRidershipData } from './api/getData';
-import { JSON_COLUMNS } from './util/constants';
-import Navbar from './components/navbar';
-import { DataTable } from './components/data-table';
-import { MapContainer, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
-import L, { type LatLngExpression } from 'leaflet';
-import "leaflet/dist/leaflet.css";
-import 'leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css';
-import 'leaflet-extra-markers';
-import { useCallback, useEffect, useState } from 'react';
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from './components/ui/chart';
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
+import "./App.css";
 
-// This extends L with ExtraMarkers
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ExtraMarkers = (L as any).ExtraMarkers;
+import Navbar from "./components/navbar";
+import { useEffect, useState } from "react";
+import { DisplayTable } from "./components/displayTable";
+import { DisplayBarChart } from "./components/displayBarChart";
+import type { ChartConfig } from "./components/ui/chart";
+import type BusRoute from "./models/BusRoute";
+import type BusViolationCount from "./models/BusViolationCount";
+import type BusSpeed from "./models/BusSpeed";
+import type BusRidership from "./models/BusRidership";
+// import type Neighborhood from "./models/Neighborhood";
+import { getRouteData } from "./api/getBusRoutes";
+import { getSpeedData } from "./api/getBusSpeeds";
+import { getRidershipData } from "./api/getBusRiderships";
+import { getViolationCountData } from "./api/getBusViolationCount";
+import { FactorsDisplay } from "./components/displayFactors";
 
-const getExtraMarker = (color: string) =>
-  ExtraMarkers.icon({
-    icon: 'fa-number',
-    // number: '1',
-    markerColor: color,
-    shape: 'penta',
-    prefix: 'fa',
-    // iconColor: 'gray',
-    svg: true
-  });
+const violationCountQuery = `SELECT 
+    bus_route_id,
+    COUNT(*) AS total_violations,
+    SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
+    SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
+    SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
+  GROUP BY bus_route_id`;
 
-type BusRouteMarker = {
-  bus_route_id: string,
-  color: string,
-}
+const chartConfigTotalViolations = {
+  total_violations: {
+    label: "Total Violations",
+    color: "#2563eb",
+  },
+} satisfies ChartConfig;
 
-const purpleOptions = { color: 'purple' }
+const chartConfigViolationsPerType = {
+  bus_stop_violations: {
+    label: "Bus Stop",
+    color: "#E53A70",
+  },
+  double_parked_violations: {
+    label: "Double Parked",
+    color: "#32CD32",
+  },
+  bus_lane_violations: {
+    label: "Bus Lane",
+    color: "#FF8C00",
+  },
+} satisfies ChartConfig;
 
-const greenOptions = { color: 'green' }
+const chartConfigSpeeds = {
+  average_speed: {
+    label: "Average Speed",
+    color: "#2563eb",
+  },
+};
 
-const simpleCongestionZone = [
-  [40.699793, -74.019806],  // bottom-left
-  [40.774653, -74.019806],  // top-left
-  [40.774653, -73.9586025], // top-right
-  [40.699793, -73.9586025], // bottom-right
-]
+const chartConfigRiderships = {
+  total_riders: {
+    label: "Ridership",
+    color: "#2563eb",
+  },
+};
 
 function App() {
-  const [data, setData] = useState<BusViolation[]>([]);
-  const [routes, setRoutes] = useState<BusRouteMarker[]>([]);
-  const [congestionZone, setCongestionZone] = useState<number[][][]>([]);
+  const [busAceRoutes, setBusAceRoutes] = useState<BusRoute[]>([]);
+  const [busViolationCounts, setBusViolationCounts] = useState<
+    BusViolationCount[]
+  >([]);
+  const [busSpeeds, setBusSpeeds] = useState<BusSpeed[]>([]);
+  const [busRiderships, setBusRiderships] = useState<BusRidership[]>([]);
+  // const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]); //TODO: Add Type
 
-  const [counts, setCounts] = useState<BusViolationCount[]>([]);
-  const violationQuery = `SELECT 
-                            bus_route_id,
-                            COUNT(*) AS total_violations,
-                            SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
-                            SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
-                            SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
-                          GROUP BY bus_route_id`
-  const speedQuery = `SELECT
-                        route_id,
-                        SUM(total_mileage) AS total_mileage,
-                        SUM(total_operating_time) AS total_operating_time,
-                        AVG(average_speed) AS average_speed
-                      GROUP BY route_id`
+  const [weights, setWeights] = useState({
+    doubleParkedViolation: 0,
+    busStopViolation: 0,
+    busLaneViolation: 0,
+    speed: 0,
+    ridership: 0,
+    neighborhood: 0,
+  });
 
-  const ridershipQuery = `SELECT
-                            bus_route,
-                            SUM(ridership) AS total_ridership,
-                            SUM(transfers) AS total_transfers
-                          WHERE ridership != 0 OR transfers != 0
-                          GROUP BY bus_route`
+  const [factorsEnabled, setFactorsEnabled] = useState({
+    doubleParkedViolation: true,
+    busStopViolation: true,
+    busLaneViolation: true,
+    speed: true,
+    ridership: true,
+    neighborhood: true,
+  });
 
-  const chartConfig = {
-    value: {
-      label: "Total Violations",
-      color: "#2563eb",
-    },
-  } satisfies ChartConfig
+  // const calculateRisk = (routeId: string) => {
+  //   const violation = busViolationCounts.find(
+  //     (b) => b.bus_route_id === routeId
+  //   );
+  //   const speed = busSpeeds.find((b) => b.route_id === routeId);
+  //   const ridership = busRiderships.find((b) => b.bus_route === routeId);
+  //   // const neighborhood = 0; //TODO: get neighboorhood based on id? idk
 
-  const chartConfig2 = {
-    bus_stop_violations: {
-      label: "Bus Stop",
-      color: "#E53A70",
-    },
-    double_parked_violations: {
-      label: "Double Parked",
-      color: "#32CD32",
-    },
-    bus_lane_violations: {
-      label: "Bus Lane",
-      color: "#FF8C00",
-    },
-  } satisfies ChartConfig
+  //   // TODO: Get normalized values
+  //   const vDouble = 0;
+  //   const vStop = 0;
+  //   const vLane = 0;
+  //   const vSpeed = 0;
+  //   const vRidership = 0;
+  //   const vNeighborhood = 0;
 
-  const getDistinctRoutesWithColors = (data: BusViolation[]) => {
-    const uniqueRouteIds = new Set<string>(data.map((item: BusViolation) => item.bus_route_id));
-    const distinctRoutes: BusRouteMarker[] = [];
+  //   if (!violation || !speed || !ridership) return 0;
 
-    const getRandomColor = () => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
+  //   let score = 0;
+  //   if (factorsEnabled.doubleParkedViolation)
+  //     score += weights.doubleParkedViolation * vDouble;
+  //   if (factorsEnabled.busStopViolation)
+  //     score += weights.busStopViolation * vStop;
+  //   if (factorsEnabled.busLaneViolation)
+  //     score += weights.busLaneViolation * vLane;
+  //   if (factorsEnabled.speed) score += weights.speed * vSpeed;
+  //   if (factorsEnabled.ridership) score += weights.ridership * vRidership;
+  //   if (factorsEnabled.neighborhood)
+  //     score += weights.neighborhood * vNeighborhood;
 
-    uniqueRouteIds.forEach(id => {
-      distinctRoutes.push({
-        bus_route_id: id,
-        color: getRandomColor()
-      });
-    });
-
-    return distinctRoutes;
-  };
-
-  const fetchAndSetViolationData = useCallback(async () => {
-    const allViolationData = [];
-    const limit = 1000;
-    const totalRecordsToFetch = 5000;
-    const query = `SELECT *
-                    WHERE
-                      \`violation_longitude\` BETWEEN -74.019806 AND -73.9586025
-                      AND \`violation_latitude\` BETWEEN 40.699793 AND 40.774653
-                      AND caseless_contains(\`bus_route_id\`, "M")
-                    ORDER BY \`violation_id\` DESC NULL FIRST`;
-
-    for (let i = 0; i < totalRecordsToFetch / limit; i++) {
-      const offset = i * limit;
-      try {
-        const newData = await getViolationData({ offset, query });
-        allViolationData.push(...newData);
-      } catch (error) {
-        console.error('Failed to fetch violation data:', error);
-      }
-    }
-
-    setData(allViolationData);
-    console.log(`Successfully fetched and set ${allViolationData.length} records.`);
-
-    setRoutes(getDistinctRoutesWithColors(allViolationData));
-  }, []);
-
-  const getTotal = () => {
-    return counts.reduce((acc, curr) => +acc + +curr.total_violations, 0)
-  }
-
-  const getChartData = () => {
-    return counts.map((c) => ({
-      label: c.bus_route_id,
-      value: c.total_violations
-    }));
-  }
+  //   return score;
+  // };
 
   useEffect(() => {
-    fetchAndSetViolationData();
-    getCBDData().then(setCongestionZone);
+    getRouteData({}).then((data) => {
+      setBusAceRoutes(data);
 
-    getViolationCountData({ offset: 0, query: violationQuery }).then(setCounts);
+      const inRouteList = data.map((route) => `'${route.route}'`).join(", ");
 
-  }, [fetchAndSetViolationData, violationQuery]);
+      const speedQuery = `SELECT
+          route_id,
+          SUM(total_mileage) AS total_mileage,
+          SUM(total_operating_time) AS total_operating_time,
+          AVG(average_speed) AS average_speed
+        WHERE route_id IN (${inRouteList})
+        GROUP BY route_id`;
 
-  const getColorByRouteId = (id: string) => {
-    return routes.find(r => r.bus_route_id === id)?.color ?? 'gray';
-  }
+      const ridershipQuery = `SELECT
+          bus_route,
+          SUM(ridership) AS total_ridership,
+          SUM(transfers) AS total_transfers
+        WHERE (ridership != 0 OR transfers != 0)
+          AND bus_route IN (${inRouteList})
+        GROUP BY bus_route`;
+
+      getSpeedData({ offset: 0, query: speedQuery }).then(setBusSpeeds);
+      getRidershipData({ offset: 0, query: ridershipQuery }).then(
+        setBusRiderships
+      );
+    });
+
+    getViolationCountData({ offset: 0, query: violationCountQuery }).then(
+      setBusViolationCounts
+    );
+  }, []);
+
+  useEffect(() => {}, [busViolationCounts, busSpeeds, busRiderships]);
 
   return (
     <>
       <Navbar />
       <main className="mt-12 space-y-6">
-        <DataTable<BusViolation>
-          title="Bus Violation"
-          fetchData={getViolationData}
-          columns={JSON_COLUMNS}
-          renderCell={(col, value) => {
-            if (
-              col === 'violation_georeference' ||
-              col === 'bus_stop_georeference'
-            ) {
-              if (typeof value === 'object' && value?.coordinates) {
-                return `Point(${value.coordinates[0]}, ${value.coordinates[1]})`
-              }
-              return JSON.stringify(value)
-            }
-            return value as string
-          }}
+        <DisplayTable<BusRoute>
+          title="Bus Route with ACE or ABLE"
+          data={busAceRoutes}
         />
-        <DataTable<BusRoute>
-          title="Bus Route"
-          fetchData={getRouteData}
+        <DisplayTable<BusViolationCount>
+          title="Bus Violations"
+          data={busViolationCounts}
         />
-        <div className="rounded border">
-          <MapContainer center={[40.6782, -73.9442]} zoom={13} scrollWheelZoom={false}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            {data.map(vio => (
-              <Marker
-                key={vio.violation_id}
-                position={[parseFloat(vio.violation_latitude), parseFloat(vio.violation_longitude)]}
-                icon={getExtraMarker(getColorByRouteId(vio.bus_route_id))}
-              >
-                <Popup className="flex flex-row">
-                  <span>{vio.bus_route_id}</span>
-                  <br />
-                  <span>{vio.stop_name}</span>
-                  <br />
-                  <span>{vio.violation_type}</span>
-                  <br />
-                  <span>{vio.violation_status}</span>
-                  <br />
-                  <span>Longitude: {vio.violation_longitude}</span>
-                  <br />
-                  <span>Latitude: {vio.violation_latitude}</span>
-                </Popup>
-              </Marker>
-            ))}
-            <Polygon pathOptions={purpleOptions} positions={congestionZone as LatLngExpression[][]} />
-            <Polygon pathOptions={greenOptions} positions={simpleCongestionZone as LatLngExpression[]} />
-          </MapContainer>
-        </div>
-
-        <DataTable<BusViolationCount>
-          title="Violation Count"
-          fetchData={() => getViolationCountData({ offset: 0, query: violationQuery })}
+        <DisplayTable<BusSpeed>
+          title="Bus Speeds for ACE/ABLE Routes"
+          data={busSpeeds}
+        />
+        <DisplayTable<BusRidership>
+          title="Bus Riderships for ACE/ABLE Routes"
+          data={busRiderships}
         />
 
-        <span>{getTotal()}</span>
-        <h2 className='font-bold text-xl'>Total Violations Per Bus Route</h2>
-        <ChartContainer config={chartConfig} className="min-h-[200px] max-h-[550px] w-full">
-          <BarChart accessibilityLayer data={getChartData()} margin={{ bottom: 30 }}>
-            <CartesianGrid vertical={false} />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <XAxis
-              dataKey="label"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              angle={-45}
-              textAnchor='end'
-              interval={0}
-              dy={-10}
-              dx={-4}
-            />
-            <YAxis />
-            <Bar dataKey="value" fill="var(--color-value)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-        <h2 className='font-bold text-xl'>Violations of Each Type Per Bus Route</h2>
-        <ChartContainer config={chartConfig2} className="min-h-[200px] max-h-[550px] w-full">
-          <BarChart accessibilityLayer data={counts} margin={{ bottom: 30 }}>
-            <CartesianGrid vertical={false} />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <XAxis
-              dataKey="bus_route_id"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              angle={-45}
-              textAnchor='end'
-              interval={0}
-              dy={-10}
-              dx={-5}
-            />
-            <YAxis />
-            <Bar dataKey="bus_stop_violations" fill="var(--color-bus_stop_violations)" radius={4} />
-            <Bar dataKey="bus_lane_violations" fill="var(--color-bus_lane_violations)" radius={4} />
-            <Bar dataKey="double_parked_violations" fill="var(--color-double_parked_violations)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-
-        <DataTable<BusSpeed>
-          title="Bus Speed"
-          fetchData={() => getSpeedData({ offset: 0, query: speedQuery })}
+        <DisplayBarChart
+          title="Total Violations Per Bus Route"
+          data={busViolationCounts}
+          config={chartConfigTotalViolations}
+          bars={[
+            {
+              dataKey: "total_violations",
+              fill: "var(--color-total_violations)",
+            },
+          ]}
+          showLegend={true}
         />
-
-        <DataTable<BusRidership>
-          title="Bus Ridership"
-          fetchData={() => getRidershipData({ offset: 0, query: ridershipQuery })}
+        <DisplayBarChart
+          title="Violations of Each Type Per Bus Route"
+          data={busViolationCounts}
+          config={chartConfigViolationsPerType}
+          bars={[
+            {
+              dataKey: "bus_stop_violations",
+              fill: "var(--color-bus_stop_violations)",
+            },
+            {
+              dataKey: "bus_lane_violations",
+              fill: "var(--color-bus_lane_violations)",
+            },
+            {
+              dataKey: "double_parked_violations",
+              fill: "var(--color-double_parked_violations)",
+            },
+          ]}
+          showLegend={true}
+        />
+        <DisplayBarChart
+          title="Average Speed Per Bus Route"
+          data={busSpeeds}
+          config={chartConfigSpeeds}
+          xKey="route_id"
+          bars={[
+            {
+              dataKey: "average_speed",
+              fill: "var(--color-average_speed)",
+            },
+          ]}
+          showLegend={true}
+        />
+        <DisplayBarChart
+          title="Ridership Per Bus Route"
+          data={busRiderships}
+          config={chartConfigRiderships}
+          xKey="bus_route"
+          bars={[
+            {
+              dataKey: "total_riders",
+              fill: "var(--color-total_riders)",
+            },
+          ]}
+          showLegend={true}
+        />
+        <FactorsDisplay
+          weights={weights}
+          setWeights={setWeights}
+          factorsEnabled={factorsEnabled}
+          setFactorsEnabled={setFactorsEnabled}
         />
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
