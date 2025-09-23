@@ -34,17 +34,23 @@ df = pd.read_csv(violations_csv_path, usecols=usecols)
 
 #  Filter the three types early to save memory:
 if target_types is not None:
-    df = df[df['Violation Type'].str.lower().isin([t.lower() for t in target_types])]
+    df = df[df['Violation Type'].str.lower().isin([t.lower()
+                                                   for t in target_types])]
 
 # Convert CSV to GeoDataFrame
 points = gpd.GeoDataFrame(
     df,
-    geometry=gpd.points_from_xy(df['Violation Longitude'], df['Violation Latitude']),
+    geometry=gpd.points_from_xy(
+        df['Violation Longitude'], df['Violation Latitude']),
     crs="EPSG:4326"
 )
 
 # Do spatial join
 joined = gpd.sjoin(points, polygons, how="inner", predicate="within")
+
+# Fill empty Bus Route ID with ABLE
+joined['Bus Route ID'] = joined['Bus Route ID'].fillna(
+    'ABLE')  # or '' or 'None'
 
 # Counts by polygon, bus route, and type
 detail_counts = (

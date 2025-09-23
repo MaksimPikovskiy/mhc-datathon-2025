@@ -76,23 +76,27 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 12,Brooklyn,Bushwick (East),B26,MOBILE DOUBLE PARKED,1051
 12,Brooklyn,Bushwick (East),Q58,MOBILE BUS STOP,416
 12,Brooklyn,Bushwick (East),Q58,MOBILE DOUBLE PARKED,67
+122,Manhattan,Greenwich Village,ABLE,MOBILE BUS LANE,10
 122,Manhattan,Greenwich Village,M14+,MOBILE BUS LANE,1601
 122,Manhattan,Greenwich Village,M14+,MOBILE BUS STOP,1652
 122,Manhattan,Greenwich Village,M14+,MOBILE DOUBLE PARKED,16
 122,Manhattan,Greenwich Village,M2,MOBILE BUS STOP,468
 122,Manhattan,Greenwich Village,M2,MOBILE DOUBLE PARKED,62
+123,Manhattan,West Village,ABLE,MOBILE BUS LANE,18
 123,Manhattan,West Village,M14+,MOBILE BUS LANE,1228
 123,Manhattan,West Village,M14+,MOBILE BUS STOP,1781
 123,Manhattan,West Village,M14+,MOBILE DOUBLE PARKED,173
 124,Manhattan,Chinatown-Two Bridges,M15+,MOBILE BUS LANE,386
 124,Manhattan,Chinatown-Two Bridges,M15+,MOBILE BUS STOP,13689
 124,Manhattan,Chinatown-Two Bridges,M15+,MOBILE DOUBLE PARKED,9123
+125,Manhattan,Lower East Side,ABLE,MOBILE BUS LANE,82
 125,Manhattan,Lower East Side,M14+,MOBILE BUS LANE,677
 125,Manhattan,Lower East Side,M14+,MOBILE BUS STOP,3709
 125,Manhattan,Lower East Side,M14+,MOBILE DOUBLE PARKED,2236
 125,Manhattan,Lower East Side,M15+,MOBILE BUS LANE,3949
 125,Manhattan,Lower East Side,M15+,MOBILE BUS STOP,2478
 125,Manhattan,Lower East Side,M15+,MOBILE DOUBLE PARKED,785
+126,Manhattan,East Village,ABLE,MOBILE BUS LANE,1056
 126,Manhattan,East Village,M101,MOBILE BUS STOP,3012
 126,Manhattan,East Village,M101,MOBILE DOUBLE PARKED,1659
 126,Manhattan,East Village,M14+,MOBILE BUS LANE,22503
@@ -103,6 +107,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 126,Manhattan,East Village,M15+,MOBILE DOUBLE PARKED,445
 126,Manhattan,East Village,M2,MOBILE BUS STOP,116
 126,Manhattan,East Village,M2,MOBILE DOUBLE PARKED,25
+127,Manhattan,Chelsea-Hudson Yards,ABLE,MOBILE BUS LANE,88
 127,Manhattan,Chelsea-Hudson Yards,M14+,MOBILE BUS LANE,1319
 127,Manhattan,Chelsea-Hudson Yards,M14+,MOBILE BUS STOP,577
 127,Manhattan,Chelsea-Hudson Yards,M14+,MOBILE DOUBLE PARKED,10
@@ -118,6 +123,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 128,Manhattan,Hell's Kitchen,M42,MOBILE BUS LANE,1744
 128,Manhattan,Hell's Kitchen,M42,MOBILE BUS STOP,305
 128,Manhattan,Hell's Kitchen,M42,MOBILE DOUBLE PARKED,91
+129,Manhattan,Midtown South-Flatiron-Union Square,ABLE,MOBILE BUS LANE,130
 129,Manhattan,Midtown South-Flatiron-Union Square,M14+,MOBILE BUS LANE,998
 129,Manhattan,Midtown South-Flatiron-Union Square,M14+,MOBILE BUS STOP,1163
 129,Manhattan,Midtown South-Flatiron-Union Square,M14+,MOBILE DOUBLE PARKED,11
@@ -132,6 +138,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 129,Manhattan,Midtown South-Flatiron-Union Square,M34+,MOBILE DOUBLE PARKED,36
 129,Manhattan,Midtown South-Flatiron-Union Square,M4,MOBILE BUS STOP,111
 129,Manhattan,Midtown South-Flatiron-Union Square,M4,MOBILE DOUBLE PARKED,4
+130,Manhattan,Midtown-Times Square,ABLE,MOBILE BUS LANE,32
 130,Manhattan,Midtown-Times Square,M2,MOBILE BUS LANE,1597
 130,Manhattan,Midtown-Times Square,M2,MOBILE BUS STOP,2699
 130,Manhattan,Midtown-Times Square,M2,MOBILE DOUBLE PARKED,5
@@ -141,6 +148,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 130,Manhattan,Midtown-Times Square,M42,MOBILE BUS LANE,1725
 130,Manhattan,Midtown-Times Square,M42,MOBILE BUS STOP,371
 130,Manhattan,Midtown-Times Square,M42,MOBILE DOUBLE PARKED,7
+131,Manhattan,Stuyvesant Town-Peter Cooper Village,ABLE,MOBILE BUS LANE,144
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M14+,MOBILE BUS LANE,3104
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M14+,MOBILE BUS STOP,92
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M14+,MOBILE DOUBLE PARKED,2
@@ -151,6 +159,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M23+,MOBILE DOUBLE PARKED,87
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M34+,MOBILE BUS STOP,7
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M34+,MOBILE DOUBLE PARKED,1
+132,Manhattan,Gramercy,ABLE,MOBILE BUS LANE,1538
 132,Manhattan,Gramercy,M101,MOBILE BUS STOP,8535
 132,Manhattan,Gramercy,M101,MOBILE DOUBLE PARKED,10467
 132,Manhattan,Gramercy,M14+,MOBILE BUS LANE,14501
@@ -166,6 +175,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 132,Manhattan,Gramercy,M23+,MOBILE DOUBLE PARKED,90
 132,Manhattan,Gramercy,M34+,MOBILE BUS STOP,863
 132,Manhattan,Gramercy,M34+,MOBILE DOUBLE PARKED,166
+133,Manhattan,Murray Hill-Kips Bay,ABLE,MOBILE BUS LANE,714
 133,Manhattan,Murray Hill-Kips Bay,M101,MOBILE BUS LANE,1654
 133,Manhattan,Murray Hill-Kips Bay,M101,MOBILE BUS STOP,9734
 133,Manhattan,Murray Hill-Kips Bay,M101,MOBILE DOUBLE PARKED,2404
@@ -180,6 +190,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 133,Manhattan,Murray Hill-Kips Bay,M42,MOBILE BUS LANE,512
 133,Manhattan,Murray Hill-Kips Bay,M42,MOBILE BUS STOP,349
 133,Manhattan,Murray Hill-Kips Bay,M42,MOBILE DOUBLE PARKED,3
+134,Manhattan,East Midtown-Turtle Bay,ABLE,MOBILE BUS LANE,394
 134,Manhattan,East Midtown-Turtle Bay,M101,MOBILE BUS LANE,5212
 134,Manhattan,East Midtown-Turtle Bay,M101,MOBILE BUS STOP,4983
 134,Manhattan,East Midtown-Turtle Bay,M101,MOBILE DOUBLE PARKED,220
@@ -188,9 +199,11 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 134,Manhattan,East Midtown-Turtle Bay,M15+,MOBILE DOUBLE PARKED,613
 134,Manhattan,East Midtown-Turtle Bay,M42,MOBILE BUS LANE,29
 134,Manhattan,East Midtown-Turtle Bay,M42,MOBILE BUS STOP,427
+135,Manhattan,United Nations,ABLE,MOBILE BUS LANE,73
 135,Manhattan,United Nations,M15+,MOBILE BUS LANE,5261
 135,Manhattan,United Nations,M15+,MOBILE BUS STOP,303
 135,Manhattan,United Nations,M15+,MOBILE DOUBLE PARKED,14
+137,Manhattan,Upper West Side (Central),ABLE,MOBILE BUS LANE,22
 137,Manhattan,Upper West Side (Central),M79+,MOBILE BUS LANE,1114
 137,Manhattan,Upper West Side (Central),M79+,MOBILE BUS STOP,3474
 137,Manhattan,Upper West Side (Central),M79+,MOBILE DOUBLE PARKED,12404
@@ -201,6 +214,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 138,Manhattan,Upper West Side-Manhattan Valley,M4,MOBILE DOUBLE PARKED,54
 138,Manhattan,Upper West Side-Manhattan Valley,M60+,MOBILE BUS STOP,723
 138,Manhattan,Upper West Side-Manhattan Valley,M60+,MOBILE DOUBLE PARKED,2270
+139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,ABLE,MOBILE BUS LANE,1239
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M101,MOBILE BUS LANE,3767
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M101,MOBILE BUS STOP,8006
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M101,MOBILE DOUBLE PARKED,337
@@ -211,6 +225,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M79+,MOBILE BUS STOP,600
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M79+,MOBILE DOUBLE PARKED,3312
 14,Brooklyn,Cypress Hills,B25,MOBILE DOUBLE PARKED,3
+140,Manhattan,Upper East Side-Carnegie Hill,ABLE,MOBILE BUS LANE,10
 140,Manhattan,Upper East Side-Carnegie Hill,M101,MOBILE BUS LANE,8883
 140,Manhattan,Upper East Side-Carnegie Hill,M101,MOBILE BUS STOP,14260
 140,Manhattan,Upper East Side-Carnegie Hill,M101,MOBILE DOUBLE PARKED,832
@@ -223,6 +238,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 140,Manhattan,Upper East Side-Carnegie Hill,M86+,MOBILE BUS LANE,521
 140,Manhattan,Upper East Side-Carnegie Hill,M86+,MOBILE BUS STOP,1408
 140,Manhattan,Upper East Side-Carnegie Hill,M86+,MOBILE DOUBLE PARKED,6975
+141,Manhattan,Upper East Side-Yorkville,ABLE,MOBILE BUS LANE,871
 141,Manhattan,Upper East Side-Yorkville,M101,MOBILE BUS LANE,2674
 141,Manhattan,Upper East Side-Yorkville,M101,MOBILE BUS STOP,8039
 141,Manhattan,Upper East Side-Yorkville,M101,MOBILE DOUBLE PARKED,50
@@ -273,6 +289,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 146,Manhattan,Harlem (North),BX6+,MOBILE DOUBLE PARKED,2
 146,Manhattan,Harlem (North),M2,MOBILE BUS STOP,872
 146,Manhattan,Harlem (North),M2,MOBILE DOUBLE PARKED,150
+147,Manhattan,East Harlem (South),ABLE,MOBILE BUS LANE,951
 147,Manhattan,East Harlem (South),M101,MOBILE BUS STOP,7746
 147,Manhattan,East Harlem (South),M101,MOBILE DOUBLE PARKED,19877
 147,Manhattan,East Harlem (South),M15+,MOBILE BUS LANE,34980
@@ -280,6 +297,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 147,Manhattan,East Harlem (South),M15+,MOBILE DOUBLE PARKED,1715
 147,Manhattan,East Harlem (South),M2,MOBILE BUS STOP,1573
 147,Manhattan,East Harlem (South),M2,MOBILE DOUBLE PARKED,436
+148,Manhattan,East Harlem (North),ABLE,MOBILE BUS LANE,827
 148,Manhattan,East Harlem (North),BX19,MOBILE DOUBLE PARKED,2
 148,Manhattan,East Harlem (North),M101,MOBILE BUS LANE,2789
 148,Manhattan,East Harlem (North),M101,MOBILE BUS STOP,15915
@@ -329,6 +347,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 153,Manhattan,Highbridge Park,M2,MOBILE DOUBLE PARKED,34
 154,Manhattan,Inwood Hill Park,M100,MOBILE BUS STOP,58
 154,Manhattan,Inwood Hill Park,M100,MOBILE DOUBLE PARKED,154
+155,Manhattan,Central Park,ABLE,MOBILE BUS LANE,1
 155,Manhattan,Central Park,M2,MOBILE BUS LANE,2740
 155,Manhattan,Central Park,M2,MOBILE BUS STOP,4199
 155,Manhattan,Central Park,M2,MOBILE DOUBLE PARKED,34
@@ -570,12 +589,14 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 261,Staten Island,Great Kills Park,S79+,MOBILE BUS LANE,44
 261,Staten Island,Great Kills Park,S79+,MOBILE BUS STOP,9
 261,Staten Island,Great Kills Park,S79+,MOBILE DOUBLE PARKED,3
+27,Brooklyn,Crown Heights (North),ABLE,MOBILE BUS LANE,257
 27,Brooklyn,Crown Heights (North),B44+,MOBILE BUS LANE,983
 27,Brooklyn,Crown Heights (North),B44+,MOBILE BUS STOP,3667
 27,Brooklyn,Crown Heights (North),B44+,MOBILE DOUBLE PARKED,382
 27,Brooklyn,Crown Heights (North),B46+,MOBILE BUS LANE,12829
 27,Brooklyn,Crown Heights (North),B46+,MOBILE BUS STOP,4498
 27,Brooklyn,Crown Heights (North),B46+,MOBILE DOUBLE PARKED,1974
+29,Brooklyn,Crown Heights (South),ABLE,MOBILE BUS LANE,463
 29,Brooklyn,Crown Heights (South),B44+,MOBILE BUS LANE,8782
 29,Brooklyn,Crown Heights (South),B44+,MOBILE BUS STOP,1241
 29,Brooklyn,Crown Heights (South),B44+,MOBILE DOUBLE PARKED,85
@@ -584,6 +605,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 29,Brooklyn,Crown Heights (South),B46+,MOBILE DOUBLE PARKED,2903
 3,Brooklyn,East Williamsburg,Q54,MOBILE BUS STOP,4999
 3,Brooklyn,East Williamsburg,Q54,MOBILE DOUBLE PARKED,2030
+30,Brooklyn,Prospect Lefferts Gardens-Wingate,ABLE,MOBILE BUS LANE,65
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,B41,MOBILE BUS STOP,1921
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,B41,MOBILE DOUBLE PARKED,4955
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,B44+,MOBILE BUS LANE,1571
@@ -617,6 +639,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 40,Brooklyn,Kensington,B35,MOBILE DOUBLE PARKED,2804
 40,Brooklyn,Kensington,S46,MOBILE BUS LANE,637
 40,Brooklyn,Kensington,S46,MOBILE DOUBLE PARKED,2512
+46,Brooklyn,Flatbush,ABLE,MOBILE BUS LANE,443
 46,Brooklyn,Flatbush,B35,MOBILE BUS STOP,7948
 46,Brooklyn,Flatbush,B35,MOBILE DOUBLE PARKED,3216
 46,Brooklyn,Flatbush,B41,MOBILE BUS STOP,11329
@@ -666,6 +689,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 53,Brooklyn,Brownsville,B35,MOBILE BUS STOP,3935
 53,Brooklyn,Brownsville,B35,MOBILE DOUBLE PARKED,1604
 53,Brooklyn,Brownsville,S46,MOBILE DOUBLE PARKED,1437
+54,Brooklyn,East Flatbush-Erasmus,ABLE,MOBILE BUS LANE,85
 54,Brooklyn,East Flatbush-Erasmus,B35,MOBILE BUS STOP,8433
 54,Brooklyn,East Flatbush-Erasmus,B35,MOBILE DOUBLE PARKED,5292
 54,Brooklyn,East Flatbush-Erasmus,B41,MOBILE BUS STOP,583
@@ -675,12 +699,14 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 54,Brooklyn,East Flatbush-Erasmus,B44+,MOBILE DOUBLE PARKED,2832
 54,Brooklyn,East Flatbush-Erasmus,B46+,MOBILE BUS LANE,432
 54,Brooklyn,East Flatbush-Erasmus,S46,MOBILE DOUBLE PARKED,4710
+55,Brooklyn,East Flatbush-Farragut,ABLE,MOBILE BUS LANE,327
 55,Brooklyn,East Flatbush-Farragut,B44+,MOBILE BUS LANE,3434
 55,Brooklyn,East Flatbush-Farragut,B44+,MOBILE BUS STOP,115
 55,Brooklyn,East Flatbush-Farragut,B44+,MOBILE DOUBLE PARKED,272
 55,Brooklyn,East Flatbush-Farragut,B46+,MOBILE BUS LANE,16255
 55,Brooklyn,East Flatbush-Farragut,B46+,MOBILE BUS STOP,3052
 55,Brooklyn,East Flatbush-Farragut,B46+,MOBILE DOUBLE PARKED,2208
+56,Brooklyn,East Flatbush-Rugby,ABLE,MOBILE BUS LANE,557
 56,Brooklyn,East Flatbush-Rugby,B35,MOBILE BUS STOP,18873
 56,Brooklyn,East Flatbush-Rugby,B35,MOBILE DOUBLE PARKED,5968
 56,Brooklyn,East Flatbush-Rugby,B46+,MOBILE BUS LANE,38655
@@ -690,6 +716,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 57,Brooklyn,East Flatbush-Remsen Village,B35,MOBILE BUS STOP,8737
 57,Brooklyn,East Flatbush-Remsen Village,B35,MOBILE DOUBLE PARKED,3656
 57,Brooklyn,East Flatbush-Remsen Village,S46,MOBILE DOUBLE PARKED,2718
+59,Brooklyn,Flatlands,ABLE,MOBILE BUS LANE,319
 59,Brooklyn,Flatlands,B41,MOBILE BUS STOP,11062
 59,Brooklyn,Flatlands,B41,MOBILE DOUBLE PARKED,9207
 59,Brooklyn,Flatlands,B44+,MOBILE BUS LANE,140
@@ -841,6 +868,7 @@ id,BoroName,NTAName,Bus Route ID,Violation Type,count
 89,Bronx,University Heights (North)-Fordham,BX12+,MOBILE DOUBLE PARKED,8216
 89,Bronx,University Heights (North)-Fordham,BX28,MOBILE BUS STOP,183
 89,Bronx,University Heights (North)-Fordham,BX28,MOBILE DOUBLE PARKED,1439
+9,Brooklyn,Bedford-Stuyvesant (West),ABLE,MOBILE BUS LANE,33
 9,Brooklyn,Bedford-Stuyvesant (West),B25,MOBILE BUS STOP,2494
 9,Brooklyn,Bedford-Stuyvesant (West),B25,MOBILE DOUBLE PARKED,1214
 9,Brooklyn,Bedford-Stuyvesant (West),B26,MOBILE BUS LANE,192

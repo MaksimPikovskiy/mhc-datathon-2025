@@ -230,7 +230,7 @@ function App() {
     }
 
     if (busRiderships.length) {
-      const ridershipValues = busRiderships.map((r) => r.total_ridership);
+      const ridershipValues = busRiderships.map((r) => r.total_riders);
       const normalized = normalizeArray(ridershipValues);
       setNormalizedRidership(
         busRiderships.map((r, idx) => ({ ...r, normalized: normalized[idx] }))

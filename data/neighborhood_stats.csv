@@ -1,0 +1,188 @@
+borough_name,neighborhood_name,bus_route_ids,total_violations,bus_lane_violations,bus_stop_violations,double_parked_violations
+Bronx,Bedford Park,"['BX41+', 'BX28']",40057,22965.0,6711.0,10381.0
+Bronx,Belmont,"['BX19', 'BX41+', 'BX12+']",57927,39526.0,8870.0,9531.0
+Bronx,Bronx Park,"['BX19', 'BX41+', 'BX28-BX38', 'BX12+', 'Q44+']",986,1.0,423.0,562.0
+Bronx,Castle Hill-Unionport,"['BX5', 'Q44+', 'BX36']",36846,0.0,7833.0,29013.0
+Bronx,Claremont Village-Claremont (East),"['BX41+', 'BX35']",36684,25854.0,4298.0,6532.0
+Bronx,Co-op City,"['BX28', 'BX38', 'BX12+']",52855,0.0,14215.0,38640.0
+Bronx,Concourse-Concourse Village,"['BX19', 'BX35', 'BX6+', 'BX41+']",59966,15602.0,12535.0,31829.0
+Bronx,Crotona Park,['BX19'],514,0.0,41.0,473.0
+Bronx,Crotona Park East,"['BX19', 'BX35']",51480,0.0,3926.0,47554.0
+Bronx,Eastchester-Edenwald-Baychester,"['BX5', 'BX28-BX38', 'BX28', 'BX12+']",3940,845.0,1697.0,1398.0
+Bronx,Ferry Point Park-St. Raymond Cemetery,['Q44+'],17,0.0,0.0,17.0
+Bronx,Fordham Heights,"['BX41+', 'BX12+']",39529,31940.0,6478.0,1111.0
+Bronx,Highbridge,"['BX35', 'BX6+', 'BX36']",3280,8.0,1.0,3271.0
+Bronx,Hunts Point,"['BX19', 'BX6+', 'BX5']",54933,370.0,15983.0,38580.0
+Bronx,Hutchinson Metro Center,['BX12+'],2,0.0,0.0,2.0
+Bronx,Longwood,"['BX19', 'BX35', 'BX6+', 'BX5']",108420,135.0,26076.0,82209.0
+Bronx,Melrose,"['BX19', 'BX41+']",70926,32449.0,21942.0,16535.0
+Bronx,Morris Park,['BX12+'],974,838.0,125.0,11.0
+Bronx,Morrisania,"['BX41+', 'BX35', 'BX6+']",49057,5453.0,10487.0,33117.0
+Bronx,Mott Haven-Port Morris,"['BX19', 'BX41+']",29760,14644.0,7056.0,8060.0
+Bronx,Mount Eden-Claremont (West),"['BX41+', 'BX35', 'BX36']",14188,11230.0,1968.0,990.0
+Bronx,Mount Hope,"['BX41+', 'BX36']",54481,29557.0,14106.0,10818.0
+Bronx,Norwood,"['BX41+', 'BX28-BX38', 'BX28']",60018,17222.0,16347.0,26449.0
+Bronx,Parkchester,"['Q44+', 'BX36']",15595,0.0,2314.0,13281.0
+Bronx,Pelham Bay Park,"['BX5', 'BX12+']",3415,1.0,700.0,2714.0
+Bronx,Pelham Bay-Country Club-City Island,"['BX5', 'BX12+']",245,0.0,227.0,18.0
+Bronx,Pelham Gardens,"['BX28-BX38', 'BX28']",4449,1965.0,2222.0,262.0
+Bronx,Pelham Parkway-Van Nest,"['BX36', 'BX12+']",6288,364.0,549.0,5375.0
+Bronx,Soundview Park,['BX5'],1,1.0,0.0,0.0
+Bronx,Soundview-Bruckner-Bronx River,"['BX5', 'Q44+', 'BX36']",25587,114.0,5193.0,20280.0
+Bronx,Soundview-Clason Point,"['BX5', 'BX36']",18126,4309.0,1296.0,12521.0
+Bronx,Throgs Neck-Schuylerville,['BX5'],111,0.0,35.0,76.0
+Bronx,Tremont,"['BX19', 'BX36']",51621,0.0,15881.0,35740.0
+Bronx,University Heights (North)-Fordham,"['BX28', 'BX12+']",67741,44190.0,13896.0,9655.0
+Bronx,University Heights (South)-Morris Heights,['BX36'],34405,17834.0,4987.0,11584.0
+Bronx,West Farms,"['BX19', 'Q44+', 'BX36']",26839,0.0,10615.0,16224.0
+Bronx,Westchester Square,['Q44+'],18,0.0,9.0,9.0
+Bronx,Williamsbridge-Olinville,"['BX41+', 'BX28-BX38', 'BX28']",5640,1654.0,1867.0,2119.0
+Bronx,Yankee Stadium-Macombs Dam Park,['BX6+'],391,60.0,312.0,19.0
+Brooklyn,Bath Beach,['B82+'],2550,0.0,1216.0,1334.0
+Brooklyn,Bay Ridge,['S79+'],12660,0.0,2658.0,10002.0
+Brooklyn,Bedford-Stuyvesant (East),"['B25', 'B46+', 'B26']",18841,268.0,14341.0,4232.0
+Brooklyn,Bedford-Stuyvesant (West),"['B25', 'B26', 'B46+', 'ABLE', 'B44+']",37733,11392.0,19184.0,7157.0
+Brooklyn,Bensonhurst,['B82+'],5788,0.0,3221.0,2567.0
+Brooklyn,Borough Park,"['B35', 'S46']",13294,0.0,5618.0,7676.0
+Brooklyn,Brooklyn Heights,"['B25', 'B41']",1005,0.0,787.0,218.0
+Brooklyn,Brooklyn Navy Yard,['B62'],254,0.0,52.0,202.0
+Brooklyn,Brownsville,"['B35', 'S46']",6976,0.0,3935.0,3041.0
+Brooklyn,Bushwick (East),"['B26', 'Q58']",6627,0.0,5509.0,1118.0
+Brooklyn,Canarsie,"['B82+', 'B42']",36264,6041.0,17843.0,12380.0
+Brooklyn,Clinton Hill,"['B25', 'B62', 'B26']",9437,7082.0,1249.0,1106.0
+Brooklyn,Crown Heights (North),"['B46+', 'B44+', 'ABLE']",24590,14069.0,8165.0,2356.0
+Brooklyn,Crown Heights (South),"['B46+', 'B44+', 'ABLE']",33324,22700.0,7636.0,2988.0
+Brooklyn,Cypress Hills,['B25'],3,0.0,0.0,3.0
+Brooklyn,Downtown Brooklyn-DUMBO-Boerum Hill,"['B25', 'B41', 'B62', 'B26']",35544,10786.0,20253.0,4505.0
+Brooklyn,East Flatbush-Erasmus,"['B46+', 'B35', 'B41', 'ABLE', 'B44+', 'S46']",48564,5580.0,27202.0,15782.0
+Brooklyn,East Flatbush-Farragut,"['B46+', 'B44+', 'ABLE']",25663,20016.0,3167.0,2480.0
+Brooklyn,East Flatbush-Remsen Village,"['B35', 'S46']",15111,0.0,8737.0,6374.0
+Brooklyn,East Flatbush-Rugby,"['B46+', 'B35', 'S46', 'ABLE']",91441,39212.0,29941.0,22288.0
+Brooklyn,East New York (North),['B25'],791,0.0,784.0,7.0
+Brooklyn,East New York-New Lots,['B82+'],988,0.0,254.0,734.0
+Brooklyn,East Williamsburg,['Q54'],7029,0.0,4999.0,2030.0
+Brooklyn,Flatbush,"['B35', 'B41', 'ABLE', 'B44+', 'S46']",88634,31724.0,25178.0,31732.0
+Brooklyn,Flatbush (West)-Ditmas Park-Parkville,"['B35', 'S46']",6649,2375.0,2061.0,2213.0
+Brooklyn,Flatlands,"['B82+', 'B46+', 'B41', 'ABLE', 'B44+']",72237,24941.0,25151.0,22145.0
+Brooklyn,Fort Greene,"['B25', 'B41', 'B62', 'B26']",22321,14771.0,6581.0,969.0
+Brooklyn,Fort Hamilton,['S79+'],31,0.0,0.0,31.0
+Brooklyn,Gravesend (East)-Homecrest,['B82+'],16939,913.0,9913.0,6113.0
+Brooklyn,Gravesend (West),['B82+'],26363,1709.0,12815.0,11839.0
+Brooklyn,Greenpoint,['B62'],2308,0.0,2082.0,226.0
+Brooklyn,Kensington,"['B35', 'S46']",17641,1373.0,10952.0,5316.0
+Brooklyn,Madison,"['B82+', 'B44+']",21441,3091.0,9025.0,9325.0
+Brooklyn,Marine Park-Mill Basin-Bergen Beach,"['B82+', 'B46+', 'B41', 'B44+']",14379,5.0,9204.0,5170.0
+Brooklyn,Midwood,"['B82+', 'B44+']",13681,207.0,4183.0,9291.0
+Brooklyn,Ocean Hill,"['B25', 'B26']",3758,0.0,2634.0,1124.0
+Brooklyn,Park Slope,['B41'],5874,77.0,5331.0,466.0
+Brooklyn,Prospect Heights,['B41'],4389,0.0,3886.0,503.0
+Brooklyn,Prospect Lefferts Gardens-Wingate,"['B46+', 'B41', 'B44+', 'ABLE']",18604,5581.0,7104.0,5919.0
+Brooklyn,Prospect Park,['B41'],1359,0.0,1011.0,348.0
+Brooklyn,Sheepshead Bay-Manhattan Beach-Gerritsen Beach,['B44+'],9147,80.0,4666.0,4401.0
+Brooklyn,South Williamsburg,"['B44+', 'Q54', 'B62']",5130,1.0,3380.0,1749.0
+Brooklyn,Spring Creek-Starrett City,['B82+'],12516,2874.0,8219.0,1423.0
+Brooklyn,Sunset Park (Central),"['B35', 'S46']",1686,0.0,1063.0,623.0
+Brooklyn,Sunset Park (East)-Borough Park (West),"['B35', 'S46']",7721,0.0,3183.0,4538.0
+Brooklyn,Sunset Park (West),"['B35', 'S46']",4099,0.0,2541.0,1558.0
+Brooklyn,Williamsburg,"['B44+', 'Q54', 'B62']",9998,0.0,8703.0,1295.0
+Manhattan,Central Park,"['M4', 'ABLE', 'M79+', 'M2', 'M86+']",7235,2800.0,4399.0,36.0
+Manhattan,Chelsea-Hudson Yards,"['M14+', 'M42', 'M23+', 'M34+', 'ABLE']",10765,5816.0,4300.0,649.0
+Manhattan,Chinatown-Two Bridges,['M15+'],23198,386.0,13689.0,9123.0
+Manhattan,East Harlem (North),"['BX19', 'M101', 'M15+', 'M60+', 'ABLE']",106701,55646.0,32258.0,18797.0
+Manhattan,East Harlem (South),"['M101', 'M15+', 'M2', 'ABLE']",72201,35931.0,14242.0,22028.0
+Manhattan,East Midtown-Turtle Bay,"['M101', 'M15+', 'M42', 'ABLE']",42722,32267.0,9622.0,833.0
+Manhattan,East Village,"['M14+', 'M101', 'M15+', 'ABLE', 'M2']",64865,45009.0,16764.0,3092.0
+Manhattan,Financial District-Battery Park City,['M15+'],30465,0.0,21886.0,8579.0
+Manhattan,Gramercy,"['M14+', 'M101', 'M15+', 'M23+', 'M34+', 'ABLE', 'M2']",101810,74302.0,16160.0,11348.0
+Manhattan,Greenwich Village,"['M2', 'M14+', 'ABLE']",3809,1611.0,2120.0,78.0
+Manhattan,Hamilton Heights-Sugar Hill,"['M100', 'BX19', 'M101', 'BX6+', 'M4']",76170,0.0,26945.0,49225.0
+Manhattan,Harlem (North),"['BX19', 'BX6+', 'M2']",32061,0.0,10276.0,21785.0
+Manhattan,Harlem (South),"['M4', 'M101', 'M2', 'M60+']",69532,49843.0,17035.0,2654.0
+Manhattan,Hell's Kitchen,['M42'],2140,1744.0,305.0,91.0
+Manhattan,Highbridge Park,"['M101', 'M2', 'M100', 'BX36']",11988,0.0,3606.0,8382.0
+Manhattan,Inwood,"['M100', 'BX12+']",75103,28367.0,3456.0,43280.0
+Manhattan,Inwood Hill Park,['M100'],212,0.0,58.0,154.0
+Manhattan,Lower East Side,"['M15+', 'M14+', 'ABLE']",13916,4708.0,6187.0,3021.0
+Manhattan,Manhattanville-West Harlem,"['M4', 'M101']",17077,0.0,7277.0,9800.0
+Manhattan,Midtown South-Flatiron-Union Square,"['M14+', 'M4', 'M23+', 'M34+', 'ABLE', 'M2']",15354,8541.0,6691.0,122.0
+Manhattan,Midtown-Times Square,"['M42', 'M2', 'M34+', 'ABLE']",9607,5314.0,4278.0,15.0
+Manhattan,Morningside Heights,"['M4', 'M101', 'M100', 'M60+']",37505,2101.0,7404.0,28000.0
+Manhattan,Murray Hill-Kips Bay,"['M101', 'M15+', 'M42', 'M23+', 'M34+', 'ABLE']",80519,49603.0,26100.0,4816.0
+Manhattan,Stuyvesant Town-Peter Cooper Village,"['M14+', 'M15+', 'M23+', 'M34+', 'ABLE']",4202,3767.0,345.0,90.0
+Manhattan,Tribeca-Civic Center,['M15+'],5214,0.0,3506.0,1708.0
+Manhattan,United Nations,"['M15+', 'ABLE']",5651,5334.0,303.0,14.0
+Manhattan,Upper East Side-Carnegie Hill,"['M101', 'ABLE', 'M79+', 'M2', 'M86+']",43197,11264.0,19547.0,12386.0
+Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,"['M79+', 'M101', 'M15+', 'ABLE']",112761,83158.0,22442.0,7161.0
+Manhattan,Upper East Side-Yorkville,"['M101', 'M15+', 'ABLE', 'M79+', 'M86+']",92304,50576.0,22574.0,19154.0
+Manhattan,Upper West Side (Central),"['M79+', 'ABLE', 'M86+']",32747,3424.0,7203.0,22120.0
+Manhattan,Upper West Side-Manhattan Valley,"['M4', 'M60+']",3309,0.0,985.0,2324.0
+Manhattan,Washington Heights (North),"['M100', 'BX36', 'M101', 'M4', 'BX35']",68309,14006.0,24287.0,30016.0
+Manhattan,Washington Heights (South),"['M100', 'BX36', 'M101', 'BX6+', 'M4', 'BX35', 'M2']",103077,2794.0,33011.0,67272.0
+Manhattan,West Village,"['M14+', 'ABLE']",3200,1246.0,1781.0,173.0
+Queens,Astoria (Central),"['Q69', 'M60+']",245,71.0,77.0,97.0
+Queens,Astoria (East)-Woodside (North),['M60+'],1710,0.0,1359.0,351.0
+Queens,Astoria (North)-Ditmars-Steinway,"['Q69', 'M60+']",11647,11.0,5163.0,6473.0
+Queens,Baisley Park,['Q5'],2441,254.0,2067.0,120.0
+Queens,Bellerose,['Q43'],1958,0.0,1762.0,196.0
+Queens,Breezy Point-Belle Harbor-Rockaway Park-Broad Channel,['Q53+'],1488,117.0,959.0,412.0
+Queens,College Point,['Q44+'],9,0.0,0.0,9.0
+Queens,Corona,['Q58'],20614,0.0,11394.0,9220.0
+Queens,East Elmhurst,['M60+'],4206,0.0,3060.0,1146.0
+Queens,Elmhurst,"['Q53+', 'Q58']",28483,1461.0,18598.0,8424.0
+Queens,Flushing Meadows-Corona Park,['Q58'],390,0.0,165.0,225.0
+Queens,Flushing-Willets Point,"['Q44+', 'Q58']",49006,20854.0,18176.0,9976.0
+Queens,Forest Hills,['Q54'],2405,0.0,2361.0,44.0
+Queens,Forest Park,"['Q53+', 'Q54']",218,98.0,100.0,20.0
+Queens,Glen Oaks-Floral Park-New Hyde Park,['Q43'],992,0.0,679.0,313.0
+Queens,Glendale,"['Q53+', 'Q54']",2088,1217.0,794.0,77.0
+Queens,Hollis,['Q43'],5720,3037.0,2169.0,514.0
+Queens,Howard Beach-Lindenwood,['Q53+'],7059,0.0,5384.0,1675.0
+Queens,Jackson Heights,"['Q69', 'M60+']",315,0.0,69.0,246.0
+Queens,Jamaica,"['Q43', 'Q54', 'Q5', 'Q44+']",151976,79411.0,59360.0,13205.0
+Queens,Jamaica Bay (East),['Q53+'],13,0.0,10.0,3.0
+Queens,Jamaica Estates-Holliswood,['Q43'],14447,6014.0,6086.0,2347.0
+Queens,Jamaica Hills-Briarwood,"['Q43', 'Q54', 'Q44+']",31215,4195.0,11826.0,15194.0
+Queens,Kew Gardens,['Q54'],2535,0.0,2068.0,467.0
+Queens,Kew Gardens Hills,['Q44+'],10401,0.0,7851.0,2550.0
+Queens,LaGuardia Airport,['M60+'],684,0.0,637.0,47.0
+Queens,Laurelton,['Q5'],4980,0.0,3349.0,1631.0
+Queens,Long Island City-Hunters Point,"['B62', 'Q69']",3874,0.0,2909.0,965.0
+Queens,Maspeth,"['Q54', 'Q58']",22146,0.0,15629.0,6517.0
+Queens,Middle Village,"['Q53+', 'Q54']",5234,919.0,3761.0,554.0
+Queens,Middle Village Cemetery,['Q54'],136,0.0,131.0,5.0
+Queens,Mount Hebron & Cedar Grove Cemeteries,['Q44+'],480,0.0,477.0,3.0
+Queens,Mount Olivet & All Faiths Cemeteries,['Q54'],341,0.0,332.0,9.0
+Queens,Murray Hill-Broadway Flushing,['Q44+'],2014,0.0,1115.0,899.0
+Queens,Old Astoria-Hallets Point,['Q69'],961,232.0,547.0,182.0
+Queens,Ozone Park,['Q53+'],3506,1947.0,1471.0,88.0
+Queens,Ozone Park (North),['Q53+'],83,80.0,3.0,0.0
+Queens,Queens Village,['Q43'],1219,0.0,824.0,395.0
+Queens,Queensboro Hill,"['Q44+', 'Q58']",4983,2569.0,1415.0,999.0
+Queens,Queensbridge-Ravenswood-Dutch Kills,['Q69'],1958,991.0,853.0,114.0
+Queens,Rego Park,"['Q53+', 'Q54']",2277,363.0,1849.0,65.0
+Queens,Richmond Hill,['Q54'],4024,0.0,3551.0,473.0
+Queens,Ridgewood,"['B26', 'Q54', 'Q58']",33253,6892.0,24521.0,1840.0
+Queens,Rockaway Beach-Arverne-Edgemere,['Q53+'],526,279.0,229.0,18.0
+Queens,Rosedale,['Q5'],312,0.0,217.0,95.0
+Queens,South Jamaica,['Q5'],11396,2955.0,7042.0,1399.0
+Queens,Spring Creek Park,['Q53+'],27,0.0,0.0,27.0
+Queens,Springfield Gardens (North)-Rochdale Village,['Q5'],1876,420.0,1405.0,51.0
+Queens,St. Albans,['Q5'],4262,688.0,3258.0,316.0
+Queens,St. John Cemetery,"['Q53+', 'Q54']",509,51.0,344.0,114.0
+Queens,Whitestone-Beechhurst,['Q44+'],1748,0.0,1418.0,330.0
+Queens,Woodhaven,['Q53+'],197,44.0,127.0,26.0
+Queens,Woodside,['Q53+'],5283,0.0,4019.0,1264.0
+Staten Island,Freshkills Park (North),['S79+'],5,3.0,1.0,1.0
+Staten Island,Grasmere-Arrochar-South Beach-Dongan Hills,['S79+'],3490,2233.0,1149.0,108.0
+Staten Island,Great Kills Park,['S79+'],56,44.0,9.0,3.0
+Staten Island,Great Kills-Eltingville,['S79+'],3524,245.0,3043.0,236.0
+Staten Island,Mariner's Harbor-Arlington-Graniteville,['S46'],1835,0.0,1784.0,51.0
+Staten Island,New Dorp-Midland Beach,['S79+'],951,448.0,474.0,29.0
+Staten Island,New Springville-Willowbrook-Bulls Head-Travis,"['S79+', 'S46']",222,57.0,104.0,61.0
+Staten Island,Oakwood-Richmondtown,['S79+'],280,174.0,98.0,8.0
+Staten Island,Port Richmond,['S46'],1547,0.0,1396.0,151.0
+Staten Island,Rosebank-Shore Acres-Park Hill,['S79+'],121,0.0,60.0,61.0
+Staten Island,St. George-New Brighton,['S46'],5851,3125.0,1926.0,800.0
+Staten Island,Todt Hill-Emerson Hill-Lighthouse Hill-Manor Heights,['S79+'],19,18.0,0.0,1.0
+Staten Island,Tompkinsville-Stapleton-Clifton-Fox Hills,['S46'],1545,571.0,973.0,1.0
+Staten Island,West New Brighton-Silver Lake-Grymes Hill,['S46'],1607,196.0,1319.0,92.0
