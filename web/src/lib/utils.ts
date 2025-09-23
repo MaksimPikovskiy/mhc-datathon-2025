@@ -8,6 +8,16 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const formatTitle = (str: string) => {
+  const isCamelCase = /[a-z][A-Z]/.test(str);
+
+  if (isCamelCase) {
+    return fixCamelCaseTitle(str);
+  } else {
+    return fixTitle(str);
+  }
+};
+
 export const fixTitle = (title: string) => {
   return title
     .split("_")

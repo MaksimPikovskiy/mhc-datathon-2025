@@ -1,4 +1,4 @@
-import { fixTitle } from "@/lib/utils";
+import { formatTitle } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Table,
@@ -32,7 +32,7 @@ export function DisplayTable<T extends Record<string, any>>({
                     className="border-0 bg-white shadow-border shadow-[inset_0_-1px_0]"
                   >
                     <div className="flex flex-col">
-                      <span className="select-none">{fixTitle(col)}</span>
+                      <span className="select-none">{formatTitle(col)}</span>
                       <div>
                         <span className="text-gray-400 text-xs select-none">
                           (

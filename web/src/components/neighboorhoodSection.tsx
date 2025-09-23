@@ -7,8 +7,10 @@ import { normalizeName } from "@/lib/utils";
 import { DisplayTable } from "./displayTable";
 import { useEffect, useState } from "react";
 import { LoaderCircle } from "lucide-react";
-import { DisplayBarChart } from "./displayBarChart";
 import { chartConfigRiskScores } from "@/lib/constants";
+import { DisplayBarChart } from "./displayBarChart";
+import { Switch } from "./ui/switch";
+import { Label } from "./ui/label";
 
 type NeighborhoodSectionProps = {
   neighborhoodPolygons: FeatureCollection;
@@ -22,6 +24,7 @@ export default function NeighborhoodSection({
   neighborhoodRisks,
 }: NeighborhoodSectionProps) {
   const [loading, setLoading] = useState<boolean>(true);
+  const [sortData, setSortData] = useState<boolean>(false);
   const enrichedData = {
     ...neighborhoodPolygons,
     features: neighborhoodPolygons.features.map((f) => {
@@ -57,6 +60,12 @@ export default function NeighborhoodSection({
     }),
   };
 
+  const sortedNeighborhoodRisks = [...neighborhoodRisks].sort((a, b) => b.riskScore - a.riskScore);
+
+  const getData = () => {
+    return sortData ? sortedNeighborhoodRisks : neighborhoodRisks;
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
@@ -71,11 +80,17 @@ export default function NeighborhoodSection({
         Mapping Risk for Neighborhoods
       </h2>
       <Tabs defaultValue="map" className="h-[600px] w-full">
-        <TabsList>
-          <TabsTrigger value="map">Map</TabsTrigger>
-          <TabsTrigger value="table">Table</TabsTrigger>
-          <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>
-        </TabsList>
+        <div className="flex flex-row justify-between">
+          <TabsList>
+            <TabsTrigger value="map">Map</TabsTrigger>
+            <TabsTrigger value="table">Table</TabsTrigger>
+            <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>
+          </TabsList>
+          <div className="flex flex-row gap-2 items-center">
+            <Label>Sort Data by Risk Score</Label>
+            <Switch checked={sortData} onCheckedChange={setSortData} />
+          </div>
+        </div>
         <TabsContent value="map">
           {!loading ? (
             <MapWithPolygons
@@ -90,11 +105,11 @@ export default function NeighborhoodSection({
           )}
         </TabsContent>
         <TabsContent value="table">
-          <DisplayTable<NeighborhoodRisk> data={neighborhoodRisks} />
+          <DisplayTable<NeighborhoodRisk> data={getData()} />
         </TabsContent>
         <TabsContent value="bar-chart">
           <DisplayBarChart
-            data={neighborhoodRisks}
+            data={getData()}
             config={chartConfigRiskScores}
             xKey="neighborhoodName"
             bars={[
@@ -104,6 +119,7 @@ export default function NeighborhoodSection({
               },
             ]}
             showLegend={true}
+            showXLabels={false}
           />
         </TabsContent>
       </Tabs>

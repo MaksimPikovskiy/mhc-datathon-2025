@@ -34,7 +34,7 @@ type BarChartOptions = {
   showXLabels?: boolean;
 };
 
-export function DisplayBarChart({
+export function DisplayBarChartVertical({
   data,
   config,
   bars,
@@ -48,23 +48,28 @@ export function DisplayBarChart({
         config={config}
         className="min-h-[200px] max-h-[550px] w-full"
       >
-        <BarChart accessibilityLayer data={data} margin={{ bottom: 30 }}>
+        <BarChart
+          accessibilityLayer
+          data={data}
+          layout="vertical"
+          margin={{ bottom: 30 }}
+        >
           <CartesianGrid vertical={false} />
           <Tooltip content={<ChartTooltipContent />} />
           {showLegend && <Legend content={<ChartLegendContent />} />}
-          <XAxis
+          <XAxis type="number" />
+          <YAxis
+            type="category"
             dataKey={xKey}
             tick={showXLabels}
             tickLine={false}
             tickMargin={10}
             axisLine={false}
-            angle={-45}
             textAnchor="end"
             interval={0}
             dy={-10}
             dx={-4}
           />
-          <YAxis />
           {bars.map((bar) => (
             <Bar
               key={bar.dataKey}
