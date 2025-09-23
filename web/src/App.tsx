@@ -17,6 +17,8 @@ import { getViolationCountData } from "./api/getBusViolationCount";
 import { FactorsDisplay } from "./components/displayFactors";
 import type BusRouteRisk from "./models/busRouteRisk";
 import { normalizeArray } from "./lib/utils";
+import { Switch } from "./components/ui/switch";
+import { Label } from "./components/ui/label";
 
 const violationCountQuery = `SELECT 
     bus_route_id,
@@ -62,7 +64,16 @@ const chartConfigRiderships = {
   },
 };
 
+const chartConfigRiskScores = {
+  riskScore: {
+    label: "Risk Score",
+    color: "#2563eb",
+  },
+};
+
 function App() {
+  const [useLocal, setUseLocal] = useState<boolean>(true);
+
   const [busAceRoutes, setBusAceRoutes] = useState<BusRoute[]>([]);
   const [busViolationCounts, setBusViolationCounts] = useState<
     BusViolationCount[]
@@ -126,13 +137,15 @@ function App() {
         GROUP BY bus_route`;
 
       getSpeedData({ offset: 0, query: speedQuery }).then(setBusSpeeds);
-      getRidershipData({ offset: 0, query: ridershipQuery }).then((data) => {
-        // Filter the routes locally for Database Servers times us out
-        const filtered = data.filter((row) =>
-          busAceRoutes.some((r) => r.route === row.bus_route)
-        );
-        setBusRiderships(filtered);
-      });
+      getRidershipData({ offset: 0, query: ridershipQuery }).then(
+        (ridership_data) => {
+          // Filter the routes locally for Database Servers times us out
+          const filtered = ridership_data.filter((row) =>
+            data.some((r) => r.route === row.bus_route)
+          );
+          setBusRiderships(filtered);
+        }
+      );
     });
 
     getViolationCountData({ offset: 0, query: violationCountQuery }).then(
@@ -255,7 +268,15 @@ function App() {
         route.riskScore = calculateRiskByRoute(route.busRouteId);
       });
 
-      setBusRouteRisks(allRoutes);
+      const allRiskScores = allRoutes.map((s) => s.riskScore);
+      const normalizedRiskScores = normalizeArray(allRiskScores);
+
+      const normalizedAllRoutes = allRoutes.map((s, idx) => ({
+        ...s,
+        riskScore: normalizedRiskScores[idx],
+      }));
+
+      setBusRouteRisks(normalizedAllRoutes);
     }
   }, [
     busAceRoutes,
@@ -269,6 +290,26 @@ function App() {
     <>
       <Navbar />
       <main className="mt-12 space-y-6">
+        <div
+          className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm hover:scale-101 cursor-pointer"
+          onClick={() => setUseLocal(!useLocal)}
+        >
+          <div className="space-y-0.5">
+            <Label>Fetching Data Method</Label>
+            <p className="text-sm">
+              {useLocal
+                ? "Using Local Data Available to the Website"
+                : "Fetching Data from data.ny.gov"}
+            </p>
+          </div>
+          <div>
+            <Switch
+              checked={useLocal}
+              onCheckedChange={setUseLocal}
+              aria-readonly
+            />
+          </div>
+        </div>
         <DisplayTable<BusRoute>
           title="Bus Route with ACE or ABLE"
           data={busAceRoutes}
@@ -374,8 +415,21 @@ function App() {
         />
 
         <DisplayTable<BusRouteRisk>
-          title="Risk for Bus Route"
+          title="Risk Score for Bus Routes"
           data={busRouteRisks}
+        />
+        <DisplayBarChart
+          title="Risk Score for Bus Routes"
+          data={busRouteRisks}
+          config={chartConfigRiskScores}
+          xKey="busRouteId"
+          bars={[
+            {
+              dataKey: "riskScore",
+              fill: "var(--color-riskScore)",
+            },
+          ]}
+          showLegend={true}
         />
       </main>
     </>
