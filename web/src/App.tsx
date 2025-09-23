@@ -23,6 +23,9 @@ import { getRouteDataLocal } from "./local-api/getBusRoutesLocal";
 import { getSpeedDataLocal } from "./local-api/getBusSpeedsLocal";
 import { getRidershipDataLocal } from "./local-api/getBusRidershipsLocal";
 import { getViolationCountDataLocal } from "./local-api/getBusViolationCountLocal";
+import neighborhoods from "./data/neighborhoods.json";
+import MapWithPolygons from "./components/mapWithPolygons";
+import type { FeatureCollection } from "geojson";
 
 const violationCountQuery = `SELECT 
     bus_route_id,
@@ -464,6 +467,10 @@ function App() {
           ]}
           showLegend={true}
         />
+        <h2 className="font-bold  text-xl mb-2">
+          Mapping Risk by Neighborhoods
+        </h2>
+        <MapWithPolygons data={neighborhoods as FeatureCollection} />
       </main>
     </>
   );
