@@ -39,27 +39,27 @@ id,BoroName,NTAName,Bus Route ID,total_count
 12,Brooklyn,Bushwick (East),B26,6144
 12,Brooklyn,Bushwick (East),Q58,483
 122,Manhattan,Greenwich Village,ABLE,10
-122,Manhattan,Greenwich Village,M14+,3269
+122,Manhattan,Greenwich Village,M14+,3241
 122,Manhattan,Greenwich Village,M2,530
 123,Manhattan,West Village,ABLE,18
-123,Manhattan,West Village,M14+,3182
+123,Manhattan,West Village,M14+,3120
 124,Manhattan,Chinatown-Two Bridges,M15+,23198
 125,Manhattan,Lower East Side,ABLE,82
 125,Manhattan,Lower East Side,M14+,6622
 125,Manhattan,Lower East Side,M15+,7212
 126,Manhattan,East Village,ABLE,1056
 126,Manhattan,East Village,M101,4671
-126,Manhattan,East Village,M14+,28587
-126,Manhattan,East Village,M15+,30410
+126,Manhattan,East Village,M14+,28542
+126,Manhattan,East Village,M15+,29430
 126,Manhattan,East Village,M2,141
 127,Manhattan,Chelsea-Hudson Yards,ABLE,88
-127,Manhattan,Chelsea-Hudson Yards,M14+,1906
+127,Manhattan,Chelsea-Hudson Yards,M14+,1784
 127,Manhattan,Chelsea-Hudson Yards,M23+,6254
 127,Manhattan,Chelsea-Hudson Yards,M34+,2351
 127,Manhattan,Chelsea-Hudson Yards,M42,166
 128,Manhattan,Hell's Kitchen,M42,2140
 129,Manhattan,Midtown South-Flatiron-Union Square,ABLE,130
-129,Manhattan,Midtown South-Flatiron-Union Square,M14+,2172
+129,Manhattan,Midtown South-Flatiron-Union Square,M14+,2099
 129,Manhattan,Midtown South-Flatiron-Union Square,M2,1308
 129,Manhattan,Midtown South-Flatiron-Union Square,M23+,2589
 129,Manhattan,Midtown South-Flatiron-Union Square,M34+,9040
@@ -70,28 +70,28 @@ id,BoroName,NTAName,Bus Route ID,total_count
 130,Manhattan,Midtown-Times Square,M42,2103
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,ABLE,144
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M14+,3198
-131,Manhattan,Stuyvesant Town-Peter Cooper Village,M15+,435
+131,Manhattan,Stuyvesant Town-Peter Cooper Village,M15+,421
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M23+,417
 131,Manhattan,Stuyvesant Town-Peter Cooper Village,M34+,8
 132,Manhattan,Gramercy,ABLE,1538
 132,Manhattan,Gramercy,M101,19002
-132,Manhattan,Gramercy,M14+,15005
-132,Manhattan,Gramercy,M15+,57811
+132,Manhattan,Gramercy,M14+,14930
+132,Manhattan,Gramercy,M15+,53824
 132,Manhattan,Gramercy,M2,315
 132,Manhattan,Gramercy,M23+,7110
 132,Manhattan,Gramercy,M34+,1029
 133,Manhattan,Murray Hill-Kips Bay,ABLE,714
 133,Manhattan,Murray Hill-Kips Bay,M101,13792
-133,Manhattan,Murray Hill-Kips Bay,M15+,56754
+133,Manhattan,Murray Hill-Kips Bay,M15+,55109
 133,Manhattan,Murray Hill-Kips Bay,M23+,36
 133,Manhattan,Murray Hill-Kips Bay,M34+,8359
 133,Manhattan,Murray Hill-Kips Bay,M42,864
 134,Manhattan,East Midtown-Turtle Bay,ABLE,394
 134,Manhattan,East Midtown-Turtle Bay,M101,10415
-134,Manhattan,East Midtown-Turtle Bay,M15+,31457
+134,Manhattan,East Midtown-Turtle Bay,M15+,29994
 134,Manhattan,East Midtown-Turtle Bay,M42,456
 135,Manhattan,United Nations,ABLE,73
-135,Manhattan,United Nations,M15+,5578
+135,Manhattan,United Nations,M15+,5066
 137,Manhattan,Upper West Side (Central),ABLE,22
 137,Manhattan,Upper West Side (Central),M79+,16992
 137,Manhattan,Upper West Side (Central),M86+,15733
@@ -99,7 +99,7 @@ id,BoroName,NTAName,Bus Route ID,total_count
 138,Manhattan,Upper West Side-Manhattan Valley,M60+,2993
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,ABLE,1239
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M101,12110
-139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M15+,93771
+139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M15+,90338
 139,Manhattan,Upper East Side-Lenox Hill-Roosevelt Island,M79+,5641
 14,Brooklyn,Cypress Hills,B25,3
 140,Manhattan,Upper East Side-Carnegie Hill,ABLE,10
@@ -109,7 +109,7 @@ id,BoroName,NTAName,Bus Route ID,total_count
 140,Manhattan,Upper East Side-Carnegie Hill,M86+,8904
 141,Manhattan,Upper East Side-Yorkville,ABLE,871
 141,Manhattan,Upper East Side-Yorkville,M101,10763
-141,Manhattan,Upper East Side-Yorkville,M15+,57469
+141,Manhattan,Upper East Side-Yorkville,M15+,55779
 141,Manhattan,Upper East Side-Yorkville,M79+,7402
 141,Manhattan,Upper East Side-Yorkville,M86+,15799
 142,Manhattan,Morningside Heights,M100,231
@@ -132,12 +132,12 @@ id,BoroName,NTAName,Bus Route ID,total_count
 146,Manhattan,Harlem (North),M2,1022
 147,Manhattan,East Harlem (South),ABLE,951
 147,Manhattan,East Harlem (South),M101,27623
-147,Manhattan,East Harlem (South),M15+,41618
+147,Manhattan,East Harlem (South),M15+,40260
 147,Manhattan,East Harlem (South),M2,2009
 148,Manhattan,East Harlem (North),ABLE,827
 148,Manhattan,East Harlem (North),BX19,2
 148,Manhattan,East Harlem (North),M101,30597
-148,Manhattan,East Harlem (North),M15+,61373
+148,Manhattan,East Harlem (North),M15+,58673
 148,Manhattan,East Harlem (North),M60+,13902
 15,Brooklyn,East New York (North),B25,791
 150,Manhattan,Washington Heights (South),BX35,2794
@@ -263,16 +263,16 @@ id,BoroName,NTAName,Bus Route ID,total_count
 253,Staten Island,Great Kills-Eltingville,S79+,3524
 26,Brooklyn,Prospect Heights,B41,4389
 261,Staten Island,Great Kills Park,S79+,56
-27,Brooklyn,Crown Heights (North),ABLE,257
-27,Brooklyn,Crown Heights (North),B44+,5032
+27,Brooklyn,Crown Heights (North),ABLE,212
+27,Brooklyn,Crown Heights (North),B44+,4970
 27,Brooklyn,Crown Heights (North),B46+,19301
 29,Brooklyn,Crown Heights (South),ABLE,463
-29,Brooklyn,Crown Heights (South),B44+,10108
-29,Brooklyn,Crown Heights (South),B46+,22753
+29,Brooklyn,Crown Heights (South),B44+,9017
+29,Brooklyn,Crown Heights (South),B46+,22734
 3,Brooklyn,East Williamsburg,Q54,7029
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,ABLE,65
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,B41,6876
-30,Brooklyn,Prospect Lefferts Gardens-Wingate,B44+,7186
+30,Brooklyn,Prospect Lefferts Gardens-Wingate,B44+,7136
 30,Brooklyn,Prospect Lefferts Gardens-Wingate,B46+,4477
 31,Brooklyn,Bay Ridge,S79+,12660
 33,Brooklyn,Fort Hamilton,S79+,31
@@ -290,11 +290,11 @@ id,BoroName,NTAName,Bus Route ID,total_count
 46,Brooklyn,Flatbush,ABLE,443
 46,Brooklyn,Flatbush,B35,11164
 46,Brooklyn,Flatbush,B41,34595
-46,Brooklyn,Flatbush,B44+,39694
+46,Brooklyn,Flatbush,B44+,38373
 46,Brooklyn,Flatbush,S46,2738
 47,Brooklyn,Flatbush (West)-Ditmas Park-Parkville,B35,4243
 47,Brooklyn,Flatbush (West)-Ditmas Park-Parkville,S46,2406
-48,Brooklyn,Midwood,B44+,12575
+48,Brooklyn,Midwood,B44+,12432
 48,Brooklyn,Midwood,B82+,1106
 49,Brooklyn,Gravesend (East)-Homecrest,B82+,16939
 5,Brooklyn,Downtown Brooklyn-DUMBO-Boerum Hill,B25,4753
@@ -311,21 +311,21 @@ id,BoroName,NTAName,Bus Route ID,total_count
 54,Brooklyn,East Flatbush-Erasmus,ABLE,85
 54,Brooklyn,East Flatbush-Erasmus,B35,13725
 54,Brooklyn,East Flatbush-Erasmus,B41,3531
-54,Brooklyn,East Flatbush-Erasmus,B44+,26081
+54,Brooklyn,East Flatbush-Erasmus,B44+,25595
 54,Brooklyn,East Flatbush-Erasmus,B46+,432
 54,Brooklyn,East Flatbush-Erasmus,S46,4710
 55,Brooklyn,East Flatbush-Farragut,ABLE,327
-55,Brooklyn,East Flatbush-Farragut,B44+,3821
+55,Brooklyn,East Flatbush-Farragut,B44+,3554
 55,Brooklyn,East Flatbush-Farragut,B46+,21515
-56,Brooklyn,East Flatbush-Rugby,ABLE,557
+56,Brooklyn,East Flatbush-Rugby,ABLE,556
 56,Brooklyn,East Flatbush-Rugby,B35,24841
-56,Brooklyn,East Flatbush-Rugby,B46+,60676
+56,Brooklyn,East Flatbush-Rugby,B46+,60674
 56,Brooklyn,East Flatbush-Rugby,S46,5367
 57,Brooklyn,East Flatbush-Remsen Village,B35,12393
 57,Brooklyn,East Flatbush-Remsen Village,S46,2718
-59,Brooklyn,Flatlands,ABLE,319
+59,Brooklyn,Flatlands,ABLE,317
 59,Brooklyn,Flatlands,B41,20269
-59,Brooklyn,Flatlands,B44+,9227
+59,Brooklyn,Flatlands,B44+,9098
 59,Brooklyn,Flatlands,B46+,39566
 59,Brooklyn,Flatlands,B82+,2856
 6,Brooklyn,Fort Greene,B25,20600
@@ -391,8 +391,8 @@ id,BoroName,NTAName,Bus Route ID,total_count
 9,Brooklyn,Bedford-Stuyvesant (West),ABLE,33
 9,Brooklyn,Bedford-Stuyvesant (West),B25,3708
 9,Brooklyn,Bedford-Stuyvesant (West),B26,5487
-9,Brooklyn,Bedford-Stuyvesant (West),B44+,27811
-9,Brooklyn,Bedford-Stuyvesant (West),B46+,694
+9,Brooklyn,Bedford-Stuyvesant (West),B44+,27792
+9,Brooklyn,Bedford-Stuyvesant (West),B46+,600
 90,Bronx,Bedford Park,BX28,12954
 90,Bronx,Bedford Park,BX41+,27103
 91,Bronx,Norwood,BX28,18334

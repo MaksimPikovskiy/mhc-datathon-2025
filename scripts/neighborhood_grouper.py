@@ -4,7 +4,10 @@ from shapely.geometry import Point
 
 # Files for input and output
 geojson_path = "./data/NYC_Neighborhoods.json"
-violations_csv_path = "./data/MTA_Bus_Automated_Camera_Enforcement_Violations__Beginning_October_2019_20250919.csv"
+# ACE Violations for 2019-2025
+# violations_csv_path = "./data/MTA_Bus_Automated_Camera_Enforcement_Violations__Beginning_October_2019_20250919.csv"
+# ACE Violations for 2020-2025
+violations_csv_path = "./data/MTA_Bus_Automated_Camera_Enforcement_Violations__Beginning_2020.csv"
 output_detail_csv = "violation_counts_by_type.csv"
 output_totals_csv = "violation_totals.csv"
 
