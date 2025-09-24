@@ -1,4 +1,2 @@
-1. Filter out 2019 in main dataset
-2. Get proper weights
+1. Get proper weights and rationale
 2. Provide recommendations based on the findings
-3. Make all the information presentable (report-style)
