@@ -410,17 +410,43 @@ function App() {
 
       if (!vDouble || !vStop || !vLane || !vSpeed || !vRidership) return 0;
 
-      let score = 0;
-      if (factorsEnabled.doubleParkedViolation)
-        score += weights.doubleParkedViolation * vDouble;
-      if (factorsEnabled.busStopViolation)
-        score += weights.busStopViolation * vStop;
-      if (factorsEnabled.busLaneViolation)
-        score += weights.busLaneViolation * vLane;
-      if (factorsEnabled.speed) score += weights.speed * vSpeed;
-      if (factorsEnabled.ridership) score += weights.ridership * vRidership;
+      // Build factors + weights arrays dynamically based on enabled flags
+      const factorValues: number[] = [];
+      const weightValues: number[] = [];
 
-      return score;
+      if (factorsEnabled.doubleParkedViolation) {
+        factorValues.push(vDouble);
+        weightValues.push(weights.doubleParkedViolation);
+      }
+      if (factorsEnabled.busStopViolation) {
+        factorValues.push(vStop);
+        weightValues.push(weights.busStopViolation);
+      }
+      if (factorsEnabled.busLaneViolation) {
+        factorValues.push(vLane);
+        weightValues.push(weights.busLaneViolation);
+      }
+      if (factorsEnabled.speed) {
+        factorValues.push(vSpeed);
+        weightValues.push(weights.speed);
+      }
+      if (factorsEnabled.ridership) {
+        factorValues.push(vRidership);
+        weightValues.push(weights.ridership);
+      }
+
+      const totalWeight = weightValues.reduce((sum, w) => sum + w, 0);
+
+      if (totalWeight === 0) return 0;
+
+      const weightedSum = factorValues.reduce(
+        (sum, val, idx) => sum + val * weightValues[idx],
+        0
+      );
+
+      // Normalize by total weight to ensure 0–1 output
+      // (we want weighted average, not weighted sum)
+      return weightedSum / totalWeight;
     };
     if (normalizedNeighborhoods.length) {
       const allNeighborhoods: NeighborhoodRisk[] = [];
@@ -445,12 +471,6 @@ function App() {
 
   const calculateRiskByRoute = useCallback(
     (routeId: string) => {
-      const violation = busViolationCounts.find(
-        (b) => b.bus_route_id === routeId
-      );
-      const speed = busSpeeds.find((b) => b.route_id === routeId);
-      const ridership = busRiderships.find((b) => b.bus_route === routeId);
-
       const vDouble = normalizedViolations.find(
         (v) => v.bus_route_id === routeId
       )?.normalized_double_parked_violations;
@@ -467,25 +487,47 @@ function App() {
         (v) => v.bus_route === routeId
       )?.normalized;
 
-      if (!violation || !speed || !ridership) return 0;
       if (!vDouble || !vStop || !vLane || !vSpeed || !vRidership) return 0;
 
-      let score = 0;
-      if (factorsEnabled.doubleParkedViolation)
-        score += weights.doubleParkedViolation * vDouble;
-      if (factorsEnabled.busStopViolation)
-        score += weights.busStopViolation * vStop;
-      if (factorsEnabled.busLaneViolation)
-        score += weights.busLaneViolation * vLane;
-      if (factorsEnabled.speed) score += weights.speed * vSpeed;
-      if (factorsEnabled.ridership) score += weights.ridership * vRidership;
+      // Build factors and weights dynamically based on enabled flags
+      const factorValues: number[] = [];
+      const weightValues: number[] = [];
 
-      return score;
+      if (factorsEnabled.doubleParkedViolation) {
+        factorValues.push(vDouble);
+        weightValues.push(weights.doubleParkedViolation);
+      }
+      if (factorsEnabled.busStopViolation) {
+        factorValues.push(vStop);
+        weightValues.push(weights.busStopViolation);
+      }
+      if (factorsEnabled.busLaneViolation) {
+        factorValues.push(vLane);
+        weightValues.push(weights.busLaneViolation);
+      }
+      if (factorsEnabled.speed) {
+        factorValues.push(vSpeed);
+        weightValues.push(weights.speed);
+      }
+      if (factorsEnabled.ridership) {
+        factorValues.push(vRidership);
+        weightValues.push(weights.ridership);
+      }
+
+      const totalWeight = weightValues.reduce((sum, w) => sum + w, 0);
+
+      if (totalWeight === 0) return 0;
+
+      const weightedSum = factorValues.reduce(
+        (sum, val, idx) => sum + val * weightValues[idx],
+        0
+      );
+
+      // Normalize by total weight so final score is always 0–1
+      // (we want weighted average, not weighted sum)
+      return weightedSum / totalWeight;
     },
     [
-      busRiderships,
-      busSpeeds,
-      busViolationCounts,
       normalizedRidership,
       normalizedSpeeds,
       normalizedViolations,
@@ -538,7 +580,7 @@ function App() {
           busRiderships={busRiderships}
           neighborhoods={neighborhoods}
         />
-        <RiskFormulaSection id="risk_factors"/>
+        <RiskFormulaSection id="risk_factors" />
         <FactorsDisplay
           weights={weights}
           setWeights={setWeights}
@@ -552,8 +594,8 @@ function App() {
           neighborhoods={neighborhoods}
           neighborhoodRisks={neighborhoodRisks}
         />
-        <ConclusionSection id="conclusion"/>
-        <AppendixSection id="appendix"/>
+        <ConclusionSection id="conclusion" />
+        <AppendixSection id="appendix" />
       </main>
     </>
   );

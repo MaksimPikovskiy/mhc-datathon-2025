@@ -98,7 +98,10 @@ export default function Navbar({ sections, setCurrentIndex }: NavbarProps) {
         {sections.map((sec, idx) => (
           <button
             key={sec}
-            onClick={() => setCurrentIndex(idx)}
+            onClick={() => {
+              setCurrentIndex(idx);
+              toggleMobileMenu();
+            }}
             className={`nav-link ${sec === activeSection ? "active" : ""}`}
           >
             {formatTitle(sec)}

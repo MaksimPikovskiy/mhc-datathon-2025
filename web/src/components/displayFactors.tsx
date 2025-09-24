@@ -125,6 +125,13 @@ export function FactorsDisplay({
           </Card>
         ))}
       </div>
+      <div className="container mx-auto px-4">
+        <p className="px-24 italic mt-6">
+          As we want weighted average (rather than weighted sum), we
+          normalize the risk score if the total weight is greater than 1. <br />
+          Thus, do not worry about sum of weights being equal to 1.
+        </p>
+      </div>
     </div>
   );
 }
