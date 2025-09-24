@@ -117,3 +117,18 @@ export const normalizeName = (name: string): string => {
     .replace(/[^\w\s]/g, "") // remove punctuation like () , . etc.
     .replace(/\s+/g, "_"); // collapse multiple spaces and convert to underscore
 };
+
+export const scrollToSection = (id: string) => {
+  try {
+    const element = document.getElementById(id);
+
+    if (element) {
+      const top = element.offsetTop - 75;
+      window.scrollTo({ top, behavior: "smooth" });
+    } else {
+      console.error(`Error: Element with ID "${id}" not found.`);
+    }
+  } catch (error) {
+    console.error("An error occurred while trying to scroll:", error);
+  }
+};

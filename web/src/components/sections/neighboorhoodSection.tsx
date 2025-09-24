@@ -1,18 +1,18 @@
 import type { FeatureCollection } from "geojson";
 import type Neighborhood from "@/models/Neighborhood";
 import type NeighborhoodRisk from "@/models/NeighborhoodRisk";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import MapWithPolygons from "./mapWithPolygons";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import MapWithPolygons from "../mapWithPolygons";
 import { normalizeName } from "@/lib/utils";
-import { DisplayTable } from "./displayTable";
+import { DisplayTable } from "../displayTable";
 import { useEffect, useState } from "react";
 import { InfoIcon, LoaderCircle } from "lucide-react";
 import { chartConfigRiskScores } from "@/lib/constants";
-import { DisplayBarChart } from "./displayBarChart";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
-import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { DisplayBarChart } from "../displayBarChart";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
+import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type NeighborhoodSectionProps = {
   id?: string;
@@ -92,7 +92,7 @@ export default function NeighborhoodSection({
   };
 
   return (
-    <div id={id}>
+    <section id={id}>
       <h2 className="font-bold  text-xl mb-1">
         Mapping Risk for Neighborhoods
       </h2>
@@ -174,6 +174,6 @@ export default function NeighborhoodSection({
           />
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   );
 }

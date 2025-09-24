@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
-import { DisplayTable } from "./displayTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
+import { DisplayTable } from "../displayTable";
 import type BusRouteRisk from "@/models/busRouteRisk";
 import { chartConfigRiskScores } from "@/lib/constants";
-import { DisplayBarChart } from "./displayBarChart";
+import { DisplayBarChart } from "../displayBarChart";
 
 type BusRouteSectionProps = {
   id?: string;
@@ -27,7 +27,7 @@ export default function BusRouteSection({
   };
 
   return (
-    <div id={id}>
+    <section id={id}>
       <h2 className="font-bold  text-xl mb-1">Risk Score for Bus Routes</h2>
       <Tabs defaultValue="bar-chart" className={`md:h-[600px] w-full`}>
         <div className="flex flex-row justify-between">
@@ -65,6 +65,6 @@ export default function BusRouteSection({
           />
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   );
 }

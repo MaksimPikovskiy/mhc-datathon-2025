@@ -1,5 +1,5 @@
 import { datasets } from "@/lib/constants";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { SquareArrowOutUpRightIcon, Star, StarOff } from "lucide-react";
 
 type DatasetsSectionProps = {
@@ -8,8 +8,12 @@ type DatasetsSectionProps = {
 
 export default function DatasetsSection({ id = "" }: DatasetsSectionProps) {
   return (
-    <div id={id}>
-      <h2 className="font-bold  text-xl mb-1">Datasets Used</h2>
+    <section id={id} className="space-y-3 pt-12">
+      <h2 className="font-bold text-xl">Datasets Used</h2>
+      <p>
+        We compiled data from multiple sources to examine violations, speeds,
+        and ridership across NYC bus routes.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {datasets.map((ds) => (
           <a
@@ -49,6 +53,10 @@ export default function DatasetsSection({ id = "" }: DatasetsSectionProps) {
           </a>
         ))}
       </div>
-    </div>
+      <p className="italic">
+        <strong>Up next:</strong> A closer look at the ACE/ABLE Enforced Bus
+        Routes dataset, our primary input for filtering the datasets you saw above.
+      </p>
+    </section>
   );
 }

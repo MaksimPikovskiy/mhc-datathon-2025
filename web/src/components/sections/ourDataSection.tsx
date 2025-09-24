@@ -1,20 +1,21 @@
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Switch } from "./ui/switch";
-import { Label } from "./ui/label";
-import { DisplayTable } from "./displayTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Switch } from "../ui/switch";
+import { Label } from "../ui/label";
+import { DisplayTable } from "../displayTable";
 import {
   chartConfigRiderships,
   chartConfigSpeeds,
   chartConfigTotalViolations,
   chartConfigViolationsPerType,
 } from "@/lib/constants";
-import { DisplayBarChart } from "./displayBarChart";
+import { DisplayBarChart } from "../displayBarChart";
 import type BusViolationCount from "@/models/BusViolationCount";
 import type BusSpeed from "@/models/BusSpeed";
 import type BusRidership from "@/models/BusRidership";
 import type Neighborhood from "@/models/Neighborhood";
 import type BusRoute from "@/models/BusRoute";
+import { scrollToSection } from "@/lib/utils";
 
 type OurDataSectionProps = {
   id?: string;
@@ -57,8 +58,8 @@ export default function OurDataSection({
   };
 
   return (
-    <div id={id}>
-      <h2 className="font-bold  text-xl mb-1">ACE/ABLE Enforced Bus Routes</h2>
+    <section id={id} className="space-y-3 pt-12">
+      <h2 className="font-bold text-xl">ACE/ABLE Enforced Bus Routes</h2>
       <div className="mb-2 flex flex-row justify-center w-full gap-4">
         <span
           key={"ACE"}
@@ -91,7 +92,110 @@ export default function OurDataSection({
           </span>
         ))}
       </div>
-      <h2 className="font-bold  text-xl mb-1">Our Data at a Glance</h2>
+      <div className="pt-12 space-y-3 container mx-auto px-4">
+        <h2 className="text-2xl font-bold">
+          From Raw Data to Processed Insights
+        </h2>
+        <p>
+          After gathering enforcement, speed, and ridership datasets, we ran
+          SoQL queries and Python scripts to combine and clean the data. This
+          produced our set of datasets (seen in{' "'}
+          <button
+            onClick={() => scrollToSection("processed_data")}
+            className="cursor-pointer underline hover:text-primary/50"
+          >
+            Our Data at a Glance
+          </button>
+          {'" '}
+          below), which powers the analysis.
+        </p>
+        <p className="text-sm">
+          Appendix: Full Python scripts too large to display here are linked{" "}
+          <button
+            onClick={() => scrollToSection("appendix")}
+            className="cursor-pointer underline hover:text-primary/50"
+          >
+            here
+          </button>
+          .
+        </p>
+        <h3 className="font-semibold text-md">
+          SoQL Query to get ACE Violations per Bus Route between 2020 and 2025
+          <button
+            onClick={() => scrollToSection("main_soql_note")}
+            className="hover:underline hover:text-primary/50 cursor-pointer"
+          >
+            *
+          </button>
+        </h3>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+          <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
+            <code>
+              {`SELECT
+  bus_route_id,
+  COUNT(*) AS total_violations,
+  SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
+  SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
+  SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
+WHERE first_occurrence > '2019-12-31T23:59:59'
+GROUP BY bus_route_id`}
+            </code>
+          </pre>
+        </div>
+        <h3 className="font-semibold text-md">
+          SoQL Query to get Bus Speeds for ACE/ABLE Enforced Routes
+        </h3>
+        <p className="text-sm mb-2 italic">
+          <span className="bg-gray-100 rounded py-0.5 px-2 text-gray-500">
+            inRouteList
+          </span>{" "}
+          is a variable containing the set of ACE/ABLE Enforced Bus Routes we
+          mentioned earlier.
+        </p>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+          <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
+            <code>
+              {`SELECT
+  route_id,
+  SUM(total_mileage) AS total_mileage,
+  SUM(total_operating_time) AS total_operating_time,
+  AVG(average_speed) AS average_speed
+WHERE route_id IN (\${inRouteList})
+GROUP BY route_id`}
+            </code>
+          </pre>
+        </div>
+        <h3 className="font-semibold text-md">
+          SoQL Query to get Bus Total Ridership for ACE/ABLE Enforced Routes
+        </h3>
+        <p className="text-sm italic">
+          <span className="bg-gray-100 rounded py-0.5 px-2 text-gray-500">
+            inRouteList
+          </span>{" "}
+          is a variable containing the set of ACE/ABLE Enforced Bus Routes we
+          mentioned earlier.
+        </p>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+          <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
+            <code>
+              {`SELECT
+  route_id,
+  SUM(total_mileage) AS total_mileage,
+  SUM(total_operating_time) AS total_operating_time,
+  AVG(average_speed) AS average_speed
+WHERE route_id IN (\${inRouteList})
+GROUP BY route_id`}
+            </code>
+          </pre>
+        </div>
+        <span id="main_soql_note" className="italic text-sm">
+          *We limited main dataset to 2020-2025 due to Ridership and Speeds
+          being in that range.
+        </span>
+      </div>
+      <h2 id="processed_data" className="font-bold  text-xl mb-1 pt-12">
+        Our Data at a Glance
+      </h2>
       <Tabs
         defaultValue="violations"
         className={`md:h-[600px] w-full`}
@@ -225,6 +329,6 @@ export default function OurDataSection({
           <DisplayTable<Neighborhood> data={neighborhoods} />
         </TabsContent>
       </Tabs>
-    </div>
+    </section>
   );
 }

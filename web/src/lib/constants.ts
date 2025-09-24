@@ -98,8 +98,9 @@ export const sections = [
   "datasets",
   "our_data",
   "risk_factors",
-  "route_risk_score",
-  "neighborhood_risk_score",
+  "findings",
+  "conclusion",
+  "appendix",
 ];
 
 export const datasets = [

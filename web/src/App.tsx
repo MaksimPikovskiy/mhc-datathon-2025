@@ -13,8 +13,6 @@ import { getViolationCountData } from "./api/getBusViolationCount";
 import { FactorsDisplay } from "./components/displayFactors";
 import type BusRouteRisk from "./models/busRouteRisk";
 import { normalizeArray } from "./lib/utils";
-import { Switch } from "./components/ui/switch";
-import { Label } from "./components/ui/label";
 import { getRouteDataLocal } from "./local-api/getBusRoutesLocal";
 import { getSpeedDataLocal } from "./local-api/getBusSpeedsLocal";
 import { getRidershipDataLocal } from "./local-api/getBusRidershipsLocal";
@@ -24,16 +22,22 @@ import type { FeatureCollection } from "geojson";
 import type Neighborhood from "./models/Neighborhood";
 import { getNeighborhoodsLocal } from "./local-api/getNeighborhoodsLocal";
 import type NeighborhoodRisk from "./models/NeighborhoodRisk";
-import NeighborhoodSection from "./components/neighboorhoodSection";
+import NeighborhoodSection from "./components/sections/neighboorhoodSection";
 import {
   defaultFactorsEnabled,
   defaultWeights,
   sections,
   violationCountQuery,
 } from "./lib/constants";
-import BusRouteSection from "./components/busRouteSection";
-import OurDataSection from "./components/ourDataSection";
-import DatasetsSection from "./components/datasetsSection";
+import BusRouteSection from "./components/sections/busRouteSection";
+import OurDataSection from "./components/sections/ourDataSection";
+import DatasetsSection from "./components/sections/datasetsSection";
+import HeroSection from "./components/sections/heroSection";
+import IntroSection from "./components/sections/introSection";
+import RiskFormulaSection from "./components/sections/riskFormulaSection";
+import ResultsInterlude from "./components/sections/resultsInterlude";
+import ConclusionSection from "./components/sections/conclusionSection";
+import AppendixSection from "./components/sections/appendixSection";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
@@ -399,10 +403,10 @@ function App() {
       if (!entry) return 0;
 
       const vDouble = entry.normalized_double_parked_violations;
-      const vStop = entry.bus_stop_violations;
-      const vLane = entry.bus_lane_violations;
-      const vSpeed = entry.avg_speed;
-      const vRidership = entry.avg_total_ridership;
+      const vStop = entry.normalized_bus_stop_violations;
+      const vLane = entry.normalized_bus_lane_violations;
+      const vSpeed = entry.normalized_avg_speed;
+      const vRidership = entry.normalized_avg_total_ridership;
 
       if (!vDouble || !vStop || !vLane || !vSpeed || !vRidership) return 0;
 
@@ -435,15 +439,7 @@ function App() {
         allNeighborhoods.push(newNeighborhoodRisk);
       });
 
-      const allRiskScores = allNeighborhoods.map((s) => s.riskScore);
-      const normalizedRiskScores = normalizeArray(allRiskScores);
-
-      const normalizedAllNeighborhoods = allNeighborhoods.map((s, idx) => ({
-        ...s,
-        riskScore: normalizedRiskScores[idx],
-      }));
-
-      setNeighborhoodRisks(normalizedAllNeighborhoods);
+      setNeighborhoodRisks(allNeighborhoods);
     }
   }, [normalizedNeighborhoods, factorsEnabled, weights]);
 
@@ -513,15 +509,7 @@ function App() {
         route.riskScore = calculateRiskByRoute(route.busRouteId);
       });
 
-      const allRiskScores = allRoutes.map((s) => s.riskScore);
-      const normalizedRiskScores = normalizeArray(allRiskScores);
-
-      const normalizedAllRoutes = allRoutes.map((s, idx) => ({
-        ...s,
-        riskScore: normalizedRiskScores[idx],
-      }));
-
-      setBusRouteRisks(normalizedAllRoutes);
+      setBusRouteRisks(allRoutes);
     }
   }, [
     busAceRoutes,
@@ -535,28 +523,12 @@ function App() {
     <>
       <Navbar sections={sections} setCurrentIndex={setCurrentIndex} />
       <main className="mt-12 space-y-6">
-        <div
-          id="home"
-          className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm hover:scale-101 cursor-pointer"
-          onClick={() => setUseLocal(!useLocal)}
-        >
-          <div className="space-y-0.5">
-            <Label>Fetching Data Method</Label>
-            <p className="text-sm">
-              {useLocal
-                ? "Using Local Data Available to the Website"
-                : "Fetching Data from data.ny.gov"}
-            </p>
-          </div>
-          <div>
-            <Switch
-              checked={useLocal}
-              onCheckedChange={setUseLocal}
-              aria-readonly
-              className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
-            />
-          </div>
-        </div>
+        <HeroSection id="home" setCurrentIndex={setCurrentIndex} />
+        <IntroSection
+          id="intro"
+          useLocal={useLocal}
+          setUseLocal={setUseLocal}
+        />
         <DatasetsSection id="datasets" />
         <OurDataSection
           id="our_data"
@@ -566,20 +538,22 @@ function App() {
           busRiderships={busRiderships}
           neighborhoods={neighborhoods}
         />
+        <RiskFormulaSection id="risk_factors"/>
         <FactorsDisplay
-          id="risk_factors"
           weights={weights}
           setWeights={setWeights}
           factorsEnabled={factorsEnabled}
           setFactorsEnabled={setFactorsEnabled}
         />
+        <ResultsInterlude id="findings" />
         <BusRouteSection id="route_risk_score" busRouteRisks={busRouteRisks} />
         <NeighborhoodSection
-          id="neighborhood_risk_score"
           neighborhoodPolygons={neighborhoodPolygons as FeatureCollection}
           neighborhoods={neighborhoods}
           neighborhoodRisks={neighborhoodRisks}
         />
+        <ConclusionSection id="conclusion"/>
+        <AppendixSection id="appendix"/>
       </main>
     </>
   );
