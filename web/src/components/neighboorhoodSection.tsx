@@ -6,11 +6,13 @@ import MapWithPolygons from "./mapWithPolygons";
 import { normalizeName } from "@/lib/utils";
 import { DisplayTable } from "./displayTable";
 import { useEffect, useState } from "react";
-import { LoaderCircle } from "lucide-react";
+import { InfoIcon, LoaderCircle } from "lucide-react";
 import { chartConfigRiskScores } from "@/lib/constants";
 import { DisplayBarChart } from "./displayBarChart";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
+import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type NeighborhoodSectionProps = {
   id?: string;
@@ -25,6 +27,7 @@ export default function NeighborhoodSection({
   neighborhoods,
   neighborhoodRisks,
 }: NeighborhoodSectionProps) {
+  const [activeTab, setActiveTab] = useState<string>("map");
   const [loading, setLoading] = useState<boolean>(true);
   const [sortData, setSortData] = useState<boolean>(false);
   const enrichedData = {
@@ -78,21 +81,53 @@ export default function NeighborhoodSection({
     return () => clearTimeout(timer);
   }, []);
 
+  const handleClick = () => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  };
+
   return (
     <div id={id}>
       <h2 className="font-bold  text-xl mb-1">
         Mapping Risk for Neighborhoods
       </h2>
-      <Tabs defaultValue="map" className="h-[600px] w-full">
+      <Tabs
+        defaultValue="map"
+        className="h-[600px] w-full"
+        value={activeTab}
+        onValueChange={setActiveTab}
+      >
         <div className="flex flex-row justify-between">
           <TabsList>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="table">Table</TabsTrigger>
             <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>
           </TabsList>
-          <div className="flex flex-row gap-2 items-center">
-            <Label>Sort Data by Risk Score</Label>
-            <Switch checked={sortData} onCheckedChange={setSortData} />
+          <div className="flex flex-row gap-12">
+            {activeTab === "map" && (
+              <div className="flex flex-row gap-2 items-center">
+                <Tooltip>
+                  <TooltipTrigger>
+                    <InfoIcon className="w-6 h-6" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-[150px]">
+                    <p className="text-center">It is necessary to rerender the map when adjusting weights or enabling/disabling risk factors</p>
+                  </TooltipContent>
+                </Tooltip>
+                <Button onClick={handleClick} className="cursor-pointer">
+                  Rerender Map
+                </Button>
+              </div>
+            )}
+            <div className="flex flex-row gap-2 items-center">
+              <Label>Sort Data by Risk Score</Label>
+              <Switch checked={sortData} onCheckedChange={setSortData} />
+            </div>
           </div>
         </div>
         <TabsContent value="map">

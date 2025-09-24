@@ -5,6 +5,7 @@ import { Slider } from "./ui/slider";
 import { Switch } from "./ui/switch";
 import { defaultFactorsEnabled, defaultWeights } from "@/lib/constants";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface FactorsDisplayProps {
   id?: string;
@@ -59,7 +60,7 @@ export function FactorsDisplay({
   return (
     <div id={id}>
       <h2 className="font-bold text-xl mb-2">Risk Factors</h2>
-      <div className="w-full flex justify-end">
+      <div className="w-full flex justify-end mb-2">
         <Button onClick={handleReset} className="cursor-pointer">
           Reset to Default
         </Button>
@@ -86,17 +87,34 @@ export function FactorsDisplay({
             </CardHeader>
             <CardContent>
               <Label htmlFor={factor}>Weight: {weights[factor]}</Label>
-              <Slider
-                className="mt-2"
-                id={factor}
-                value={[weights[factor]]}
-                onValueChange={(value: number[]) =>
-                  setWeights((prev) => ({ ...prev, [factor]: value[0] }))
-                }
-                max={1}
-                step={0.01}
-                disabled={!factorsEnabled[factor]}
-              />
+              <div className="flex flex-row gap-3">
+                <Slider
+                  className="mt-2"
+                  id={factor}
+                  value={[weights[factor]]}
+                  onValueChange={(value: number[]) =>
+                    setWeights((prev) => ({ ...prev, [factor]: value[0] }))
+                  }
+                  max={1}
+                  step={0.01}
+                  disabled={!factorsEnabled[factor]}
+                />
+                <Input
+                  type="number"
+                  className="w-22"
+                  value={weights[factor]}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  onChange={(e) => {
+                    const newVal = Number(e.target.value);
+                    if (newVal >= 0 && newVal <= 1) {
+                      setWeights((prev) => ({ ...prev, [factor]: newVal }));
+                    }
+                  }}
+                  disabled={!factorsEnabled[factor]}
+                />
+              </div>
             </CardContent>
           </Card>
         ))}
