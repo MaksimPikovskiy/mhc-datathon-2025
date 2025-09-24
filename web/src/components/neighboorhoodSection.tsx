@@ -13,12 +13,14 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 
 type NeighborhoodSectionProps = {
+  id?: string;
   neighborhoodPolygons: FeatureCollection;
   neighborhoods: Neighborhood[];
   neighborhoodRisks: NeighborhoodRisk[];
 };
 
 export default function NeighborhoodSection({
+  id = "",
   neighborhoodPolygons,
   neighborhoods,
   neighborhoodRisks,
@@ -60,7 +62,9 @@ export default function NeighborhoodSection({
     }),
   };
 
-  const sortedNeighborhoodRisks = [...neighborhoodRisks].sort((a, b) => b.riskScore - a.riskScore);
+  const sortedNeighborhoodRisks = [...neighborhoodRisks].sort(
+    (a, b) => b.riskScore - a.riskScore
+  );
 
   const getData = () => {
     return sortData ? sortedNeighborhoodRisks : neighborhoodRisks;
@@ -75,7 +79,7 @@ export default function NeighborhoodSection({
   }, []);
 
   return (
-    <div>
+    <div id={id}>
       <h2 className="font-bold  text-xl mb-1">
         Mapping Risk for Neighborhoods
       </h2>

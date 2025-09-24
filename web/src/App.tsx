@@ -28,6 +28,7 @@ import NeighborhoodSection from "./components/neighboorhoodSection";
 import {
   defaultFactorsEnabled,
   defaultWeights,
+  sections,
   violationCountQuery,
 } from "./lib/constants";
 import BusRouteSection from "./components/busRouteSection";
@@ -35,6 +36,7 @@ import OurDataSection from "./components/ourDataSection";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [unmodifiedBusAceRoutes, setUnmodifiedBusAceRoutes] = useState<
     BusRoute[]
@@ -81,6 +83,31 @@ function App() {
   const [weights, setWeights] = useState(defaultWeights);
 
   const [factorsEnabled, setFactorsEnabled] = useState(defaultFactorsEnabled);
+
+  // Navigate via keyboard
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        setCurrentIndex((prev) => Math.min(prev + 1, sections.length - 1));
+      } else if (e.key === "ArrowLeft") {
+        setCurrentIndex((prev) => Math.max(prev - 1, 0));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Scroll to section whenever currentIndex changes
+  useEffect(() => {
+    const sectionId = sections[currentIndex];
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    // Scroll so the section top is at the top of viewport, minus 20px margin
+    const top = section.offsetTop - 75;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, [currentIndex]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -505,9 +532,10 @@ function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar sections={sections} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
       <main className="mt-12 space-y-6">
         <div
+          id="home"
           className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm hover:scale-101 cursor-pointer"
           onClick={() => setUseLocal(!useLocal)}
         >
@@ -528,6 +556,7 @@ function App() {
           </div>
         </div>
         <OurDataSection
+          id="our_data"
           busAceRoutes={unmodifiedBusAceRoutes}
           busViolationCounts={busViolationCounts}
           busSpeeds={busSpeeds}
@@ -535,13 +564,15 @@ function App() {
           neighborhoods={neighborhoods}
         />
         <FactorsDisplay
+          id="risk_factors"
           weights={weights}
           setWeights={setWeights}
           factorsEnabled={factorsEnabled}
           setFactorsEnabled={setFactorsEnabled}
         />
-        <BusRouteSection busRouteRisks={busRouteRisks} />
+        <BusRouteSection id="route_risk_score" busRouteRisks={busRouteRisks} />
         <NeighborhoodSection
+          id="neighborhood_risk_score"
           neighborhoodPolygons={neighborhoodPolygons as FeatureCollection}
           neighborhoods={neighborhoods}
           neighborhoodRisks={neighborhoodRisks}

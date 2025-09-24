@@ -3,8 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
 import { Switch } from "./ui/switch";
+import { defaultFactorsEnabled, defaultWeights } from "@/lib/constants";
+import { Button } from "./ui/button";
 
 interface FactorsDisplayProps {
+  id?: string;
   weights: {
     doubleParkedViolation: number;
     busStopViolation: number;
@@ -40,6 +43,7 @@ interface FactorsDisplayProps {
 }
 
 export function FactorsDisplay({
+  id = "",
   weights,
   setWeights,
   factorsEnabled,
@@ -47,9 +51,19 @@ export function FactorsDisplay({
 }: FactorsDisplayProps) {
   const factors = Object.keys(weights) as (keyof typeof weights)[];
 
+  const handleReset = () => {
+    setFactorsEnabled(defaultFactorsEnabled);
+    setWeights(defaultWeights);
+  };
+
   return (
-    <>
+    <div id={id}>
       <h2 className="font-bold text-xl mb-2">Risk Factors</h2>
+      <div className="w-full flex justify-end">
+        <Button onClick={handleReset} className="cursor-pointer">
+          Reset to Default
+        </Button>
+      </div>
       <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {factors.map((factor) => (
           <Card
@@ -87,6 +101,6 @@ export function FactorsDisplay({
           </Card>
         ))}
       </div>
-    </>
+    </div>
   );
 }

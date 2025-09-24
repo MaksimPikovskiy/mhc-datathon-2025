@@ -76,3 +76,11 @@ export const violationCountQuery = `SELECT
     SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
     SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
   GROUP BY bus_route_id`;
+
+export const sections = [
+  "home",
+  "our_data",
+  "risk_factors",
+  "route_risk_score",
+  "neighborhood_risk_score",
+];

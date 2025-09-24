@@ -8,10 +8,12 @@ import { chartConfigRiskScores } from "@/lib/constants";
 import { DisplayBarChart } from "./displayBarChart";
 
 type BusRouteSectionProps = {
+  id?: string;
   busRouteRisks: BusRouteRisk[];
 };
 
 export default function BusRouteSection({
+  id = "",
   busRouteRisks,
 }: BusRouteSectionProps) {
   const [sortData, setSortData] = useState<boolean>(false);
@@ -25,7 +27,7 @@ export default function BusRouteSection({
   };
 
   return (
-    <div>
+    <div id={id}>
       <h2 className="font-bold  text-xl mb-1">Risk Score for Bus Routes</h2>
       <Tabs defaultValue="bar-chart" className={`h-[600px] w-full`}>
         <div className="flex flex-row justify-between">
