@@ -101,12 +101,6 @@ export default function MapWithPolygons({ data, info, riskScores }: Props) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data={data as any}
         style={styleFeature}
-        // style={{
-        //   color: "#3388ff",
-        //   weight: 2,
-        //   fillColor: "#3388ff",
-        //   fillOpacity: 0.3,
-        // }}
         onEachFeature={onEachFeature}
       />
       <FitBounds data={data} />

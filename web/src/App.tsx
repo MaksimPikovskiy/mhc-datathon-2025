@@ -2,8 +2,6 @@ import "./App.css";
 
 import Navbar from "./components/navbar";
 import { useCallback, useEffect, useState } from "react";
-import { DisplayTable } from "./components/displayTable";
-import { DisplayBarChart } from "./components/displayBarChart";
 import type BusRoute from "./models/BusRoute";
 import type BusViolationCount from "./models/BusViolationCount";
 import type BusSpeed from "./models/BusSpeed";
@@ -28,19 +26,19 @@ import { getNeighborhoodsLocal } from "./local-api/getNeighborhoodsLocal";
 import type NeighborhoodRisk from "./models/NeighborhoodRisk";
 import NeighborhoodSection from "./components/neighboorhoodSection";
 import {
-  chartConfigRiderships,
-  chartConfigRiskScores,
-  chartConfigSpeeds,
-  chartConfigTotalViolations,
-  chartConfigViolationsPerType,
   defaultFactorsEnabled,
   defaultWeights,
   violationCountQuery,
 } from "./lib/constants";
+import BusRouteSection from "./components/busRouteSection";
+import OurDataSection from "./components/ourDataSection";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
 
+  const [unmodifiedBusAceRoutes, setUnmodifiedBusAceRoutes] = useState<
+    BusRoute[]
+  >([]);
   const [busAceRoutes, setBusAceRoutes] = useState<BusRoute[]>([]);
   const [busViolationCounts, setBusViolationCounts] = useState<
     BusViolationCount[]
@@ -91,9 +89,69 @@ function App() {
           ? await getRouteDataLocal()
           : await getRouteData({});
 
-        setBusAceRoutes(routes);
+        routes.sort((a, b) => {
+          // Regex to capture: letter prefix, number, optional suffix
+          const regex = /^([A-Za-z]+)?(\d+)(.*)?$/;
 
-        const inRouteList = routes
+          const matchA = a.route.match(regex);
+          const matchB = b.route.match(regex);
+
+          if (!matchA || !matchB) return 0;
+
+          const [, prefixA = "", numA, suffixA = ""] = matchA;
+          const [, prefixB = "", numB, suffixB = ""] = matchB;
+
+          // 1. Compare letter prefixes
+          const prefixDiff = prefixA.localeCompare(prefixB);
+          if (prefixDiff !== 0) return prefixDiff;
+
+          // 2. Compare numeric part
+          const numDiff = Number(numA) - Number(numB);
+          if (numDiff !== 0) return numDiff;
+
+          // 3. Compare suffixes (put '+' last)
+          if (suffixA && !suffixB) return 1;
+          if (!suffixA && suffixB) return -1;
+
+          return suffixA.localeCompare(suffixB);
+        });
+
+        setUnmodifiedBusAceRoutes(routes);
+
+        const uniqueRoutes: BusRoute[] = Array.from(
+          new Map(routes.map((r) => [r.route, r])).values()
+        );
+
+        uniqueRoutes.sort((a, b) => {
+          // Regex to capture: letter prefix, number, optional suffix
+          const regex = /^([A-Za-z]+)?(\d+)(.*)?$/;
+
+          const matchA = a.route.match(regex);
+          const matchB = b.route.match(regex);
+
+          if (!matchA || !matchB) return 0;
+
+          const [, prefixA = "", numA, suffixA = ""] = matchA;
+          const [, prefixB = "", numB, suffixB = ""] = matchB;
+
+          // 1. Compare letter prefixes
+          const prefixDiff = prefixA.localeCompare(prefixB);
+          if (prefixDiff !== 0) return prefixDiff;
+
+          // 2. Compare numeric part
+          const numDiff = Number(numA) - Number(numB);
+          if (numDiff !== 0) return numDiff;
+
+          // 3. Compare suffixes (put '+' last)
+          if (suffixA && !suffixB) return 1;
+          if (!suffixA && suffixB) return -1;
+
+          return suffixA.localeCompare(suffixB);
+        });
+
+        setBusAceRoutes(uniqueRoutes);
+
+        const inRouteList = uniqueRoutes
           .map((route) => `'${route.route}'`)
           .join(", ");
 
@@ -116,6 +174,33 @@ function App() {
           ? await getSpeedDataLocal()
           : await getSpeedData({ offset: 0, query: speedQuery });
 
+        speeds.sort((a, b) => {
+          // Regex to capture: letter prefix, number, optional suffix
+          const regex = /^([A-Za-z]+)?(\d+)(.*)?$/;
+
+          const matchA = a.route_id.match(regex);
+          const matchB = b.route_id.match(regex);
+
+          if (!matchA || !matchB) return 0;
+
+          const [, prefixA = "", numA, suffixA = ""] = matchA;
+          const [, prefixB = "", numB, suffixB = ""] = matchB;
+
+          // 1. Compare letter prefixes
+          const prefixDiff = prefixA.localeCompare(prefixB);
+          if (prefixDiff !== 0) return prefixDiff;
+
+          // 2. Compare numeric part
+          const numDiff = Number(numA) - Number(numB);
+          if (numDiff !== 0) return numDiff;
+
+          // 3. Compare suffixes (put '+' last)
+          if (suffixA && !suffixB) return 1;
+          if (!suffixA && suffixB) return -1;
+
+          return suffixA.localeCompare(suffixB);
+        });
+
         if (useLocal) {
           // Filter locally to match ACE/ABLE routes
           const filteredSpeeds = speeds.filter((row) =>
@@ -129,6 +214,33 @@ function App() {
         const ridershipData = useLocal
           ? await getRidershipDataLocal()
           : await getRidershipData({ offset: 0, query: ridershipQuery });
+
+        ridershipData.sort((a, b) => {
+          // Regex to capture: letter prefix, number, optional suffix
+          const regex = /^([A-Za-z]+)?(\d+)(.*)?$/;
+
+          const matchA = a.bus_route.match(regex);
+          const matchB = b.bus_route.match(regex);
+
+          if (!matchA || !matchB) return 0;
+
+          const [, prefixA = "", numA, suffixA = ""] = matchA;
+          const [, prefixB = "", numB, suffixB = ""] = matchB;
+
+          // 1. Compare letter prefixes
+          const prefixDiff = prefixA.localeCompare(prefixB);
+          if (prefixDiff !== 0) return prefixDiff;
+
+          // 2. Compare numeric part
+          const numDiff = Number(numA) - Number(numB);
+          if (numDiff !== 0) return numDiff;
+
+          // 3. Compare suffixes (put '+' last)
+          if (suffixA && !suffixB) return 1;
+          if (!suffixA && suffixB) return -1;
+
+          return suffixA.localeCompare(suffixB);
+        });
 
         // Filter locally to match ACE/ABLE routes
         const filteredRidership = ridershipData.filter((row) =>
@@ -145,6 +257,15 @@ function App() {
         setBusViolationCounts(violations);
 
         getNeighborhoodsLocal().then((data) => {
+          data.sort((a, b) => {
+            // Compare boroughs first
+            const boroughDiff = a.borough_name.localeCompare(b.borough_name);
+            if (boroughDiff !== 0) return boroughDiff;
+
+            // If boroughs are the same, compare neighborhoods
+            return a.neighborhood_name.localeCompare(b.neighborhood_name);
+          });
+
           setNeighborhoods(data);
 
           if (data.length) {
@@ -406,80 +527,12 @@ function App() {
             />
           </div>
         </div>
-        <DisplayTable<BusRoute>
-          // title="Bus Route with ACE or ABLE"
-          data={busAceRoutes}
-        />
-        <DisplayTable<BusViolationCount>
-          // title="Bus Violations"
-          data={busViolationCounts}
-        />
-        <DisplayTable<BusSpeed>
-          // title="Bus Speeds for ACE/ABLE Routes"
-          data={busSpeeds}
-        />
-        <DisplayTable<BusRidership>
-          // title="Bus Riderships for ACE/ABLE Routes"
-          data={busRiderships}
-        />
-
-        <DisplayBarChart
-          // title="Total Violations Per Bus Route"
-          data={busViolationCounts}
-          config={chartConfigTotalViolations}
-          bars={[
-            {
-              dataKey: "total_violations",
-              fill: "var(--color-total_violations)",
-            },
-          ]}
-          showLegend={true}
-        />
-        <DisplayBarChart
-          // title="Violations of Each Type Per Bus Route"
-          data={busViolationCounts}
-          config={chartConfigViolationsPerType}
-          bars={[
-            {
-              dataKey: "bus_stop_violations",
-              fill: "var(--color-bus_stop_violations)",
-            },
-            {
-              dataKey: "bus_lane_violations",
-              fill: "var(--color-bus_lane_violations)",
-            },
-            {
-              dataKey: "double_parked_violations",
-              fill: "var(--color-double_parked_violations)",
-            },
-          ]}
-          showLegend={true}
-        />
-        <DisplayBarChart
-          // title="Average Speed Per Bus Route"
-          data={busSpeeds}
-          config={chartConfigSpeeds}
-          xKey="route_id"
-          bars={[
-            {
-              dataKey: "average_speed",
-              fill: "var(--color-average_speed)",
-            },
-          ]}
-          showLegend={true}
-        />
-        <DisplayBarChart
-          // title="Ridership Per Bus Route"
-          data={busRiderships}
-          config={chartConfigRiderships}
-          xKey="bus_route"
-          bars={[
-            {
-              dataKey: "total_riders",
-              fill: "var(--color-total_riders)",
-            },
-          ]}
-          showLegend={true}
+        <OurDataSection
+          busAceRoutes={unmodifiedBusAceRoutes}
+          busViolationCounts={busViolationCounts}
+          busSpeeds={busSpeeds}
+          busRiderships={busRiderships}
+          neighborhoods={neighborhoods}
         />
         <FactorsDisplay
           weights={weights}
@@ -487,62 +540,7 @@ function App() {
           factorsEnabled={factorsEnabled}
           setFactorsEnabled={setFactorsEnabled}
         />
-
-        <DisplayTable<
-          BusViolationCount & {
-            normalized_total_violations: number;
-            normalized_double_parked_violations: number;
-            normalized_bus_lane_violations: number;
-            normalized_bus_stop_violations: number;
-          }
-        >
-          // title="Normalized Bus Violations"
-          data={normalizedViolations}
-        />
-
-        <DisplayTable<BusSpeed & { normalized: number }>
-          // title="Normalized Bus Speeds"
-          data={normalizedSpeeds}
-        />
-
-        <DisplayTable<BusRidership & { normalized: number }>
-          // title="Normalized Bus Ridership"
-          data={normalizedRidership}
-        />
-
-        <DisplayTable<BusRouteRisk>
-          // title="Risk Score for Bus Routes"
-          data={busRouteRisks}
-        />
-        <DisplayBarChart
-          // title="Risk Score for Bus Routes"
-          data={busRouteRisks}
-          config={chartConfigRiskScores}
-          xKey="busRouteId"
-          bars={[
-            {
-              dataKey: "riskScore",
-              fill: "var(--color-riskScore)",
-            },
-          ]}
-          showLegend={true}
-        />
-        <h2 className="font-bold  text-xl mb-2">
-          Mapping Risk by Neighborhoods
-        </h2>
-        <DisplayTable<
-          Neighborhood & {
-            normalized_total_violations: number;
-            normalized_bus_stop_violations: number;
-            normalized_double_parked_violations: number;
-            normalized_bus_lane_violations: number;
-            normalized_avg_speed: number;
-            normalized_avg_total_ridership: number;
-          }
-        >
-          // title="Normalized Statistics for Neighborhoods"
-          data={normalizedNeighborhoods}
-        />
+        <BusRouteSection busRouteRisks={busRouteRisks} />
         <NeighborhoodSection
           neighborhoodPolygons={neighborhoodPolygons as FeatureCollection}
           neighborhoods={neighborhoods}

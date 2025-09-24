@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
 } from "recharts";
 import {
   ChartContainer,
@@ -32,6 +33,10 @@ type BarChartOptions = {
   showLegend?: boolean;
   /** show or hide x-axis labels*/
   showXLabels?: boolean;
+  /** x-axis label */
+  xLabel?: string;
+  /** y-axis label */
+  yLabel?: string;
 };
 
 export function DisplayBarChartVertical({
@@ -41,6 +46,8 @@ export function DisplayBarChartVertical({
   xKey = "bus_route_id",
   showLegend = false,
   showXLabels = true,
+  xLabel = "",
+  yLabel = "",
 }: BarChartOptions) {
   return (
     <div className="w-full">
@@ -57,7 +64,11 @@ export function DisplayBarChartVertical({
           <CartesianGrid vertical={false} />
           <Tooltip content={<ChartTooltipContent />} />
           {showLegend && <Legend content={<ChartLegendContent />} />}
-          <XAxis type="number" />
+          <XAxis type="number">
+            {xLabel.length > 0 && (
+              <Label value={xLabel} position="insideBottom" offset={-5} />
+            )}
+          </XAxis>
           <YAxis
             type="category"
             dataKey={xKey}
@@ -69,7 +80,16 @@ export function DisplayBarChartVertical({
             interval={0}
             dy={-10}
             dx={-4}
-          />
+          >
+            {yLabel.length > 0 && (
+              <Label
+                value={yLabel}
+                angle={-90}
+                position="insideLeft"
+                offset={10}
+              />
+            )}
+          </YAxis>
           {bars.map((bar) => (
             <Bar
               key={bar.dataKey}

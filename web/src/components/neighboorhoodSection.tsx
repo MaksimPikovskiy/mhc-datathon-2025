@@ -118,8 +118,10 @@ export default function NeighborhoodSection({
                 fill: "var(--color-riskScore)",
               },
             ]}
-            showLegend={true}
+            showLegend={false}
             showXLabels={false}
+            xLabel="Neighborhood"
+            yLabel="Risk Score"
           />
         </TabsContent>
       </Tabs>

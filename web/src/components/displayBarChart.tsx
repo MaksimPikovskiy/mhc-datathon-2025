@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  Label,
 } from "recharts";
 import {
   ChartContainer,
@@ -32,6 +33,14 @@ type BarChartOptions = {
   showLegend?: boolean;
   /** show or hide x-axis labels*/
   showXLabels?: boolean;
+  /** x-axis label */
+  xLabel?: string;
+  /** x-axis label offset */
+  xOffset?: number;
+  /** y-axis label */
+  yLabel?: string;
+  /** y-axis label offset */
+  yOffset?: number;
 };
 
 export function DisplayBarChart({
@@ -41,7 +50,17 @@ export function DisplayBarChart({
   xKey = "bus_route_id",
   showLegend = false,
   showXLabels = true,
+  xLabel = "",
+  yLabel = "",
+  xOffset = -5,
+  yOffset = 10,
 }: BarChartOptions) {
+  const formatNumber = (num: number) => {
+    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + "K";
+    return num.toString();
+  };
+
   return (
     <div className="w-full">
       <ChartContainer
@@ -51,7 +70,15 @@ export function DisplayBarChart({
         <BarChart accessibilityLayer data={data} margin={{ bottom: 30 }}>
           <CartesianGrid vertical={false} />
           <Tooltip content={<ChartTooltipContent />} />
-          {showLegend && <Legend content={<ChartLegendContent />} />}
+          {showLegend && (
+            <Legend
+              content={<ChartLegendContent />}
+              layout="horizontal"
+              verticalAlign="bottom"
+              align="center"
+              wrapperStyle={{ bottom: 0 }}
+            />
+          )}
           <XAxis
             dataKey={xKey}
             tick={showXLabels}
@@ -63,8 +90,21 @@ export function DisplayBarChart({
             interval={0}
             dy={-10}
             dx={-4}
-          />
-          <YAxis />
+          >
+            {xLabel.length > 0 && (
+              <Label value={xLabel} position="insideBottom" offset={xOffset} />
+            )}
+          </XAxis>
+          <YAxis tickFormatter={formatNumber}>
+            {yLabel.length > 0 && (
+              <Label
+                value={yLabel}
+                angle={-90}
+                position="insideLeft"
+                offset={yOffset}
+              />
+            )}
+          </YAxis>
           {bars.map((bar) => (
             <Bar
               key={bar.dataKey}
