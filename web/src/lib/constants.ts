@@ -10,6 +10,16 @@ export const riskColors = [
   "#BD0026", // very high
 ];
 
+export const riskColorsLegend = [
+  { range: "0.00 – 0.16", color: "#FFFFCC", label: "Very Low" },
+  { range: "0.17 – 0.33", color: "#FFEDA0", label: "Low" },
+  { range: "0.34 – 0.49", color: "#FED976", label: "Moderate" },
+  { range: "0.50 – 0.66", color: "#FEB24C", label: "Moderately High" },
+  { range: "0.67 – 0.83", color: "#FD8D3C", label: "High" },
+  { range: "0.84 – 0.99", color: "#F03B20", label: "Very High" },
+  { range: "1.00", color: "#BD0026", label: "Extreme" },
+];
+
 export const chartConfigTotalViolations = {
   total_violations: {
     label: "Total Violations",

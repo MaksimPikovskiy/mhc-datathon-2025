@@ -110,6 +110,21 @@ export const getColorForScore = (score: number): string => {
   return riskColors[idx];
 };
 
+export const getContrastTextColor = (bgColor: string) => {
+  // Remove # if present
+  const hex = bgColor.replace("#", "");
+  // Parse r,g,b
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  // Relative luminance
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+  // Return black for light backgrounds, white for dark backgrounds
+  return luminance > 0.5 ? "#000000" : "#FFFFFF";
+};
+
 export const normalizeName = (name: string): string => {
   return name
     .toLowerCase()

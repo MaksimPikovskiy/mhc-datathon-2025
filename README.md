@@ -392,6 +392,19 @@ With weights applied, we computed risk scores for each route and neighborhood. T
 
 ### Mapping Risk for Neighborhoods
 
+### Risk Score Color Legend
+
+| **Score Range** | **Color** | **Hex Code** | **Risk Level** |
+|-----------------|-----------|-------------|----------------|
+| 0.00 – 0.16     | ![#FFFFCC](https://placehold.co/15x15/FFFFCC/FFFFCC.png) | `#FFFFCC` | Very Low |
+| 0.17 – 0.33     | ![#FFEDA0](https://placehold.co/15x15/FFEDA0/FFEDA0.png) | `#FFEDA0` | Low |
+| 0.34 – 0.49     | ![#FED976](https://placehold.co/15x15/FED976/FED976.png) | `#FED976` | Moderate |
+| 0.50 – 0.66     | ![#FEB24C](https://placehold.co/15x15/FEB24C/FEB24C.png) | `#FEB24C` | Moderately High |
+| 0.67 – 0.83     | ![#FD8D3C](https://placehold.co/15x15/FD8D3C/FD8D3C.png) | `#FD8D3C` | High |
+| 0.84 – 0.99     | ![#F03B20](https://placehold.co/15x15/F03B20/F03B20.png) | `#F03B20` | Very High |
+| 1.00            | ![#BD0026](https://placehold.co/15x15/BD0026/BD0026.png) | `#BD0026` | Extreme |
+
+
 ![Map of Risk Scores for Neighborhoods](/visuals/map_risk_neighborhoods.png)
 
 ## Conclusion

@@ -3,16 +3,17 @@ import type Neighborhood from "@/models/Neighborhood";
 import type NeighborhoodRisk from "@/models/NeighborhoodRisk";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import MapWithPolygons from "../mapWithPolygons";
-import { normalizeName } from "@/lib/utils";
+import { getContrastTextColor, normalizeName } from "@/lib/utils";
 import { DisplayTable } from "../displayTable";
 import { useEffect, useState } from "react";
 import { InfoIcon, LoaderCircle } from "lucide-react";
-import { chartConfigRiskScores } from "@/lib/constants";
+import { chartConfigRiskScores, riskColorsLegend } from "@/lib/constants";
 import { DisplayBarChart } from "../displayBarChart";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Badge } from "../ui/badge";
 
 type NeighborhoodSectionProps = {
   id?: string;
@@ -139,6 +140,20 @@ export default function NeighborhoodSection({
               />
             </div>
           </div>
+        </div>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {riskColorsLegend.map((item) => (
+            <Badge
+              key={item.range}
+              className="text-black font-medium"
+              style={{
+                backgroundColor: item.color,
+                color: getContrastTextColor(item.color),
+              }}
+            >
+              {item.range} {item.label}
+            </Badge>
+          ))}
         </div>
         <TabsContent value="map">
           {!loading ? (
