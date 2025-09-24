@@ -25,6 +25,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/data"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Data - All intermediate and final datasets used
@@ -33,6 +35,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/data"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Data - Data used by the website
@@ -41,6 +45,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/api"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               API - Fetching from server and local data
@@ -49,6 +55,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/local-api"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               API - Fetching from local data
@@ -57,6 +65,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/scripts"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Python Scripts - Grouping ACE/ABLE violations per neighborhood and
@@ -66,6 +76,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/blob/60558a5e01eea83e16da13ecdd55a71a1cbeae96/web/src/App.tsx#L472"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Risk Calculation for Bus Routes [App.tsx:472]
@@ -74,6 +86,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/blob/60558a5e01eea83e16da13ecdd55a71a1cbeae96/web/src/App.tsx#L398"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Risk Calculation for Neighborhoods [App.tsx:398]
@@ -82,6 +96,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/blob/60558a5e01eea83e16da13ecdd55a71a1cbeae96/web/src/App.tsx#L348"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Normalization of ACE/ABLE Violation, Speed, and Ridership Data
@@ -91,6 +107,8 @@ export default function AppendixSection({ id }: { id: string }) {
           <li>
             <a
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/blob/60558a5e01eea83e16da13ecdd55a71a1cbeae96/web/src/App.tsx#L303"
+              target="_blank"
+              rel="noopener noreferrer"
               className="underline hover:text-primary/50"
             >
               Normalization of Neighborhood Data [App.tsx:303]
