@@ -82,6 +82,7 @@ export function FactorsDisplay({
                       [factor]: checked,
                     }))
                   }
+                  className="cursor-pointer"
                 />
               </CardTitle>
             </CardHeader>

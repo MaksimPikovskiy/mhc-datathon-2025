@@ -116,7 +116,10 @@ export default function NeighborhoodSection({
                     <InfoIcon className="w-6 h-6" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-[150px]">
-                    <p className="text-center">It is necessary to rerender the map when adjusting weights or enabling/disabling risk factors</p>
+                    <p className="text-center">
+                      It is necessary to rerender the map when adjusting weights
+                      or enabling/disabling risk factors
+                    </p>
                   </TooltipContent>
                 </Tooltip>
                 <Button onClick={handleClick} className="cursor-pointer">
@@ -126,7 +129,11 @@ export default function NeighborhoodSection({
             )}
             <div className="flex flex-row gap-2 items-center">
               <Label>Sort Data by Risk Score</Label>
-              <Switch checked={sortData} onCheckedChange={setSortData} />
+              <Switch
+                checked={sortData}
+                onCheckedChange={setSortData}
+                className="cursor-pointer"
+              />
             </div>
           </div>
         </div>

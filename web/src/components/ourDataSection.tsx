@@ -113,12 +113,20 @@ export default function OurDataSection({
                     Showing{" "}
                     {showTotal ? "Combined Data" : "Data Split by Types"}
                   </Label>
-                  <Switch checked={showTotal} onCheckedChange={setShowTotal} />
+                  <Switch
+                    checked={showTotal}
+                    onCheckedChange={setShowTotal}
+                    className="cursor-pointer"
+                  />
                 </div>
               )}
               <div className="flex flex-row gap-2 items-center">
                 <Label>Showing Data as {showChart ? "Chart" : "Table"}</Label>
-                <Switch checked={showChart} onCheckedChange={setShowChart} />
+                <Switch
+                  checked={showChart}
+                  onCheckedChange={setShowChart}
+                  className="cursor-pointer"
+                />
               </div>
             </div>
           )}

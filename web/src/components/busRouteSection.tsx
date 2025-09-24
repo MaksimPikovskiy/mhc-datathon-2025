@@ -37,7 +37,11 @@ export default function BusRouteSection({
           </TabsList>
           <div className="flex flex-row gap-2 items-center">
             <Label>Sort Data by Risk Score</Label>
-            <Switch checked={sortData} onCheckedChange={setSortData} />
+            <Switch
+              checked={sortData}
+              onCheckedChange={setSortData}
+              className="cursor-pointer"
+            />
           </div>
         </div>
         <TabsContent value="table">

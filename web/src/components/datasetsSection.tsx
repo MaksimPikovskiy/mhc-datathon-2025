@@ -35,7 +35,7 @@ export default function DatasetsSection({ id = "" }: DatasetsSectionProps) {
                     {ds.name}
                   </CardTitle>
                 </div>
-                <SquareArrowOutUpRightIcon className="h-4 w-4 text-blue-600 opacity-70 group-hover:opacity-100" />
+                <SquareArrowOutUpRightIcon className="flex-shrink-0 h-4 w-4 text-blue-600 opacity-70 group-hover:opacity-100" />
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground break-words">

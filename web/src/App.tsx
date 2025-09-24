@@ -557,6 +557,7 @@ function App() {
               checked={useLocal}
               onCheckedChange={setUseLocal}
               aria-readonly
+              className="cursor-pointer"
             />
           </div>
         </div>
