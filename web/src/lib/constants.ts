@@ -75,6 +75,7 @@ export const violationCountQuery = `SELECT
     SUM(CASE WHEN violation_type = 'MOBILE BUS STOP' THEN 1 ELSE 0 END) AS bus_stop_violations,
     SUM(CASE WHEN violation_type = 'MOBILE DOUBLE PARKED' THEN 1 ELSE 0 END) AS double_parked_violations,
     SUM(CASE WHEN violation_type = 'MOBILE BUS LANE' THEN 1 ELSE 0 END) AS bus_lane_violations
+  WHERE first_occurrence > '2019-12-31T23:59:59'
   GROUP BY bus_route_id`;
 
 export const sections = [
