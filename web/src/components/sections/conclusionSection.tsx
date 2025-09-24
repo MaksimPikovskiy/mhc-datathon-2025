@@ -1,7 +1,7 @@
 export default function ConclusionSection({ id }: { id: string }) {
   return (
     <section id={id} className="py-12">
-      <div className="bg-gray-50 rounded container mx-auto p-4 space-y-4">
+      <div className="bg-[var(--color-royal)]/10 rounded container mx-auto p-4 space-y-4">
         <h2 className="text-2xl font-bold">Conclusion</h2>
         <div>
           <h3 className="font-bold text-xl">Findings</h3>

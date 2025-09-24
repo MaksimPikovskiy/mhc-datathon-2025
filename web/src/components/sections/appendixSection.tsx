@@ -27,7 +27,7 @@ export default function AppendixSection({ id }: { id: string }) {
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/data"
               className="underline hover:text-primary/50"
             >
-              Data — All intermediate and final datasets used
+              Data - All intermediate and final datasets used
             </a>
           </li>
           <li>
@@ -35,7 +35,7 @@ export default function AppendixSection({ id }: { id: string }) {
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/data"
               className="underline hover:text-primary/50"
             >
-              Data — Data used by the website
+              Data - Data used by the website
             </a>
           </li>
           <li>
@@ -43,7 +43,7 @@ export default function AppendixSection({ id }: { id: string }) {
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/api"
               className="underline hover:text-primary/50"
             >
-              API — Fetching from server and local data
+              API - Fetching from server and local data
             </a>
           </li>
           <li>
@@ -51,7 +51,7 @@ export default function AppendixSection({ id }: { id: string }) {
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/web/src/local-api"
               className="underline hover:text-primary/50"
             >
-              API — Fetching from local data
+              API - Fetching from local data
             </a>
           </li>
           <li>
@@ -59,7 +59,7 @@ export default function AppendixSection({ id }: { id: string }) {
               href="https://github.com/MaksimPikovskiy/mhc-datathon-2025/tree/main/scripts"
               className="underline hover:text-primary/50"
             >
-              Python Scripts — Grouping ACE/ABLE violations per neighborhood and
+              Python Scripts - Grouping ACE/ABLE violations per neighborhood and
               adding average ridership and speed of buses
             </a>
           </li>

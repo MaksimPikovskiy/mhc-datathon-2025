@@ -38,6 +38,7 @@ import RiskFormulaSection from "./components/sections/riskFormulaSection";
 import ResultsInterlude from "./components/sections/resultsInterlude";
 import ConclusionSection from "./components/sections/conclusionSection";
 import AppendixSection from "./components/sections/appendixSection";
+import DictionarySection from "./components/sections/dictionarySection";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
@@ -571,6 +572,7 @@ function App() {
           useLocal={useLocal}
           setUseLocal={setUseLocal}
         />
+        <DictionarySection id="dictionary" />
         <DatasetsSection id="datasets" />
         <OurDataSection
           id="our_data"

@@ -95,6 +95,7 @@ export const violationCountQuery = `SELECT
 
 export const sections = [
   "home",
+  "dictionary",
   "datasets",
   "our_data",
   "risk_factors",

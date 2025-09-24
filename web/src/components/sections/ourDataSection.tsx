@@ -128,14 +128,14 @@ export default function OurDataSection({
             *
           </button>
         </h3>
-        <div className="flex justify-center mx-56">
+        <div className="flex justify-center md:mx-56">
           <p className="text-sm">
             Counts total automated camera enforcement (ACE) violations per bus
             route, as well as breaking them down into bus stop, double parked,
             and bus lane categories.
           </p>
         </div>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center md:mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -159,13 +159,13 @@ GROUP BY bus_route_id`}
           is a variable containing the set of ACE/ABLE Enforced Bus Routes we
           mentioned earlier.
         </p>
-        <div className="flex justify-center mx-56">
+        <div className="flex justify-center md:mx-56">
           <p className="text-sm">
             Retrieves total mileage, total operating time, and computes average
             speed for each enforced route.
           </p>
         </div>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center md:mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -188,13 +188,13 @@ GROUP BY route_id`}
           is a variable containing the set of ACE/ABLE Enforced Bus Routes we
           mentioned earlier.
         </p>
-        <div className="flex justify-center mx-56">
+        <div className="flex justify-center md:mx-56">
           <p className="text-sm">
             Returns ridership totals plus transfer total for the list of
             enforced routes, which is combined into total_riders on the website.
           </p>
         </div>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center md:mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -220,7 +220,7 @@ GROUP BY route_id`}
           Violations (2020-2025) dataset into clean, aggregated table the
           website uses for risk score calculations of neighborhoods.
         </p>
-        <div className="mx-32 mb-6">
+        <div className="md:mx-32 mb-6">
           <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
             <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("neighborhood_grouper")}>
               neighborhood_grouper.py
@@ -234,7 +234,7 @@ GROUP BY route_id`}
           </p>
         </div>
 
-        <div className="mx-32 mb-6">
+        <div className="md:mx-32 mb-6">
           <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
             <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("csv_merger")}>
               csv_merger.py
@@ -248,7 +248,7 @@ GROUP BY route_id`}
           </p>
         </div>
 
-        <div className="mx-32">
+        <div className="md:mx-32">
           <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
             <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("neighborhood_final_stats_maker")}>
               neighborhood_final_stats_maker.py

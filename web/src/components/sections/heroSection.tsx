@@ -37,7 +37,7 @@ export default function HeroSection({
           <Button
             className="bg-white text-purple-700 hover:bg-purple-100 cursor-pointer"
             onClick={() => {
-              setCurrentIndex(4);
+              setCurrentIndex(5);
               scrollToSection("findings");
             }}
           >

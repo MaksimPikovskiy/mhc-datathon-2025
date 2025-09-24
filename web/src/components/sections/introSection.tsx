@@ -22,8 +22,8 @@ export default function IntroSection({
         <p>
           Urban bus systems are vital for mobility, but safety remains a
           pressing issue. Our team investigates how bus route
-          characteristics—ACE (and ABLE) violations, speeds, and
-          ridership—affect accident risk.
+          characteristics-ACE (and ABLE) violations, speeds, and
+          ridership-affect accident risk.
         </p>
         <ul className="ps-6 list-disc list-outside space-y-1 text-left">
           <li>
@@ -41,7 +41,7 @@ export default function IntroSection({
         </ul>
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-row justify-center items-center gap-2">
-            <h3 className="font-bold text-xl">Reported by</h3>
+            <h3 className="font-bold text-xl">Report by</h3>
             <div className="flex flex-row justify-center items-center">
               <img src="/mechanicus.png" className="w-8 h-8" />
               <h3 className="font-bold text-xl">Mechanicus</h3>
