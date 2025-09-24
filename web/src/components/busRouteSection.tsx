@@ -16,7 +16,7 @@ export default function BusRouteSection({
   id = "",
   busRouteRisks,
 }: BusRouteSectionProps) {
-  const [sortData, setSortData] = useState<boolean>(false);
+  const [sortData, setSortData] = useState<boolean>(true);
 
   const sortedBusRouteRisks = [...busRouteRisks].sort(
     (a, b) => b.riskScore - a.riskScore

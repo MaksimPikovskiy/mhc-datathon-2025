@@ -29,7 +29,7 @@ export default function NeighborhoodSection({
 }: NeighborhoodSectionProps) {
   const [activeTab, setActiveTab] = useState<string>("map");
   const [loading, setLoading] = useState<boolean>(true);
-  const [sortData, setSortData] = useState<boolean>(false);
+  const [sortData, setSortData] = useState<boolean>(true);
   const enrichedData = {
     ...neighborhoodPolygons,
     features: neighborhoodPolygons.features.map((f) => {
