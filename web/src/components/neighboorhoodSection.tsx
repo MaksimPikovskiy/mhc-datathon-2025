@@ -102,7 +102,7 @@ export default function NeighborhoodSection({
         value={activeTab}
         onValueChange={setActiveTab}
       >
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-col md:flex-row gap-2 justify-between">
           <TabsList>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="table">Table</TabsTrigger>

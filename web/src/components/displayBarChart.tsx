@@ -65,7 +65,7 @@ export function DisplayBarChart({
     <div className="w-full">
       <ChartContainer
         config={config}
-        className="min-h-[200px] max-h-[550px] w-full"
+        className="min-h-[200px] md:max-h-[550px] w-full"
       >
         <BarChart accessibilityLayer data={data} margin={{ bottom: 30 }}>
           <CartesianGrid vertical={false} />

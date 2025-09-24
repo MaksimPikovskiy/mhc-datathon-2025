@@ -29,7 +29,7 @@ export default function BusRouteSection({
   return (
     <div id={id}>
       <h2 className="font-bold  text-xl mb-1">Risk Score for Bus Routes</h2>
-      <Tabs defaultValue="bar-chart" className={`h-[600px] w-full`}>
+      <Tabs defaultValue="bar-chart" className={`md:h-[600px] w-full`}>
         <div className="flex flex-row justify-between">
           <TabsList>
             <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>

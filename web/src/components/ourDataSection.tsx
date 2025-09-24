@@ -94,12 +94,12 @@ export default function OurDataSection({
       <h2 className="font-bold  text-xl mb-1">Our Data at a Glance</h2>
       <Tabs
         defaultValue="violations"
-        className={`h-[600px] w-full`}
+        className={`md:h-[600px] w-full`}
         value={activeTab}
         onValueChange={setActiveTab}
       >
-        <div className="flex flex-row justify-between">
-          <TabsList>
+        <div className="flex flex-col md:flex-row gap-2 justify-between">
+          <TabsList className="w-[375px] md:w-auto overflow-x-auto items-center justify-start">
             <TabsTrigger value="violations">ACE Violations</TabsTrigger>
             <TabsTrigger value="speeds">Bus Speeds</TabsTrigger>
             <TabsTrigger value="riderships">Bus Total Riderships</TabsTrigger>

@@ -21,7 +21,7 @@ export function DisplayTable<T extends Record<string, any>>({
 
   return (
     <div>
-      <ScrollArea className="relative h-[575px] max-h-[575px] overflow-auto border rounded">
+      <ScrollArea className="relative md:h-[575px] md:max-h-[575px] overflow-auto border rounded">
         {data.length > 0 ? (
           <Table>
             <TableHeader>

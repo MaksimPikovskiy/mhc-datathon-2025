@@ -1,5 +1,5 @@
 import { formatTitle } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type NavbarProps = {
   sections: string[];
@@ -13,10 +13,31 @@ export default function Navbar({
   setCurrentIndex,
 }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentSection = sections.find((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections]);
 
   return (
     <nav className="w-full fixed left-0 top-0 z-50 bg-white p-4 shadow-md rounded-b-xl">
@@ -34,7 +55,7 @@ export default function Navbar({
               key={sec}
               onClick={() => setCurrentIndex(idx)}
               className={`text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded p-1 transition duration-30 cursor-pointer ${
-                idx === currentIndex ? "underline underline-offset-2" : ""
+                sec === activeSection ? "underline underline-offset-2" : ""
               }`}
             >
               {formatTitle(sec)}
