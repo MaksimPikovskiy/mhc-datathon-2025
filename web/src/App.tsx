@@ -105,7 +105,7 @@ function App() {
     const section = document.getElementById(sectionId);
     if (!section) return;
 
-    // Scroll so the section top is at the top of viewport, minus 20px margin
+    // Scroll so the section top is at the top of viewport, minus 75px margin
     const top = section.offsetTop - 75;
     window.scrollTo({ top, behavior: "smooth" });
   }, [currentIndex]);
@@ -533,11 +533,7 @@ function App() {
 
   return (
     <>
-      <Navbar
-        sections={sections}
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
-      />
+      <Navbar sections={sections} setCurrentIndex={setCurrentIndex} />
       <main className="mt-12 space-y-6">
         <div
           id="home"
@@ -557,7 +553,7 @@ function App() {
               checked={useLocal}
               onCheckedChange={setUseLocal}
               aria-readonly
-              className="cursor-pointer"
+              className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
             />
           </div>
         </div>

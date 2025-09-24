@@ -13,43 +13,58 @@ export const riskColors = [
 export const chartConfigTotalViolations = {
   total_violations: {
     label: "Total Violations",
-    color: "#2563eb",
+    color: "#6C3BAA",
   },
 } satisfies ChartConfig;
+
+// export const chartConfigViolationsPerType = {
+//   bus_stop_violations: {
+//     label: "Bus Stop",
+//     color: "#8231C4",
+//   },
+//   double_parked_violations: {
+//     label: "Double Parked",
+//     color: "#E9B3FB",
+//   },
+//   bus_lane_violations: {
+//     label: "Bus Lane",
+//     color: "#3B0270",
+//   },
+// } satisfies ChartConfig;
 
 export const chartConfigViolationsPerType = {
   bus_stop_violations: {
     label: "Bus Stop",
-    color: "#E53A70",
+    color: "#6C3BAA",
   },
   double_parked_violations: {
     label: "Double Parked",
-    color: "#32CD32",
+    color: "#AA3B42",
   },
   bus_lane_violations: {
     label: "Bus Lane",
-    color: "#FF8C00",
+    color: "#79AA3B",
   },
 } satisfies ChartConfig;
 
 export const chartConfigSpeeds = {
   average_speed: {
     label: "Average Speed",
-    color: "#2563eb",
+    color: "#6C3BAA",
   },
 };
 
 export const chartConfigRiderships = {
   total_riders: {
     label: "Ridership",
-    color: "#2563eb",
+    color: "#6C3BAA",
   },
 };
 
 export const chartConfigRiskScores = {
   riskScore: {
     label: "Risk Score",
-    color: "#2563eb",
+    color: "#6C3BAA",
   },
 } satisfies ChartConfig;
 

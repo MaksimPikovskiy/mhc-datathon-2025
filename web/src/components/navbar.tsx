@@ -3,15 +3,10 @@ import { useEffect, useState } from "react";
 
 type NavbarProps = {
   sections: string[];
-  currentIndex: number;
   setCurrentIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export default function Navbar({
-  sections,
-  currentIndex,
-  setCurrentIndex,
-}: NavbarProps) {
+export default function Navbar({ sections, setCurrentIndex }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
@@ -40,23 +35,30 @@ export default function Navbar({
   }, [sections]);
 
   return (
-    <nav className="w-full fixed left-0 top-0 z-50 bg-white p-4 shadow-md rounded-b-xl">
+    <nav className="w-full fixed left-0 top-0 z-50 bg-white p-3 shadow-md rounded-b-xl">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center">
-          <a href="#" className="text-xl font-bold text-gray-800">
-            <span className="bg-[#F1421C] text-white p-2 rounded">MHC++</span>{" "}
-            Mechanicus{" "}
-          </a>
+        <div>
+          <button
+            className="text-xl font-bold text-gray-800 flex flex-row gap-4 items-center cursor-pointer"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setCurrentIndex(0);
+            }}
+          >
+            <span className="bg-[#F1421C] text-white p-2 rounded">MHC++</span>
+            <div className="flex flex-row items-center">
+              <img src="/mechanicus.png" className="w-10 h-10" />
+              <span>Mechanicus</span>
+            </div>
+          </button>
         </div>
 
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-2">
           {sections.map((sec, idx) => (
             <button
               key={sec}
               onClick={() => setCurrentIndex(idx)}
-              className={`text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded p-1 transition duration-30 cursor-pointer ${
-                sec === activeSection ? "underline underline-offset-2" : ""
-              }`}
+              className={`nav-link ${sec === activeSection ? "active" : ""}`}
             >
               {formatTitle(sec)}
             </button>
@@ -97,9 +99,7 @@ export default function Navbar({
           <button
             key={sec}
             onClick={() => setCurrentIndex(idx)}
-            className={`block py-2 px-4 text-gray-600 hover:bg-gray-200 transition duration-300 rounded-md cursor-pointer ${
-              idx === currentIndex ? "underline underline-offset-2" : ""
-            }`}
+            className={`nav-link ${sec === activeSection ? "active" : ""}`}
           >
             {formatTitle(sec)}
           </button>

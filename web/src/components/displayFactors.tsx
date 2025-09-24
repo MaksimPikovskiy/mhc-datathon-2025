@@ -61,7 +61,10 @@ export function FactorsDisplay({
     <div id={id}>
       <h2 className="font-bold text-xl mb-2">Risk Factors</h2>
       <div className="w-full flex justify-end mb-2">
-        <Button onClick={handleReset} className="cursor-pointer">
+        <Button
+          onClick={handleReset}
+          className="cursor-pointer bg-[var(--color-royal)] text-white hover:bg-[var(--color-royal-light)]"
+        >
           Reset to Default
         </Button>
       </div>
@@ -69,7 +72,9 @@ export function FactorsDisplay({
         {factors.map((factor) => (
           <Card
             key={factor}
-            className={`p-4 ${!factorsEnabled[factor] ? "bg-gray-50" : ""}`}
+            className={`p-4 ${
+              !factorsEnabled[factor] ? "bg-[var(--color-royal-light)]/5" : ""
+            }`}
           >
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
@@ -82,7 +87,7 @@ export function FactorsDisplay({
                       [factor]: checked,
                     }))
                   }
-                  className="cursor-pointer"
+                  className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
                 />
               </CardTitle>
             </CardHeader>
@@ -90,7 +95,7 @@ export function FactorsDisplay({
               <Label htmlFor={factor}>Weight: {weights[factor]}</Label>
               <div className="flex flex-row gap-3">
                 <Slider
-                  className="mt-2"
+                  className="mt-2 cursor-move"
                   id={factor}
                   value={[weights[factor]]}
                   onValueChange={(value: number[]) =>

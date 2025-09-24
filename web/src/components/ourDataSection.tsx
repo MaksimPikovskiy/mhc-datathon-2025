@@ -50,9 +50,9 @@ export default function OurDataSection({
     const hasACE = programs.has("ACE");
     const hasABLE = programs.has("ABLE");
 
-    if (hasACE && hasABLE) return "bg-purple-500";
-    if (hasACE) return "bg-blue-500";
-    if (hasABLE) return "bg-green-500";
+    if (hasACE && hasABLE) return "bg-[var(--color-royal)]";
+    if (hasACE) return "bg-[var(--color-royal-light)]";
+    if (hasABLE) return "bg-[var(--color-royal-super-dark)]";
     return "bg-gray-400";
   };
 
@@ -62,19 +62,19 @@ export default function OurDataSection({
       <div className="mb-2 flex flex-row justify-center w-full gap-4">
         <span
           key={"ACE"}
-          className={`bg-blue-500 text-white px-3 py-1 rounded-full font-semibold`}
+          className={`bg-[var(--color-royal-light)] text-white px-3 py-1 rounded-full font-semibold`}
         >
           {"ACE Route"}
         </span>
         <span
           key={"ABLE"}
-          className={`bg-green-500 text-white px-3 py-1 rounded-full font-semibold`}
+          className={`bg-[var(--color-royal-super-dark)] text-white px-3 py-1 rounded-full font-semibold`}
         >
           {"ABLE Route"}
         </span>
         <span
           key={"ABLE->ACE"}
-          className={`bg-purple-500 text-white px-3 py-1 rounded-full font-semibold`}
+          className={`bg-[var(--color-royal)] text-white px-3 py-1 rounded-full font-semibold`}
         >
           {"ABLE→ACE Route"}
         </span>
@@ -99,7 +99,7 @@ export default function OurDataSection({
         onValueChange={setActiveTab}
       >
         <div className="flex flex-col md:flex-row gap-2 justify-between">
-          <TabsList className="w-[375px] md:w-auto overflow-x-auto items-center justify-start">
+          <TabsList className="w-[375px] md:w-auto overflow-x-auto items-center justify-start bg-[var(--color-royal-light)]/25">
             <TabsTrigger value="violations">ACE Violations</TabsTrigger>
             <TabsTrigger value="speeds">Bus Speeds</TabsTrigger>
             <TabsTrigger value="riderships">Bus Total Riderships</TabsTrigger>
@@ -116,7 +116,7 @@ export default function OurDataSection({
                   <Switch
                     checked={showTotal}
                     onCheckedChange={setShowTotal}
-                    className="cursor-pointer"
+                    className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
                   />
                 </div>
               )}
@@ -125,7 +125,7 @@ export default function OurDataSection({
                 <Switch
                   checked={showChart}
                   onCheckedChange={setShowChart}
-                  className="cursor-pointer"
+                  className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
                 />
               </div>
             </div>

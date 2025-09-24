@@ -21,13 +21,16 @@ export default function DatasetsSection({ id = "" }: DatasetsSectionProps) {
           >
             <Card
               className={`hover:shadow-lg transition h-full ${
-                ds.main ? "border-blue-500" : ""
+                ds.main ? "border-[var(--color-royal)]" : ""
               }`}
             >
               <CardHeader className="flex items-center justify-between space-y-0">
                 <div className="flex items-center gap-2">
                   {ds.main ? (
-                    <Star className="flex-shrink-0 h-5 w-5 text-yellow-500" fill="#f0b100" />
+                    <Star
+                      className="flex-shrink-0 h-5 w-5 text-yellow-500"
+                      fill="#f0b100"
+                    />
                   ) : (
                     <StarOff className="flex-shrink-0 h-5 w-4 text-gray-400" />
                   )}
@@ -35,7 +38,7 @@ export default function DatasetsSection({ id = "" }: DatasetsSectionProps) {
                     {ds.name}
                   </CardTitle>
                 </div>
-                <SquareArrowOutUpRightIcon className="flex-shrink-0 h-4 w-4 text-blue-600 opacity-70 group-hover:opacity-100" />
+                <SquareArrowOutUpRightIcon className="flex-shrink-0 h-4 w-4 text-[var(--color-royal)] opacity-70 group-hover:opacity-100" />
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground break-words">

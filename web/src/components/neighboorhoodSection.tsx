@@ -103,7 +103,7 @@ export default function NeighborhoodSection({
         onValueChange={setActiveTab}
       >
         <div className="flex flex-col md:flex-row gap-2 justify-between">
-          <TabsList>
+          <TabsList className="bg-[var(--color-royal-light)]/25">
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="table">Table</TabsTrigger>
             <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>
@@ -122,7 +122,10 @@ export default function NeighborhoodSection({
                     </p>
                   </TooltipContent>
                 </Tooltip>
-                <Button onClick={handleClick} className="cursor-pointer">
+                <Button
+                  onClick={handleClick}
+                  className="cursor-pointer bg-[var(--color-royal)] text-white hover:bg-[var(--color-royal-light)]"
+                >
                   Rerender Map
                 </Button>
               </div>
@@ -132,7 +135,7 @@ export default function NeighborhoodSection({
               <Switch
                 checked={sortData}
                 onCheckedChange={setSortData}
-                className="cursor-pointer"
+                className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
               />
             </div>
           </div>

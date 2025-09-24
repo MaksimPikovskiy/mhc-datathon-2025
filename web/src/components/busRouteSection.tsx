@@ -31,7 +31,7 @@ export default function BusRouteSection({
       <h2 className="font-bold  text-xl mb-1">Risk Score for Bus Routes</h2>
       <Tabs defaultValue="bar-chart" className={`md:h-[600px] w-full`}>
         <div className="flex flex-row justify-between">
-          <TabsList>
+          <TabsList className="bg-[var(--color-royal-light)]/25">
             <TabsTrigger value="bar-chart">Bar Chart</TabsTrigger>
             <TabsTrigger value="table">Table</TabsTrigger>
           </TabsList>
@@ -40,7 +40,7 @@ export default function BusRouteSection({
             <Switch
               checked={sortData}
               onCheckedChange={setSortData}
-              className="cursor-pointer"
+              className="cursor-pointer data-[state=checked]:bg-[var(--color-royal)] data-[state=unchecked]:bg-[var(--color-royal-light)]"
             />
           </div>
         </div>

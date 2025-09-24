@@ -41,6 +41,20 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme {
+  --color-royal: #8231c4;
+  --color-royal-light: #a379d9;
+  --color-royal-dark: #5411ab;
+  --color-royal-super-dark: #3b0270;
+}
+
+/* @theme {
+  --color-royal: #6C3BAA;
+  --color-royal-light: #85AB3C;
+  --color-royal-dark: #5411AB;
+  --color-royal-super-dark: #D6BB1B;
+} */
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -117,4 +131,21 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.nav-link {
+  @apply relative px-1 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute left-0 bottom-0 w-full h-0.5 bg-[var(--color-royal)] scale-x-0 transition-transform duration-300 origin-bottom-right;
+}
+
+.nav-link:hover::after {
+  @apply scale-x-100 origin-bottom-left;
+}
+
+.nav-link.active::after {
+  @apply scale-x-100;
 }
