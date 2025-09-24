@@ -128,7 +128,14 @@ export default function OurDataSection({
             *
           </button>
         </h3>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+        <div className="flex justify-center mx-56">
+          <p className="text-sm">
+            Counts total automated camera enforcement (ACE) violations per bus
+            route, as well as breaking them down into bus stop, double parked,
+            and bus lane categories.
+          </p>
+        </div>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -152,7 +159,13 @@ GROUP BY bus_route_id`}
           is a variable containing the set of ACE/ABLE Enforced Bus Routes we
           mentioned earlier.
         </p>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+        <div className="flex justify-center mx-56">
+          <p className="text-sm">
+            Retrieves total mileage, total operating time, and computes average
+            speed for each enforced route.
+          </p>
+        </div>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -175,7 +188,13 @@ GROUP BY route_id`}
           is a variable containing the set of ACE/ABLE Enforced Bus Routes we
           mentioned earlier.
         </p>
-        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center">
+        <div className="flex justify-center mx-56">
+          <p className="text-sm">
+            Returns ridership totals plus transfer total for the list of
+            enforced routes, which is combined into total_riders on the website.
+          </p>
+        </div>
+        <div className="bg-gray-100 rounded-2xl p-6 flex items-center justify-center mx-32">
           <pre className="text-gray-500 font-mono text-sm text-start overflow-auto">
             <code>
               {`SELECT
@@ -192,6 +211,57 @@ GROUP BY route_id`}
           *We limited main dataset to 2020-2025 due to Ridership and Speeds
           being in that range.
         </span>
+        <h3 className="font-semibold text-md mt-12">
+          Python Scripts for Neighborhood Grouping (using geopandas, pandas,
+          numpy)
+        </h3>
+        <p>
+          These scripts turn the raw data of NYC Neighborhoods GeoJSON and ACE
+          Violations (2020-2025) dataset into clean, aggregated table the
+          website uses for risk score calculations of neighborhoods.
+        </p>
+        <div className="mx-32 mb-6">
+          <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
+            <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("neighborhood_grouper")}>
+              neighborhood_grouper.py
+            </button>
+          </h4>
+          <p className="border-x border-b rounded">
+            Reads all ACE violation points, assigns them to NYC neighborhood
+            polygons (spatial join), counts totals and by type, and outputs two
+            CSVs: <code>violation_totals.csv</code> (per neighborhood) and{" "}
+            <code>violation_counts_by_type.csv</code> (per neighborhood & type).
+          </p>
+        </div>
+
+        <div className="mx-32 mb-6">
+          <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
+            <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("csv_merger")}>
+              csv_merger.py
+            </button>
+          </h4>
+          <p className="border-x border-b rounded">
+            Merges <code>violation_totals.csv</code> and{" "}
+            <code>violation_counts_by_type.csv</code> into one file{" "}
+            <code>neighborhood_stats.csv</code>, aggregating bus routes, total
+            violations, and violation types per neighborhood.
+          </p>
+        </div>
+
+        <div className="mx-32">
+          <h4 className="font-semibold bg-gray-100 rounded-t py-0.5 px-2 text-gray-500">
+            <button className="underline hover:text-primary/50 cursor-pointer" onClick={() => scrollToSection("neighborhood_final_stats_maker")}>
+              neighborhood_final_stats_maker.py
+            </button>
+          </h4>
+          <p className="border-x border-b rounded">
+            Reads <code>neighborhood_stats.csv</code>, plus speed and ridership
+            data for 2020–2025, calculates each neighborhood’s{" "}
+            <em>average speed</em> and <em>average total ridership</em> across
+            all its bus routes (floors ridership values), and saves as{" "}
+            <code>neighbor_with_speeds_ridership.csv</code>.
+          </p>
+        </div>
       </div>
       <h2 id="processed_data" className="font-bold  text-xl mb-1 pt-12">
         Our Data at a Glance
