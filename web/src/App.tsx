@@ -33,6 +33,7 @@ import {
 } from "./lib/constants";
 import BusRouteSection from "./components/busRouteSection";
 import OurDataSection from "./components/ourDataSection";
+import DatasetsSection from "./components/datasetsSection";
 
 function App() {
   const [useLocal, setUseLocal] = useState<boolean>(true);
@@ -532,7 +533,11 @@ function App() {
 
   return (
     <>
-      <Navbar sections={sections} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+      <Navbar
+        sections={sections}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+      />
       <main className="mt-12 space-y-6">
         <div
           id="home"
@@ -555,6 +560,7 @@ function App() {
             />
           </div>
         </div>
+        <DatasetsSection id="datasets" />
         <OurDataSection
           id="our_data"
           busAceRoutes={unmodifiedBusAceRoutes}

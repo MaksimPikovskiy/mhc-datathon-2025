@@ -80,8 +80,41 @@ export const violationCountQuery = `SELECT
 
 export const sections = [
   "home",
+  "datasets",
   "our_data",
   "risk_factors",
   "route_risk_score",
   "neighborhood_risk_score",
+];
+
+export const datasets = [
+  {
+    name: "MTA Bus Automated Camera Enforcement Violations: Beginning October 2019",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Automated-Camera-Enforcement-Violations-Be/kh8p-hcbm/about_data",
+    main: true,
+  },
+  {
+    name: "ACE/ABLE-Enforced Bus Routes",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Automated-Camera-Enforced-Routes-Beginning/ki2b-sg5y/about_data",
+  },
+  {
+    name: "MTA Bus Hourly Ridership: 2020-2024",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Hourly-Ridership-2020-2024/kv7t-n8in/about_data",
+  },
+  {
+    name: "MTA Bus Hourly Ridership: Beginning 2025",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Hourly-Ridership-Beginning-2025/gxb3-akrn/about_data",
+  },
+  {
+    name: "MTA Bus Speeds: 2020 - 2024",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Speeds-2020-2024/6ksi-7cxr/about_data",
+  },
+  {
+    name: "MTA Bus Speeds: Beginning 2025",
+    link: "https://data.ny.gov/Transportation/MTA-Bus-Speeds-Beginning-2025/4u4b-jge6/about_data",
+  },
+  {
+    name: "2020 Neighborhood Tabulation Areas (NTAs)",
+    link: "https://www.nyc.gov/content/planning/pages/resources/datasets/neighborhood-tabulation",
+  },
 ];
