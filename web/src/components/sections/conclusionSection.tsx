@@ -8,13 +8,13 @@ export default function ConclusionSection({ id }: { id: string }) {
           <p className="text-start md:mx-16">
             Our analysis highlights routes and neighborhoods with the highest
             estimated risk of accidents.
-            <ul className="list-disc list-outside ps-4">
+            <ul className="list-disc list-outside ps-4 space-y-2 my-2">
               <li>
                 M15+ and M101 bus routes stretch nearly across entire Manhattan
                 and possess a Risk Score of ~0.588 and ~0.548, respectively.
-                <ul className="list-disc list-outside ps-4">
+                <ul className="list-[circle] list-outside ps-4">
                   <li>
-                    This could be due to the longer length of the bus route.
+                    This could be due to the longer length of the bus routes.
                   </li>
                 </ul>
               </li>
@@ -24,16 +24,45 @@ export default function ConclusionSection({ id }: { id: string }) {
                 close to Risk Scores of M15+ and M101.
               </li>
               <li>
-                Other bus routes posses a Risk Score lower than 0.40, which
+                Other bus routes posses a Risk Score lower than 0.400, which
                 suggests less need of intervention and fewer ACE-supplied buses.
               </li>
               <li>
                 BX3, BX7, BX20, BX38, M4, M14+, M42, M100, Q6 bus routes are
                 mostly short routes, seeing fewer ridership and violations.
-                <ul className="list-[square] list-outside ps-4">
-                  <li>Thus, their Risk Score is 0.</li>
+                <ul className="list-[circle] list-outside ps-4">
+                  <li>Thus, their Risk Score is 0.000.</li>
                 </ul>
               </li>
+              <li>
+                Jamaica Neighborhood possesses the highest Risk Score, ~0.562.
+                <ul className="list-[circle] list-outside ps-4">
+                  <li></li>
+                </ul>
+              </li>
+              <li>
+                Longwood, Washington Heights (South), and East Harlem (North)
+                come in after Jaimaca with high Risk Score of 0.520, 0,505, and
+                0.482 (respectively).
+                <ul className="list-[circle] list-outside ps-4">
+                  <li></li>
+                </ul>
+              </li>
+              <li>
+                Upper East Side-Lenox Hill-Roosevelt Island, Upper East
+                Side-Yorkville, Flatbush, and East Flatbush-Rugby have Risk
+                Scores of 0.455, 0.442, 0.437, and 0.421 (respectively).
+                <ul className="list-[circle] list-outside ps-4">
+                  <li></li>
+                </ul>
+              </li>
+              <li>
+                The other neighborhoods possess a Risk Score of close to 0.40 or
+                less.
+              </li>
+              <ul className="list-[circle] list-outside ps-4">
+                <li></li>
+              </ul>
             </ul>
             Ultimately, the data suggests a reallocation of the ACE-supplied
             routes from lower-risk routes to higher-risk routes. Bus routes with
