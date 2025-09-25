@@ -17,10 +17,13 @@ Urban bus systems are vital for mobility, but safety remains a pressing issue. O
 - Josiah R. Bernard
 - Phone Khant Kyaw Swa
 
+### [▶ Watch the overview](https://mhc-datathon-2025.vercel.app/video.mp4)
+### [Download the overview](https://github.com/MaksimPikovskiy/mhc-datathon-2025/raw/main/video.mp4)
+
 #### Live Version of This Report is available at the following links:
 
 - https://mhc-datathon-2025.vercel.app/
--
+- https://mhc-datathon.github.io/Mechanicus/
 - Live version allows you to play around with weights of risk factors, as well as enabling or disabling said risk factors
 
 ## Dictionary of Terms
@@ -377,10 +380,10 @@ Using our cleaned datasets, we derived a composite Risk Score for each bus route
 | **Risk Factor (xᵢ)**     | **Weight (wᵢ)** | **Rationale**                              |
 | ------------------------ | --------------- | ------------------------------------------ |
 | Double Parked Violations | 0.28            | High correlation with blockage & accidents |
-| Bus Stop Violations      | 0.22            | Frequent stop-area conflicts               |
-| Bus Lane Violations      | 0.20            | Impedes safe bus travel                    |
-| Speed of Bus             | 0.18            | Higher speeds, higher severity             |
-| Bus Ridership            | 0.12            | More riders = greater impact               |
+| Bus Stop Violations      | 0.18            | Frequent stop-area conflicts               |
+| Bus Lane Violations      | 0.12            | Impedes safe bus travel                    |
+| Speed of Bus             | 0.22            | Higher speeds, higher severity             |
+| Bus Ridership            | 0.20            | More riders = greater impact               |
 
 ## Findings
 
@@ -407,19 +410,50 @@ With weights applied, we computed risk scores for each route and neighborhood. T
 
 ![Map of Risk Scores for Neighborhoods](/visuals/map_risk_neighborhoods.png)
 
-## Conclusion
+Conclusion
+----------
 
 ### Findings
 
-Our analysis highlights routes and neighborhoods with the highest estimated risk of accidents, guiding potential safety interventions.
+Our analysis highlights routes and neighborhoods with the highest estimated risk of accidents.
+
+*   M15+ and M101 bus routes stretch nearly across entire Manhattan and possess a Risk Score of ~0.594 and ~0.541, respectively.
+    *   This could be due to the longer length of the bus routes.
+*   Despite BX19 being a shorter route compared to M15+ and M101, it possesses a Risk Score of ~0.525, which comparatively speaking is close to Risk Scores of M15+ and M101.
+*   Other bus routes posses a Risk Score lower than 0.400, which suggests less need of intervention and fewer ACE-supplied buses.
+*   BX3, BX7, BX20, BX38, M4, M14+, M42, M100, Q6 bus routes are mostly short routes, seeing fewer ridership and violations.
+    *   Thus, their Risk Score is 0.000.
+*   Jamaica Neighborhood possesses the highest Risk Score, ~0.562.
+    *   Jamaica has the most total violations, with the total weight of them being 0.58.
+*   Longwood, Washington Heights (South), and East Harlem (North) come in after Jaimaca with high Risk Score of ~0.520, ~0,505, and ~0.482 (respectively).
+    *   Longwood has the most double parked violations, our biggest risk factor (weight of 0.28).
+    *   BX36 and M101, highest-risk bus routes, are the bus routes that serve Washington Heights (South) neighborhood.
+    *   M15+ and M101, highest-risk bus routes, are the bus routes that serve East Harlem (North) neighborhood.
+*   Upper East Side-Lenox Hill-Roosevelt Island, Upper East Side-Yorkville, Flatbush, and East Flatbush-Rugby have Risk Scores of ~0.455, ~0.442, ~0.437, and ~0.421 (respectively).
+    *   M15+ and M101, highest-risk bus routes, are the bus routes that serve Upper East Side-Lenox Hill-Roosevelt Island and Upper East Side-Yorkville neighborhoods.
+    *   Flatbush and East Flatbush-Rugby are within top-10 of highest total violations (main contributor is bus stop violations)
+*   The other neighborhoods possess a Risk Score of close to ~0.400 or less.
+
+*   Safety intervention is not priority within a reasonable timeframe for these neighborhoods.
+
+Ultimately, the data suggests a reallocation of the ACE-supplied routes from lower-risk routes to higher-risk routes. Bus routes with lower-risk should continue to have ACE-supplied buses, but in fewer quantity than higher-risk routes. For neighborhoods, this means focusing resources where violations and ridership density combine to create the highest potential for accidents — for example, Jamaica, Longwood, Washington Heights (South), and East Harlem (North). Neighborhoods with Risk Scores near or below 0.400 should still be monitored but may warrant fewer interventions or longer review cycles, allowing resources to be concentrated where they are most needed.
 
 ### Recommendations
 
-Prioritize enforcement and infrastructure improvements on high-risk routes; increase rider safety education where applicable.
+*   Prioritize enforcement and infrastructure improvements on high-risk routes.
+*   Introduce more bus routes to ACE program.
+*   Reallocate ACE buses from lesser-risk bus routes to higher-risk ones.
+    *   Or introduce more ACE buses into the system (either through modernization or new bus).
+*   More ACE data will allow us to create a more accurate prediction of risk, which would allow MTA to have more detailed and reliable map and charts of risk score for bus routes or neighborhoods.
 
 ### Limitations
 
-Data availability varies by time and location; some violations may be underreported; additional factors (weather, driver behavior) were not included.
+*   Some violations may be underreported.
+*   Environmental factors (weather, road design, traffic signal timing, driver behavior) and socioeconomic variables are not included but may influence accident risk.
+*   There are bus routes that are not within ACE program.
+*   Longer bus routes may naturally accumulate more violations and ridership.
+*   The analysis does not account for the effectiveness of existing safety interventions.
+    *   High-risk areas may have ongoing mitigation efforts not reflected in the current data.
 
 ## Appendix
 

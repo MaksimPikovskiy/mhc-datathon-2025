@@ -11,7 +11,7 @@ export default function ConclusionSection({ id }: { id: string }) {
             <ul className="list-disc list-outside ps-4 space-y-2 my-2">
               <li>
                 M15+ and M101 bus routes stretch nearly across entire Manhattan
-                and possess a Risk Score of ~0.588 and ~0.548, respectively.
+                and possess a Risk Score of ~0.594 and ~0.541, respectively.
                 <ul className="list-[circle] list-outside ps-4">
                   <li>
                     This could be due to the longer length of the bus routes.
@@ -20,7 +20,7 @@ export default function ConclusionSection({ id }: { id: string }) {
               </li>
               <li>
                 Despite BX19 being a shorter route compared to M15+ and M101, it
-                possess a Risk Score of ~0.538, which comparatively speaking is
+                possesses a Risk Score of ~0.525, which comparatively speaking is
                 close to Risk Scores of M15+ and M101.
               </li>
               <li>

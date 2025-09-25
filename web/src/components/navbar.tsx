@@ -47,7 +47,7 @@ export default function Navbar({ sections, setCurrentIndex }: NavbarProps) {
           >
             <span className="bg-[#F1421C] text-white p-2 rounded">MHC++</span>
             <div className="flex flex-row items-center">
-              <img src="/mechanicus.png" className="w-10 h-10" />
+              <img src="mechanicus.png" className="w-10 h-10" />
               <span>Mechanicus</span>
             </div>
           </button>

@@ -43,7 +43,7 @@ export default function IntroSection({
           <div className="flex flex-row justify-center items-center gap-2">
             <h3 className="font-bold text-xl">Report by</h3>
             <div className="flex flex-row justify-center items-center">
-              <img src="/mechanicus.png" className="w-8 h-8" />
+              <img src="mechanicus.png" className="w-8 h-8" />
               <h3 className="font-bold text-xl">Mechanicus</h3>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default function IntroSection({
       </div>
       <div className="space-y-8">
         <div className="aspect-video bg-gray-100 rounded-2xl flex items-center justify-center">
-          <span className="text-gray-500">[You are watching the video!]</span>
+          <video src="video.mp4" controls className="rounded-2xl"/>
         </div>
         <div
           className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm hover:scale-101 cursor-pointer"
