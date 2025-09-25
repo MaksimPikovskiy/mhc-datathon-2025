@@ -39,27 +39,36 @@ export default function RiskFormulaSection({ id }: { id: string }) {
           <TableBody>
             <TableRow>
               <TableCell>Double Parked Violations</TableCell>
-              <TableCell>{defaultWeights.doubleParkedViolation}</TableCell>
+              <TableCell>
+                {defaultWeights.doubleParkedViolation.toFixed(2)}
+              </TableCell>
               <TableCell>High correlation with blockage & accidents</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Bus Stop Violations</TableCell>
-              <TableCell>{defaultWeights.busStopViolation}</TableCell>
+              <TableCell>
+                {defaultWeights.busStopViolation.toFixed(2)}
+              </TableCell>
               <TableCell>Frequent stop-area conflicts</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Bus Lane Violations</TableCell>
-              <TableCell>{defaultWeights.busLaneViolation}</TableCell>
+              <TableCell>
+                {defaultWeights.busLaneViolation.toFixed(2)}
+              </TableCell>
               <TableCell>Impedes safe bus travel</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Speed of Bus</TableCell>
-              <TableCell>{defaultWeights.speed}</TableCell>
-              <TableCell>Higher speeds, higher severity</TableCell>
+              <TableCell>{defaultWeights.speed.toFixed(2)}</TableCell>
+              <TableCell>
+                Higher speeds, higher severity (less time to stop, harder to
+                maneuver)
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Bus Ridership</TableCell>
-              <TableCell>{defaultWeights.ridership}</TableCell>
+              <TableCell>{defaultWeights.ridership.toFixed(2)}</TableCell>
               <TableCell>More riders = greater impact</TableCell>
             </TableRow>
           </TableBody>

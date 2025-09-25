@@ -80,10 +80,10 @@ export const chartConfigRiskScores = {
 
 export const defaultWeights = {
   doubleParkedViolation: 0.28,
-  busStopViolation: 0.22,
-  busLaneViolation: 0.2,
-  speed: 0.18,
-  ridership: 0.12,
+  busStopViolation: 0.18,
+  busLaneViolation: 0.12,
+  speed: 0.22,
+  ridership: 0.2,
 };
 
 export const defaultFactorsEnabled = {
